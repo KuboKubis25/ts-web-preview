@@ -10,7 +10,7 @@ import Photo from "../components/Photo.astro";
 import Logos from "../components/Logos.astro";
 import ContactForm from "../components/ContactForm.astro";
 import { ui } from "../data/ui";
-import { downloads, downloadTitle } from "../data/downloads";
+import { downloads, downloadTitle, downloadOrder } from "../data/downloads";
 import { serviceKeys, aviationKeys, serviceTitle } from "../data/sections";
 import homeCopy from "../data/home.json";
 import gallery from "../data/gallery.json";
@@ -41,13 +41,15 @@ const t = ui[lang];
 const find = (key: string) =>
   all.find((p) => p.data.key === key && p.data.lang === lang) ||
   all.find((p) => p.data.key === key && p.data.lang === "en");
-const contact = find("contact")!;
 const services = serviceKeys.map((key) => find(key)!);
 const aviation = aviationKeys.map((key) => find(key)!);
 const content = page ? await render(page) : undefined;
 const Content = content?.Content;
 const headings = content?.headings.filter((h) => h.depth === 2) || [];
-const relevantDownloads = downloads.filter((f) => f.page === d?.key);
+// Do not repeat a document already linked directly in the source prose.
+const relevantDownloads = downloads
+  .filter((f) => f.page === d?.key && !page?.body?.includes("/s/" + f.file))
+  .sort((a, b) => downloadOrder.indexOf(a.kind) - downloadOrder.indexOf(b.kind));
 const copy = homeCopy[lang];
 // The compliance sentence is existing source copy in all three languages.
 const homeLead = {
@@ -66,10 +68,6 @@ if (d?.kind === "references") {
   if (lang === "en")
     rows.push(
       {
-        title: "Our main list of references",
-        href: "https://drive.google.com/file/d/1TD1_VK_ORI7Ckqk6rvLvznGmCt8xz58z/view?usp=sharing",
-      },
-      {
         title: "Promotional presentation",
         href: "https://drive.google.com/file/d/1wDjKAScMM4idIgvG_27cAyZavl46cln0/view?usp=sharing",
       },
@@ -79,26 +77,6 @@ if (d?.kind === "references") {
       title: "我们的宣传介绍",
       href: "https://drive.google.com/file/d/1fGjFYueDh0oi0DWyY603WWtxajNFD-Wq/view?usp=sharing",
     });
-}
-if (d?.key === "instruments") {
-  rows.push({
-    title: "info.aviation@testing-service.org",
-    href: "mailto:info.aviation@testing-service.org",
-    meta: "E-MAIL",
-  });
-  if (lang === "sk")
-    rows.push(
-      {
-        title: "Mapa · LZZI",
-        href: url("s/LZZI-Map.jpg"),
-        meta: "JPG",
-        download: true,
-      },
-      {
-        title: "Letisko AIP",
-        href: "https://aim.lps.sk/eAIP/eAIP_SR/AIRAC193_EFF_24MAY2018/html/LZ-AD-2.LZZI-en-SK.html",
-      },
-    );
 }
 if (d?.key === "aviation") {
   rows.push(
@@ -121,10 +99,10 @@ const featuredNames = [
   "TESTING_CENTER-26%5B203%5D.jpg",
   "TESTING_CENTER-33%5B210%5D.jpg",
   "TESTING_CENTER-18%5B195%5D.jpg",
-  "TESTING_CENTER-21%5B198%5D.jpg",
+  "TESTING_CENTER-10%5B187%5D.jpg",
   "TESTING_CENTER-36%5B213%5D.jpg",
   "TESTING_CENTER-32%5B209%5D.jpg",
-  "TESTING_CENTER-08%5B185%5D.jpg",
+  "AT1.png",
   "TESTING_CENTER-06%5B183%5D.jpg",
 ];
 const featured = featuredNames.map((name) =>
@@ -178,10 +156,8 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
           <section class="home-hero on-dark">
             <div class="hero-copy">
               <span class="eyebrow" lang={lang === "zh" ? "en" : lang}>
-                {lang === "sk"
-                  ? "Inšpekcie · Certifikácie · Povolenia ·"
-                  : "Inspection · Certification · Permit ·"}{" "}
-                <span class="nowrap">CZ + SK</span>
+                {(lang === "sk" ? ["Inšpekcie", "Certifikácie", "Povolenia"] : ["Inspection", "Certification", "Permit"]).map((item) => <><span class="nowrap">{item}&nbsp;·</span>{" "}</>)}
+                <span class="nowrap">CZ&nbsp;+&nbsp;SK</span>
               </span>
               <h1>
                 {lang === "zh" ? (
@@ -244,11 +220,9 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
             <Logos />
           </section>
           <section class="intro-section wrap grid">
-            <div>
-              {copy.intro.split("\n\n").map((p, i) => (
-                <p class={i === 0 ? "statement" : undefined}>{p}</p>
-              ))}
-            </div>
+            {copy.intro.split("\n\n").map((p, i) => (
+              <p class={i === 0 ? "statement" : undefined}>{p}</p>
+            ))}
           </section>
           <section class="services-section" id="services">
             <div class="wrap">
@@ -258,15 +232,10 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
               <div class="service-grid">
                 {services.map((p, i) => (
                   <a class="service-card" href={url(p.data.path + "/")}>
-                    <Photo
-                      name={p.data.image!}
-                      alt=""
-                      sizes="(min-width: 1248px) 25vw, (min-width: 667px) 50vw, 100vw"
-                    />
                     <div class="card-content">
                       <span class="card-number">0{i + 1}</span>
                       <h3>{serviceTitle(p.data, lang)}</h3>
-                      <p>{copy.services[i].description}</p>
+                      <p>{lang === "zh" ? copy.services[i].description.split("。")[0] + "。" : copy.services[i].description}</p>
                       <span class="text-link">
                         <span>
                           {t.more}
@@ -280,17 +249,14 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
               </div>
             </div>
           </section>
-          <section class="wrap packages grid">
+          <section class="wrap packages">
             <div>
               <div class="section-head">
                 <h2>{t.packages}</h2>
                 <p class="lead">{d.packageLead}</p>
               </div>
               {copy.capabilities.length > 0 && (
-                <ul
-                  class="list capabilities"
-                  style={`--rows: ${Math.ceil(copy.capabilities.length / 2)}`}
-                >
+                <ul class="list capabilities">
                   {copy.capabilities.map((c) => (
                     <li>{c}</li>
                   ))}
@@ -313,9 +279,6 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                   alt="Aviation Testing Center, Žilina"
                 />
                 <div>
-                  <span class="eyebrow" lang="en">
-                    Aviation
-                  </span>
                   <h2 lang="en">Testing Service Aviation</h2>
                   {lang !== "zh" && (
                     <p class="lead">{aviation[0].data.description}</p>
@@ -358,7 +321,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                   <a href={url(aviation[0].data.path + "/")}>Aviation</a>
                 </li>
               )}
-              <li aria-current="page">{d.title}</li>
+              {d.kind !== "aviation" && <li aria-current="page">{d.title}</li>}
             </ol>
           </nav>
           {d.kind === "aviation" && (
@@ -375,9 +338,6 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
           )}
           <section class:list={["page-hero wrap grid", d.image && "has-photo"]}>
             <div>
-              {d.kind === "service" && (
-                <span class="eyebrow">{t.services}</span>
-              )}
               <h1>
                 {d.title}
                 <span class="gold">.</span>
@@ -426,7 +386,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                     },
                   ]}
                 />
-                <h3 class="type-h4">Aviation</h3>
+                <h3>Aviation</h3>
                 <LinkList
                   lang={lang}
                   rows={[
@@ -439,7 +399,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                 />
                 <div class="future-office">
                   <span class="eyebrow">{t.soon}</span>
-                  <h3 class="type-h4">{lang === "sk" ? "Praha" : "Prague"}</h3>
+                  <h3>{lang === "sk" ? "Praha" : "Prague"}</h3>
                   <p>
                     Forum Karlín, Pernerova 51
                     <br />
@@ -488,47 +448,19 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                     />
                   </section>
                 )}
-                {(d.kind === "service" || d.kind === "aviation") && (
-                  <section class="closing-cta">
-                    <h2 class="type-h3">{t.ctaQuestion}</h2>
-                    {d.closing && d.closing !== t.ctaQuestion && (
-                      <p>{d.closing}</p>
-                    )}
-                    <a
-                      class="button button-primary"
-                      href={url(contact.data.path + "/")}
-                    >
-                      {t.cta}
-                      <Icon />
-                    </a>
-                  </section>
-                )}
               </div>
             </div>
           )}
-          {(d.kind === "service" || d.kind === "aviation") && (
+          {d.kind === "service" && (
             <section class="wrap related grid">
-              <span class="eyebrow">
-                {d.kind === "aviation" ? "Aviation" : t.related}
-              </span>
-              <div class="list">
-                {(d.kind === "aviation" ? aviation : services)
-                  .filter((p) => p.data.key !== d.key)
-                  .map((p) => (
-                    <a href={url(p.data.path + "/")}>
-                      <span class="list-title">
-                        {serviceTitle(p.data, lang)}
-                      </span>
-                      <Icon />
-                    </a>
-                  ))}
-              </div>
+              <span class="eyebrow">{t.related}</span>
+              <LinkList lang={lang} rows={services.filter((p) => p.data.key !== d.key).map((p) => ({ title: serviceTitle(p.data, lang), href: url(p.data.path + "/"), lang: p.data.lang }))} />
             </section>
           )}
           {d.key === "aviation" && (
             <section class="gallery">
               <div class="wrap">
-                <div class="section-head grid">
+                <div class="section-head">
                   <span class="eyebrow">Žilina · LZZI</span>
                   <h2>{t.gallery}</h2>
                 </div>

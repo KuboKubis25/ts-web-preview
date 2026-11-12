@@ -16,22 +16,6 @@
     }
   },
   {
-    "image": "TESTING_CENTER-03%5B180%5D.jpg",
-    "source": "ait-gallery",
-    "alt": {
-      "sk": "Chvost lietadla OM-ARW pri servisnom vybavení",
-      "en": "Tail of aircraft OM-ARW beside service equipment"
-    }
-  },
-  {
-    "image": "TESTING_CENTER-25%5B202%5D.jpg",
-    "source": "ait-gallery",
-    "alt": {
-      "sk": "Antény na statívoch a merací kufor pred lietadlom",
-      "en": "Tripod-mounted antennas and a test case in front of an aircraft"
-    }
-  },
-  {
     "image": "TESTING_CENTER-06%5B183%5D.jpg",
     "source": "ait-gallery",
     "alt": {
@@ -56,27 +40,11 @@
     }
   },
   {
-    "image": "TESTING_CENTER-08%5B185%5D.jpg",
-    "source": "ait-gallery",
-    "alt": {
-      "sk": "Lietadlo OM-ARW na ploche pred hangárom",
-      "en": "Aircraft OM-ARW on the apron in front of a hangar"
-    }
-  },
-  {
     "image": "TESTING_CENTER-10%5B187%5D.jpg",
     "source": "ait-gallery",
     "alt": {
       "sk": "Lietadlo pri žltom servisnom vybavení pred hangárom",
       "en": "Aircraft beside yellow service equipment outside the hangar"
-    }
-  },
-  {
-    "image": "TESTING_CENTER-21%5B198%5D.jpg",
-    "source": "ait-gallery",
-    "alt": {
-      "sk": "Dva žlté meracie kufre a antény vedľa lietadla",
-      "en": "Two yellow test cases and antennas alongside an aircraft"
     }
   },
   {
@@ -105,14 +73,6 @@
   },
   {
     "image": "at3.png",
-    "source": "ait-gallery",
-    "alt": {
-      "sk": "Testing Service · skúšky avioniky",
-      "en": "Testing Service · avionics testing"
-    }
-  },
-  {
-    "image": "LZZI_AD.JPG",
     "source": "ait-gallery",
     "alt": {
       "sk": "Testing Service · skúšky avioniky",

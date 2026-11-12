@@ -8,7 +8,9 @@ const { current, target } = Astro.props;
 ---
 
 {target !== "both" && current !== target && (
-  <span class="lang-tag" lang={target}>
-    {target === "zh" ? "中文" : target.toUpperCase()}
-  </span>
+  <>
+    {"\u00a0"}<span class="lang-tag" lang={target}>
+      {target === "zh" ? "中文" : target.toUpperCase()}
+    </span>
+  </>
 )}

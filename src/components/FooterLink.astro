@@ -1,0 +1,18 @@
+---
+import Icon from "./Icon.astro";
+import LangTag from "./LangTag.astro";
+import type { Lang } from "../data/ui";
+interface Props {
+  href: string;
+  title: string;
+  current: Lang;
+  target?: Lang | "both";
+  textLang?: Lang;
+  download?: boolean;
+}
+const { href, title, current, target, textLang, download } = Astro.props;
+const split = title.lastIndexOf(" ");
+const prefix = split < 0 ? "" : title.slice(0, split + 1);
+const last = title.slice(split + 1);
+---
+<a href={href} download={download || undefined}><span lang={textLang}>{prefix}<span class="nowrap">{last}{target && <LangTag current={current} target={target} />}<Icon name={download ? "down" : /^(https?:|mailto:)/.test(href) ? "external" : "right"} /></span></span></a>

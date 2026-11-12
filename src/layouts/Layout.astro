@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
 import logo from "../../_source/img/logo-mark.png";
 import Icon from "../components/Icon.astro";
+import FooterLink from "../components/FooterLink.astro";
 import LangTag from "../components/LangTag.astro";
 import { languages, ui } from "../data/ui";
 import { url, absolute } from "../lib/urls";
@@ -28,12 +29,7 @@ const divisionEmail =
   page.kind === "aviation"
     ? "info.aviation@testing-service.org"
     : "jakub.kubis@testing-service.org";
-const footerFiles = downloads.filter(
-  (file) =>
-    file.lang === (page.lang === "zh" ? "en" : page.lang) ||
-    file.lang === "both" ||
-    ["legal", "inspections", "maintenance"].includes(file.page),
-);
+const accreditation = downloads.find((file) => file.file === "TS-Opravnenie.pdf")!;
 const alternates = pages.filter((p) => p.data.key === page.key);
 const defaultPage =
   find(page.key, "sk") ||
@@ -152,7 +148,7 @@ const canonical = absolute(
                 href={url(home.path ? `${home.path}/#services` : "#services")}
               >
                 {t.all}
-                <Icon name="down" />
+                <Icon />
               </a>
               {services.map((p) => (
                 <a
@@ -163,6 +159,7 @@ const canonical = absolute(
                     {serviceTitle(p, page.lang)}
                     <LangTag current={page.lang} target={p.lang} />
                   </span>
+                  <Icon />
                 </a>
               ))}
             </div>
@@ -175,6 +172,7 @@ const canonical = absolute(
               {t.aviation}
               <LangTag current={page.lang} target={aviation.lang} />
             </span>
+            <span class="mobile-nav-arrow"><Icon /></span>
           </a>
           <a
             href={url(references.path + "/")}
@@ -184,6 +182,7 @@ const canonical = absolute(
               {t.references}
               <LangTag current={page.lang} target={references.lang} />
             </span>
+            <span class="mobile-nav-arrow"><Icon /></span>
           </a>
           <a
             class:list={[
@@ -208,10 +207,13 @@ const canonical = absolute(
     <footer class="site-footer on-dark">
       {page.kind !== "contact" && (
         <div class="wrap footer-top grid">
-          <h2>{t.cta}</h2>
+          <div class="footer-closing">
+            <h2>{t.ctaQuestion}</h2>
+            {page.closing && page.closing !== t.ctaQuestion && <p>{page.closing}</p>}
+          </div>
           <div class="footer-action">
             <a class="footer-email" href={`mailto:${divisionEmail}`}>
-              {divisionEmail}
+              <span class="nowrap">{divisionEmail}<Icon name="external" /></span>
             </a>
             <a
               class="button button-on-dark"
@@ -238,11 +240,6 @@ const canonical = absolute(
             <br />
             {page.lang === "sk" ? "Slovensko" : "Slovakia"}
           </p>
-          {page.kind === "contact" && (
-            <a href="mailto:jakub.kubis@testing-service.org">
-              jakub.kubis@testing-service.org
-            </a>
-          )}
         </div>
         <div>
           <h3 class="type-h4">{t.legal}</h3>
@@ -256,61 +253,18 @@ const canonical = absolute(
             <br />
             IČ DPH: SK2022243982
           </p>
-          <a href={url("ochrana-osobnych-udajov/")}>
-            {t.privacy}
-            <LangTag current={page.lang} target="sk" />
-          </a>
+          <FooterLink href={url("ochrana-osobnych-udajov/")} title={t.privacy} current={page.lang} target="sk" />
+          <FooterLink href={url("s/" + accreditation.file)} title={downloadTitle(accreditation, page.lang)} current={page.lang} target={accreditation.lang} download />
         </div>
-        <div class="footer-downloads">
-          <h3 class="type-h4">{t.downloads}</h3>
-          <ul>
-            {footerFiles
-              .filter((f) => f.division === "industry")
-              .map((f) => (
-                <li>
-                  <a href={url("s/" + f.file)} download>
-                    <span>
-                      {downloadTitle(f, page.lang)}
-                      <LangTag current={page.lang} target={f.lang} />
-                    </span>
-                    <Icon name="down" />
-                  </a>
-                </li>
-              ))}
-          </ul>
+        <div>
+          <h3 class="type-h4">{t.services}</h3>
+          <ul>{services.map((p) => <li><FooterLink href={url(p.path + "/")} title={serviceTitle(p, page.lang)} current={page.lang} target={p.lang} /></li>)}</ul>
         </div>
         <div>
           <h3 class="type-h4">{t.aviation}</h3>
           <p lang="en">Aviation Testing Center · Žilina (LZZI)</p>
-          <a href="mailto:info.aviation@testing-service.org">
-            info.aviation@testing-service.org
-          </a>
-          <ul>
-            {aviationPages.map((p) => (
-              <li>
-                <a href={url(p.path + "/")}>
-                  <span>
-                    <span lang={p.lang}>{p.title}</span>
-                    <LangTag current={page.lang} target={p.lang} />
-                  </span>
-                  <Icon />
-                </a>
-              </li>
-            ))}
-            {footerFiles
-              .filter((f) => f.division === "aviation")
-              .map((f) => (
-                <li>
-                  <a href={url("s/" + f.file)} download>
-                    <span>
-                      {downloadTitle(f, page.lang)}
-                      <LangTag current={page.lang} target={f.lang} />
-                    </span>
-                    <Icon name="down" />
-                  </a>
-                </li>
-              ))}
-          </ul>
+          {page.kind !== "aviation" && <FooterLink href="mailto:info.aviation@testing-service.org" title="info.aviation@testing-service.org" current={page.lang} />}
+          <ul>{aviationPages.map((p) => <li><FooterLink href={url(p.path + "/")} title={p.title} current={page.lang} target={p.lang} textLang={p.lang} /></li>)}</ul>
         </div>
       </div>
       <div class="wrap footer-bottom">
@@ -380,9 +334,18 @@ const canonical = absolute(
       const activeTab = document.querySelector<HTMLElement>(
         '.section-nav [aria-current="page"]',
       );
-      if (activeTab)
-        activeTab.parentElement!.scrollLeft =
-          activeTab.offsetLeft - activeTab.parentElement!.offsetLeft;
+      const tabs = activeTab?.parentElement;
+      if (activeTab && tabs) {
+        const updateFade = () => tabs.classList.toggle("has-overflow", tabs.scrollWidth > tabs.clientWidth + tabs.scrollLeft + 1);
+        const alignTab = () => {
+          if (matchMedia("(width < 640px)").matches)
+            activeTab.scrollIntoView({ inline: "start", block: "nearest", behavior: "instant" });
+          updateFade();
+        };
+        document.fonts.ready.then(alignTab);
+        tabs.addEventListener("scroll", updateFade, { passive: true });
+        window.addEventListener("resize", alignTab);
+      }
     </script>
     <script>
       const contentsLinks = [

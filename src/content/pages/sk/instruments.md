@@ -9,13 +9,11 @@ source: "_source/pages/aviation-testing-service.md"
 image: "TESTING_CENTER-32%5B209%5D.jpg"
 ---
 
-skúšky avionických systémov sú povinné
+Skúšky avionických systémov sú povinné.
 
 Vyplnený formulár odošlite na info.aviation@testing-service.org
 
 ## Aviation Testing Center
-
-Prileťte na „STK“ avioniky Vášho lietadla na letisko do Žiliny (LZZI)
 
 ### Pre pilotov: organizácia pri prílete
 

@@ -25,8 +25,8 @@ It is an important condition for Airworthiness Review Certificates – ARC
 
 - EASA: Regulation (EC) No 2018/1139 a No 1321/2014 [easa.europa.eu](http://www.easa.europa.eu/)
 - Links to regulations:
-  – No 2018/1139
-  – No 1321/2014
+  - No 2018/1139
+  - No 1321/2014
 
 ## Our offer
 

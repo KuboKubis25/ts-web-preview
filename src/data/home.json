@@ -3,7 +3,7 @@
     "intro": "Testing Service je úzko špecializovaná inšpekčná a poradenská spoločnosť s dlhotrvajúcou tradíciou s viac než 20 ročnými skúsenosťami.\n\nMáme reálnu prax zo všetkých odvetví priemyslu vrátane najnovších projektov. Naše ponúkané prémiové služby poskytujú dodávateľom, výrobcom a prevádzkovateľom zabezpečenie povinných legislatívnych požiadaviek z hľadiska bezpečnosti pre ich technológie a zariadenia.",
     "services": [
       {
-        "description": "Dohliadanie na potrebné povolenia a schválenia pre vaše technológie."
+        "description": "Dohliadanie na povolenia a schválenia."
       },
       {
         "description": "Poradenské služby – technické štandardy a legislatíva."
@@ -12,16 +12,16 @@
         "description": "Riziká, bezpečnosť, ATEX, prevencia pracovných úrazov."
       },
       {
-        "description": "Inšpekcie, testovanie, certifikácie a odborné kvalifikácie."
+        "description": "Inšpekcie, testovanie, certifikácie."
       }
     ],
     "capabilities": [
-      "vypracovanie konštrukčnej dokumentácie a schválenie",
-      "inšpekcie – revízie – certifikácie – povolenia",
-      "kompletné povinné výchovno – vzdelávacie aktivity pre zamestnancov",
-      "osvedčenia – preukazy – doklady",
-      "bezpečnostné systémy na kľúč",
-      "laserová bezpečnosť – kompletné riešenia vrátane LSO certifikácie",
+      "Vypracovanie konštrukčnej dokumentácie a schválenie",
+      "Inšpekcie – revízie – certifikácie – povolenia",
+      "Kompletné povinné výchovno – vzdelávacie aktivity pre zamestnancov",
+      "Osvedčenia – preukazy – doklady",
+      "Bezpečnostné systémy na kľúč",
+      "Laserová bezpečnosť – kompletné riešenia vrátane LSO certifikácie",
       "BOZP na kľúč",
       "Kontrola a skúšanie avionických systémov",
       "Kontroly a servis leteckých magnet Slick (4600/6300) a Bendix King (S20/S200)"
@@ -31,13 +31,13 @@
     "intro": "Testing Service is a boutique legal and engineering consulting company with long standing tradition.\n\nWith more than 20 years of experience, our premium service is providing operators, manufacturers and suppliers with the fulfilment of Czech and Slovak local legal needs of their technology.",
     "services": [
       {
-        "description": "Keeping track of necessary permits and approvals needed for your technology to operate."
+        "description": "Keeping track of permits and approvals for your technology."
       },
       {
         "description": "Be on top of the local technical legislation and engineering standards."
       },
       {
-        "description": "Uncompromising, unbiased and independent third-party assessment of your safety conditions."
+        "description": "Independent third-party assessment of your safety conditions."
       },
       {
         "description": "Inspections, testing, certifications and professional qualifications."
@@ -46,9 +46,9 @@
     "capabilities": [
       "Obtaining an operating permit and continued mandatory servicing",
       "Preparation of design documentation and approval",
-      "Inspection – Certification – Permit",
+      "Inspection – certification – permit",
       "Complete compulsory educational activities for employees",
-      "Certificates – Licenses – Documents",
+      "Certificates – licenses – documents",
       "Individual solutions for safety systems",
       "Laser safety – complete solutions including LSO certification",
       "Bespoke outsourcing for OHS",

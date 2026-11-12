@@ -73,7 +73,7 @@ const shots = {
   "kontaktujte-nas/": "sk-contact",
   "en/references/": "en-references",
 };
-const shotDir = "docs/review/shots-v2";
+const shotDir = "docs/review/shots-v3";
 if (capture) await mkdir(shotDir, { recursive: true });
 async function ready() {
   await page.evaluate(async () => {
@@ -125,6 +125,300 @@ async function checkImagePixels(label, targetPage = page) {
   });
   if (bad.length) failures.push({ imageResolution: label, bad });
 }
+// Runs inside the page so assertions use rendered geometry, including font metrics.
+function layoutContract() {
+  const issues = [];
+  const visible = (el) =>
+    el.checkVisibility() && el.getBoundingClientRect().height > 0;
+  const box = (el) => el.getBoundingClientRect();
+  const label = (el) =>
+    `${el.tagName}.${el.className}: ${el.textContent.trim().slice(0, 65)}`;
+  const check = (ok, rule, detail) => {
+    if (!ok) issues.push({ rule, detail });
+  };
+  if (innerWidth === 1440) {
+    for (const h2 of document.querySelectorAll("section h2, .footer-top h2")) {
+      // Article blocks, prose and the contact form use the named margin/content split.
+      if (!visible(h2) || h2.closest(".article-layout, .contact-layout"))
+        continue;
+      const expected = h2.closest(".aviation-feature") ? 843.33 : 64;
+      check(Math.abs(box(h2).x - expected) <= 1, "section-heading-edge", {
+        heading: label(h2),
+        x: box(h2).x,
+        expected,
+      });
+    }
+  }
+  check(
+    !document.querySelector('a[href*="TS-AObjednavkaFinal_2019"]'),
+    "retired-order-form",
+    location.pathname,
+  );
+  const heroPhoto = document.querySelector(".hero-visual");
+  if (heroPhoto && innerWidth < 1080) {
+    check(
+      Math.abs(box(heroPhoto).width - innerWidth) <= 1 &&
+        box(heroPhoto).height <= innerHeight / 2 + 1,
+      "stacked-hero-photo",
+      { width: box(heroPhoto).width, height: box(heroPhoto).height },
+    );
+  }
+  const question = document.querySelector(".footer-top h2");
+  if (question)
+    check(
+      question.textContent.trim() ===
+        { sk: "Máte otázku?", en: "Have a question?", zh: "有疑问？" }[
+          document.documentElement.lang
+        ],
+      "localized-footer-question",
+      question.textContent,
+    );
+  const rules = [];
+  for (const el of document.querySelectorAll(
+    "main *, .footer-top, .footer-bottom",
+  )) {
+    if (
+      !visible(el) ||
+      el.matches("a, button, input, textarea, .lang-tag") ||
+      el.closest(".section-nav, .contents")
+    )
+      continue;
+    const style = getComputedStyle(el),
+      r = box(el);
+    for (const edge of ["Top", "Bottom"]) {
+      if (
+        parseFloat(style[`border${edge}Width`]) === 1 &&
+        style[`border${edge}Style`] !== "none" &&
+        style[`border${edge}Color`] !== "rgba(0, 0, 0, 0)"
+      )
+        rules.push({
+          x: r.left,
+          right: r.right,
+          y: edge === "Top" ? r.top : r.bottom - 1,
+          label: label(el),
+        });
+    }
+  }
+  for (let i = 0; i < rules.length; i++)
+    for (let j = i + 1; j < rules.length; j++) {
+      const a = rules[i],
+        b = rules[j],
+        distance = Math.abs(a.y - b.y);
+      // Co-located borders paint one separator; different grid columns do not share a rule.
+      if (Math.abs(a.x - b.x) <= 1 && Math.min(a.right, b.right) - a.x > 80)
+        check(distance <= 1 || distance > 48.5, "adjacent-hairlines", {
+          a,
+          b,
+          distance,
+        });
+    }
+  if (innerWidth >= 640)
+    for (const list of document.querySelectorAll(".list")) {
+      const rows = [...list.querySelectorAll(":scope > li")].filter(visible);
+      const heights = rows.map((row) => box(row).height);
+      if (heights.length > 1)
+        check(
+          Math.max(...heights) - Math.min(...heights) <= 1,
+          "equal-list-rows",
+          { list: label(list), heights },
+        );
+    }
+  for (const hero of document.querySelectorAll(".page-hero")) {
+    const copy = hero.querySelector(":scope > div");
+    const children = [
+      copy?.lastElementChild,
+      hero.querySelector(":scope > img"),
+    ]
+      .filter(Boolean)
+      .filter(visible);
+    const bottom = Math.max(...children.map((el) => box(el).bottom));
+    const gap = box(hero).bottom - 1 - bottom;
+    check(Math.abs(gap - 64) <= 1, "hero-bottom", { gap });
+  }
+  for (const el of document.querySelectorAll(
+    ".list-title, .disclosure > summary",
+  )) {
+    if (!visible(el)) continue;
+    const style = getComputedStyle(el);
+    check(
+      Math.abs(parseFloat(style.fontSize) - 17) < 0.1 &&
+        style.fontWeight === "500" &&
+        Math.abs(parseFloat(style.lineHeight) - 23.8) < 0.1,
+      "list-type",
+      {
+        element: label(el),
+        size: style.fontSize,
+        weight: style.fontWeight,
+        leading: style.lineHeight,
+      },
+    );
+  }
+  const contact = document.querySelector(".contact-details");
+  if (contact && innerWidth >= 1080)
+    check(
+      Math.abs(
+        box(contact.querySelector("h2")).y -
+          box(document.querySelector(".enquiry-form h2")).y,
+      ) < 1,
+      "contact-baseline",
+      location.pathname,
+    );
+  const footer = document.querySelector(".site-footer");
+  if (!footer.querySelector(".footer-top"))
+    check(
+      Math.abs(box(footer.querySelector("h3")).y - box(footer).y - 64) < 1,
+      "contact-footer-gap",
+      location.pathname,
+    );
+  const cta = document
+    .querySelector(".header-cta > span")
+    ?.childNodes[0]?.textContent.trim();
+  if (cta) {
+    const matches = [...document.querySelectorAll("body *")].filter(
+      (el) =>
+        !el.closest("header") &&
+        el.textContent.trim() === cta &&
+        ![...el.children].some((child) => child.textContent.trim() === cta),
+    );
+    check(matches.length <= 1, "repeated-cta", matches.map(label));
+    check(
+      document.querySelector(".footer-top h2")?.textContent.trim() !== cta,
+      "footer-question",
+      cta,
+    );
+  }
+  const hrefs = [...document.querySelectorAll("footer a")].map((a) =>
+    a.getAttribute("href"),
+  );
+  check(
+    new Set(hrefs).size === hrefs.length,
+    "duplicate-footer-links",
+    hrefs.filter((href, i) => hrefs.indexOf(href) !== i),
+  );
+  for (const col of document.querySelectorAll(".footer-grid > div"))
+    check(
+      col.querySelectorAll("a").length <= 6,
+      "footer-column-budget",
+      label(col),
+    );
+  // Measure individual glyphs in text-node Ranges, including nested eyebrow spans.
+  // A dot is invalid only when it is the first non-space glyph on its visual line.
+  for (const eyebrow of document.querySelectorAll(".eyebrow")) {
+    if (!visible(eyebrow)) continue;
+    const walker = document.createTreeWalker(eyebrow, NodeFilter.SHOW_TEXT);
+    const lines = [];
+    while (walker.nextNode()) {
+      const node = walker.currentNode;
+      for (let i = 0; i < node.length; i++) {
+        const char = node.textContent[i];
+        if (/\s/.test(char)) continue;
+        const range = document.createRange();
+        range.setStart(node, i);
+        range.setEnd(node, i + 1);
+        const r = range.getClientRects()[0];
+        if (!r || !r.width) continue;
+        let line = lines.find((line) => Math.abs(line.top - r.top) < 2);
+        if (!line) {
+          line = { top: r.top, glyphs: [] };
+          lines.push(line);
+        }
+        line.glyphs.push({ char, x: r.x });
+      }
+    }
+    for (const line of lines)
+      check(
+        line.glyphs.sort((a, b) => a.x - b.x)[0]?.char !== "·",
+        "leading-separator",
+        label(eyebrow),
+      );
+  }
+  const root = getComputedStyle(document.documentElement);
+  const tokenLeading = [
+    "display",
+    "h1",
+    "h2",
+    "statement",
+    "prose-h2",
+    "h3",
+    "h4",
+    "lead",
+    "body",
+    "list",
+    "small",
+    "ui",
+    "label",
+    "wordmark",
+    "wordmark-stacked",
+    "cjk",
+  ].map((name) => parseFloat(root.getPropertyValue(`--leading-${name}`)));
+  for (const el of document.querySelectorAll("body *")) {
+    if (
+      !visible(el) ||
+      ["SCRIPT", "STYLE"].includes(el.tagName) ||
+      ![...el.childNodes].some(
+        (node) => node.nodeType === Node.TEXT_NODE && node.textContent.trim(),
+      )
+    )
+      continue;
+    const style = getComputedStyle(el),
+      ratio = parseFloat(style.lineHeight) / parseFloat(style.fontSize);
+    check(
+      tokenLeading.some((allowed) => Math.abs(allowed - ratio) < 0.005),
+      "token-line-height",
+      { element: label(el), ratio },
+    );
+  }
+  if (innerWidth < 1080)
+    for (const el of document.querySelectorAll(
+      "a, button, summary, input, textarea",
+    )) {
+      // Inline links within running prose (including form help) retain their text line box.
+      if (
+        !visible(el) ||
+        el.closest(".prose, p") ||
+        el.matches(".skip-link") ||
+        getComputedStyle(el).position === "absolute"
+      )
+        continue;
+      check(box(el).height >= 43.5, "touch-height", {
+        element: label(el),
+        height: box(el).height,
+      });
+    }
+  if (
+    document.body.classList.contains("aviation") &&
+    /\/(?:letectvo|aviation)\/$/.test(location.pathname)
+  )
+    check(
+      !!document.querySelector(".prose li > ul > li"),
+      "nested-regulations",
+      location.pathname,
+    );
+  const cards = [...document.querySelectorAll(".service-card")];
+  if (cards.length) {
+    check(
+      cards.every((card) => !card.querySelector("img")),
+      "photo-free-cards",
+      cards.length,
+    );
+    if (innerWidth === 640)
+      check(
+        Math.abs(box(cards[0]).y - box(cards[1]).y) < 1,
+        "two-card-columns",
+        cards.map((card) => box(card).y),
+      );
+    // DESIGN requires complete first sentences and unchanged source headings on ZH;
+    // those take precedence over the review's 900px card-stack target.
+    if (innerWidth === 390 && document.documentElement.lang !== "zh")
+      check(
+        cards.reduce((sum, card) => sum + box(card).height, 0) <= 900,
+        "mobile-card-height",
+        cards.map((card) => box(card).height),
+      );
+  }
+  return issues;
+}
+
 try {
   for (const width of [390, 640, 1024, 1440, 1080]) {
     await page.setViewportSize({ width, height: width === 390 ? 844 : 1000 });
@@ -142,7 +436,7 @@ try {
         const floor = Math.min(280, innerWidth - 2 * gutter);
         const narrow = [];
         for (const element of document.querySelectorAll(
-          "main p, main h1, main h2, main h3, main h4, main li, main label, main .list > a",
+          "main p, main h1, main h2, main h3, main h4, main li, main label, main .list > li > a",
         )) {
           if (!visible(element)) continue;
           // Inline breadcrumb items are intentional; they are not reading columns.
@@ -151,8 +445,7 @@ try {
           // Explicit bounded layouts: cards, padded forms, two-column capabilities and nested prose lists.
           // Check these against their real column's expected width, rather than treating a short label as a collapsed grid.
           const card = element.closest(".card-content");
-          if (card)
-            minimum = Math.min(minimum, rect(card.parentElement).width - 48);
+          if (card) minimum = Math.min(minimum, rect(card).width);
           const form = element.closest(".enquiry-form");
           if (form) {
             const style = getComputedStyle(form);
@@ -215,11 +508,17 @@ try {
             if (!visible(element)) continue;
             const parent = rect(element.parentElement),
               child = rect(element);
-            if (Math.abs(parent.width - child.width) > 1)
+            // Reading text keeps its DESIGN measure even when its grid has collapsed.
+            const maxWidth = parseFloat(getComputedStyle(element).maxWidth);
+            const expected =
+              element.matches(".intro-section > p") && Number.isFinite(maxWidth)
+                ? Math.min(parent.width, maxWidth)
+                : parent.width;
+            if (Math.abs(expected - child.width) > 1)
               columns.push({
                 element: text(element),
                 width: child.width,
-                expected: parent.width,
+                expected,
               });
           }
         const contact = document.querySelector(".contact-form-col");
@@ -248,7 +547,9 @@ try {
           images,
         };
       });
-      metrics.push({ route, width, ...result });
+      const contract = await page.evaluate(layoutContract);
+      if (contract.length) failures.push({ route, width, contract });
+      metrics.push({ route, width, ...result, contract });
       if (
         result.overflow ||
         result.narrow.length ||
@@ -281,7 +582,9 @@ try {
         (width === 1440 ||
           width === 390 ||
           ([640, 1024, 1080].includes(width) &&
-            ["sk-home", "sk-contact", "sk-aviation-testing"].includes(name)))
+            ["sk-home", "sk-contact", "sk-aviation-testing"].includes(name)) ||
+          (width === 640 && name === "sk-service") ||
+          (width === 1024 && name === "zh-home"))
       ) {
         await page.screenshot({
           path: `${shotDir}/${name}-${width === 1440 ? "desktop" : width === 390 ? "mobile" : width}.jpg`,
@@ -302,6 +605,23 @@ try {
       "",
     );
     await checkImagePixels(`Expanded gallery at ${width}px`);
+    const galleryContract = await page.evaluate(layoutContract);
+    if (galleryContract.length)
+      failures.push({ expandedGallery: width, contract: galleryContract });
+    assert.equal(
+      await page
+        .locator(".gallery-grid img")
+        .evaluateAll((images) =>
+          images.every(
+            (image) =>
+              Math.min(
+                +image.dataset.sourceWidth,
+                +image.dataset.sourceHeight * 1.5,
+              ) >= 620,
+          ),
+        ),
+      true,
+    );
     assert.equal(
       await page.evaluate(
         () => document.documentElement.scrollWidth === innerWidth,
@@ -334,6 +654,16 @@ try {
       type: "jpeg",
       quality: 85,
     });
+  assert.equal(await page.locator(".dropdown-intro").isVisible(), false);
+  assert.equal(
+    await page
+      .locator(".dropdown a")
+      .last()
+      .evaluate((el) => getComputedStyle(el).borderBottomWidth),
+    "1px",
+  );
+  const menuContract = await page.evaluate(layoutContract);
+  if (menuContract.length) failures.push({ menu: 390, contract: menuContract });
   await page.keyboard.press("Escape");
   assert.equal(
     await page.locator(".menu-toggle").getAttribute("aria-expanded"),
@@ -353,6 +683,16 @@ try {
   await ready();
   assert.equal(await page.locator(".services-menu").getAttribute("open"), null);
   await page.locator(".services-menu summary").click();
+  assert.ok(
+    await page.evaluate(
+      () =>
+        Math.abs(
+          document.querySelector(".dropdown").getBoundingClientRect().top -
+            document.querySelector(".site-header").getBoundingClientRect()
+              .bottom,
+        ) <= 1,
+    ),
+  );
   if (capture)
     await page.screenshot({
       path: `${shotDir}/sk-dropdown-open-1440.jpg`,
@@ -363,6 +703,36 @@ try {
   assert.equal(await page.locator(".services-menu").getAttribute("open"), null);
   behaviors.push("Desktop dropdown: closed on arrival, opens, Escape closes");
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(origin + "letectvo/skusky-avioniky/");
+  await ready();
+  const tabState = await page.locator(".section-nav").evaluate((el) => {
+    const active = el.querySelector('[aria-current="page"]');
+    return {
+      x: active.getBoundingClientRect().left,
+      fade: el.classList.contains("has-overflow"),
+      scroll: el.scrollLeft,
+    };
+  });
+  assert.ok(Math.abs(tabState.x - 20) <= 1);
+  assert.ok(tabState.fade && tabState.scroll > 0);
+  if (capture)
+    await page.screenshot({
+      path: `${shotDir}/sk-aviation-mobile-tabs.jpg`,
+      type: "jpeg",
+      quality: 85,
+    });
+  await page.locator(".section-nav").evaluate((el) => {
+    el.scrollLeft = el.scrollWidth;
+  });
+  await page.waitForFunction(
+    () =>
+      !document
+        .querySelector(".section-nav")
+        .classList.contains("has-overflow"),
+  );
+  behaviors.push(
+    "Mobile aviation tabs: current tab at gutter, overflow fade clears at end",
+  );
   await page.goto(origin + "kontaktujte-nas/");
   await page.locator(".enquiry-form button").click();
   assert.equal(await page.locator("#name-error").isVisible(), true);
@@ -372,6 +742,32 @@ try {
   await page.locator(".enquiry-form button").click();
   assert.equal(await page.locator("#email-error").isVisible(), true);
   behaviors.push("Contact form: required-field and email errors");
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto(origin);
+  await ready();
+  await page.evaluate(() => {
+    const heading = document.querySelector(".services-section h2");
+    heading.style.transform = "translateX(20px)";
+    const footerLink = document.querySelector(".footer-grid a");
+    footerLink.after(footerLink.cloneNode(true));
+    const list = document.querySelector(".capabilities");
+    list.style.gridAutoRows = "auto";
+    list.children[0].style.minHeight = "200px";
+    document.querySelector(".intro-section p").style.lineHeight = "1.77";
+  });
+  const detected = new Set(
+    (await page.evaluate(layoutContract)).map((issue) => issue.rule),
+  );
+  for (const rule of [
+    "section-heading-edge",
+    "duplicate-footer-links",
+    "equal-list-rows",
+    "token-line-height",
+  ])
+    assert.ok(detected.has(rule), `QA must catch injected ${rule}`);
+  behaviors.push(
+    "QA regression probes: displaced heading, duplicate footer link, uneven rows and off-token leading rejected",
+  );
   const retina = await browser.newContext({
     deviceScaleFactor: 2,
     reducedMotion: "reduce",
@@ -428,7 +824,7 @@ const report = {
   metrics,
 };
 await writeFile(
-  capture ? "docs/review/qa-v2.json" : "dist/qa-layout.json",
+  capture ? "docs/review/qa-v3.json" : "dist/qa-layout.json",
   JSON.stringify(report, null, 2) + "\n",
 );
 console.log(

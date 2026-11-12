@@ -9,7 +9,7 @@ source: "_source/pages/aviation.md"
 image: "20190628_141438.jpg"
 ---
 
-TESTING SERVICE s.r.o. divízia AVIATION
+Testing Service s.r.o., divízia Aviation
 
 Pre bezpečné vykonanie letu je nevyhnutný správne pracujúci avionický systém
 
@@ -28,8 +28,8 @@ Ide samozrejme o dôležitú podmienku pre zachovanie letovej spôsobilosti
 - Potrebné pre splnenie predpisov a Nariadení Európskej komisie platných pre všetky členské štáty EU
 - EASA: Regulation (EC) No 2018/1139 a No 1321/2014 [easa.europa.eu](http://www.easa.europa.eu/)
 - Odkazy na predpisy:
-  – No 2018/1139
-  – No 1321/2014
+  - No 2018/1139
+  - No 1321/2014
 - Dodatočné požiadavky na vykonávanie údržby podľa No 216/2008 spracované aj s požadovanými postupmi meraní podľa ucl.cz
 
 ## Naše služby

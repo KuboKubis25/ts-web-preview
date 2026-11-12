@@ -1,6 +1,5 @@
 ---
 import Icon from "./Icon.astro";
-import LangTag from "./LangTag.astro";
 import type { Lang } from "../data/ui";
 export interface Row {
   title: string;
@@ -9,30 +8,18 @@ export interface Row {
   download?: boolean;
   lang?: Lang | "both";
 }
-interface Props {
-  rows: Row[];
-  lang: Lang;
-}
+interface Props { rows: Row[]; lang: Lang }
 const { rows, lang } = Astro.props;
 ---
-
-<div class="list">
-  {rows.map((row) => (
-    <a href={row.href} download={row.download || undefined}>
-      <span>
-        {row.title}
-        {row.lang && <LangTag current={lang} target={row.lang} />}
-        {row.meta && <small>{row.meta}</small>}
-      </span>
-      <Icon
-        name={
-          row.download
-            ? "down"
-            : /^(https?:|mailto:)/.test(row.href)
-              ? "external"
-              : "right"
-        }
-      />
-    </a>
-  ))}
-</div>
+<ul class="list link-list">
+  {rows.map((row) => {
+    const language = row.lang && row.lang !== "both" && row.lang !== lang
+      ? row.lang === "zh" ? "中文" : row.lang.toUpperCase() : undefined;
+    const meta = [row.meta, language].filter(Boolean).join(" · ");
+    return <li><a href={row.href} download={row.download || undefined}>
+      <span class="list-title">{row.title}</span>
+      {meta && <small>{meta}</small>}
+      <Icon name={row.download ? "down" : /^(https?:|mailto:)/.test(row.href) ? "external" : "right"} />
+    </a></li>;
+  })}
+</ul>
