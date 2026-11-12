@@ -2,3 +2,10 @@ _source/html/
 node_modules/
 dist/
 .astro/
+.env
+.env.*
+!.env.example
+public/s/
+public/favicon.ico
+public/.nojekyll
+public/_redirects

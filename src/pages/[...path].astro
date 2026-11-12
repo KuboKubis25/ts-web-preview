@@ -1,0 +1,490 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import partners from "../../_source/img/Na%C5%A1i_Partneri.jpg";
+import Photo from "../components/Photo.astro";
+import Logos from "../components/Logos.astro";
+import ContactForm from "../components/ContactForm.astro";
+import { ui } from "../data/ui";
+import { downloads } from "../data/downloads";
+import homeCopy from "../data/home.json";
+import gallery from "../data/gallery.json";
+import redirects from "../data/redirects.json";
+import { url, absolute } from "../lib/urls";
+export async function getStaticPaths() {
+  const pages = await getCollection("pages");
+  return [
+    ...pages.map((page) => ({
+      params: { path: page.data.path || undefined },
+      props: { page },
+    })),
+    ...Object.entries(redirects).map(([path, target]) => ({
+      params: { path },
+      props: { target },
+    })),
+  ];
+}
+interface Props {
+  page?: CollectionEntry<"pages">;
+  target?: string;
+}
+const { page, target } = Astro.props;
+const all = await getCollection("pages");
+const d = page?.data;
+const lang = d?.lang || "sk";
+const t = ui[lang];
+const find = (key: string) =>
+  all.find((p) => p.data.key === key && p.data.lang === lang) ||
+  all.find((p) => p.data.key === key && p.data.lang === "en");
+const contact = find("contact")!;
+const services = ["permits", "consulting", "risk", "inspections"].map((key) =>
+  find(key)!,
+);
+const aviation = ["aviation", "instruments", "maintenance"].map((key) =>
+  find(key)!,
+);
+const content = page ? await render(page) : undefined;
+const Content = content?.Content;
+const headings = content?.headings.filter((h) => h.depth === 2) || [];
+const relevantDownloads = downloads.filter(
+  (f) => f.page === d?.key && (f.lang === lang || f.lang === "both"),
+);
+const copy = homeCopy[lang];
+const homeTitle = {
+  sk: "Istota pre vaše technológie.",
+  en: "Confidence in your technology.",
+  zh: "管理您技术在捷克和斯洛伐克的法律合规要求",
+}[lang];
+---
+
+{target !== undefined ? (
+  <html lang="en">
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Testing Service — Page moved</title>
+      <meta name="robots" content="noindex" />
+      <meta http-equiv="refresh" content={`0;url=${url(target)}`} />
+      <link rel="canonical" href={absolute(target, Astro.site)} />
+    </head>
+    <body>
+      <p>
+        This page has moved.{" "}
+        <a id="destination" href={url(target)}>
+          Continue to Testing Service
+        </a>
+        .
+      </p>
+      <script is:inline>
+        location.replace(
+          document.getElementById("destination").href +
+            location.search +
+            location.hash,
+        );
+      </script>
+    </body>
+  </html>
+) : (
+  d && (
+    <Layout page={d}>
+      {d.kind === "home" ? (
+        <>
+          <section class="home-hero">
+            <div class="hero-copy">
+              <span class="eyebrow">TESTING SERVICE / CZ + SK</span>
+              <h1>{homeTitle}</h1>
+              <p class="hero-description">
+                {lang === "zh" ? copy.intro.split("\n\n")[0] : d.description}
+              </p>
+              <a class="button" href="#services">
+                {t.offer}
+                <span aria-hidden="true">↓</span>
+              </a>
+              <div class="hero-foot">
+                INSPECTION<span>—</span>CERTIFICATION<span>—</span>PERMIT
+              </div>
+            </div>
+            <div class="hero-visual">
+              <Photo
+                name={d.image!}
+                alt={
+                  lang === "sk"
+                    ? "Priemyselná výrobná linka"
+                    : "Industrial production line"
+                }
+                eager
+              />
+              <div class="image-caption">
+                <span>TESTING SERVICE</span>
+                <span>CZ / SK</span>
+              </div>
+            </div>
+          </section>
+          <section class="clients wrap">
+            <div class="section-label">
+              <span class="eyebrow">{t.clients}</span>
+              <a href={url(find("references")!.data.path + "/")}>
+                {t.references}
+                {lang === "sk" && " (EN)"} ↗
+              </a>
+            </div>
+            <Logos />
+          </section>
+          <section class="intro-section wrap">
+            <span class="eyebrow">01 / TESTING SERVICE</span>
+            <div>
+              {copy.intro
+                .split("\n\n")
+                .map((p, i) =>
+                  i === 0 ? <h2>{p}</h2> : <p class="lead">{p}</p>,
+                )}
+            </div>
+          </section>
+          <section class="services-section" id="services">
+            <div class="wrap">
+              <div class="section-heading">
+                <div>
+                  <span class="eyebrow">02 / {t.detail}</span>
+                  <h2>
+                    {t.offer}
+                    <span class="gold">.</span>
+                  </h2>
+                </div>
+                <span class="technical-label">CZ · SK / EN · STN · ČSN</span>
+              </div>
+              <div class="service-grid">
+                {services.map((p, i) => (
+                  <article class="service-card">
+                    <a href={url(p.data.path + "/")}>
+                      <Photo
+                        name={p.data.image!}
+                        alt=""
+                        sizes="(min-width: 900px) 25vw, (min-width: 600px) 50vw, 100vw"
+                      />
+                      <div class="card-content">
+                        <span class="card-number">
+                          0{i + 1} <span aria-hidden="true">↗</span>
+                        </span>
+                        <h3>{copy.services[i]?.title || p.data.title}</h3>
+                        <p>{copy.services[i]?.text || p.data.description}</p>
+                        <span class="text-link">{t.more}</span>
+                      </div>
+                    </a>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+          <section class="wrap packages">
+            <div class="section-heading">
+              <div>
+                <span class="eyebrow">03 / TESTING SERVICE</span>
+                <h2>
+                  {t.packages}
+                  <span class="gold">.</span>
+                </h2>
+              </div>
+            </div>
+            <details class="package-details">
+              <summary>
+                {t.detail}
+                <span aria-hidden="true">+</span>
+              </summary>
+              <div class="prose">{Content && <Content />}</div>
+            </details>
+            {copy.capabilities.length > 0 && (
+              <ul class="capabilities">
+                {copy.capabilities.map((c) => (
+                  <li>{c}</li>
+                ))}
+              </ul>
+            )}
+          </section>
+          {lang !== "zh" && (
+            <section class="aviation-feature">
+              <div class="wrap aviation-feature-grid">
+                <Photo
+                  name="TESTING_CENTER-10%5B187%5D.jpg"
+                  alt="Aviation Testing Center, Žilina"
+                />
+                <div>
+                  <span class="eyebrow">04 / AVIATION</span>
+                  <h2>
+                    Testing Service
+                    <br />
+                    <em>Aviation.</em>
+                  </h2>
+                  <p>{aviation[0].data.description}</p>
+                  <a
+                    class="button light"
+                    href={url(aviation[0].data.path + "/")}
+                  >
+                    {t.more}
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                </div>
+              </div>
+            </section>
+          )}
+        </>
+      ) : (
+        <>
+          <div class="wrap breadcrumb">
+            <a href={url(lang === "sk" ? "" : lang + "/")}>{t.home}</a>
+            <span>/</span>
+            <span>{d.kind === "service" ? t.services : d.title}</span>
+          </div>
+          <section class:list={["page-hero wrap", d.image && "has-photo"]}>
+            <div>
+              <span class="eyebrow">
+                TESTING SERVICE
+                {d.kind === "aviation" ? " / AVIATION" : " / CZ + SK"}
+              </span>
+              <h1>
+                {d.title}
+                <span class="gold">.</span>
+              </h1>
+              <p class="lead">{d.description}</p>
+              {d.kind !== "contact" && d.kind !== "legal" && (
+                <a class="button" href={url(contact.data.path + "/#enquiry")}>
+                  {t.cta}
+                  <span aria-hidden="true">↗</span>
+                </a>
+              )}
+            </div>
+            {d.image && (
+              <Photo
+                name={d.image}
+                alt={d.kind === "aviation" ? "Testing Service Aviation" : ""}
+                eager
+                sizes="(min-width: 900px) 42vw, 100vw"
+              />
+            )}
+          </section>
+          {d.kind === "aviation" && (
+            <nav class="section-nav wrap" aria-label="Aviation">
+              {aviation.map((p) => (
+                <a
+                  href={url(p.data.path + "/")}
+                  aria-current={d.path === p.data.path ? "page" : undefined}
+                >
+                  {p.data.title}
+                </a>
+              ))}
+            </nav>
+          )}
+          {d.kind === "references" && (
+            <section class="wrap clients">
+              <Logos />
+            </section>
+          )}
+          {d.kind === "contact" ? (
+            <section class="wrap contact-layout">
+              <div class="contact-details">
+                <h2>Testing Service s.r.o.</h2>
+                <p class="address">
+                  Timravy 31
+                  <br />
+                  036 01 Martin
+                  <br />
+                  Slovakia
+                </p>
+                <a href="mailto:jakub.kubis@testing-service.org">
+                  jakub.kubis@testing-service.org ↗
+                </a>
+                <h3>Aviation</h3>
+                <a href="mailto:info.aviation@testing-service.org">
+                  info.aviation@testing-service.org ↗
+                </a>
+                <div class="future-office">
+                  <span class="eyebrow">{t.soon}</span>
+                  <h3>Praha / Prague</h3>
+                  <p>
+                    Forum Karlín, Pernerova 51
+                    <br />
+                    Prague, Czech Republic
+                  </p>
+                </div>
+              </div>
+              <div id="enquiry">
+                <ContactForm lang={lang} />
+              </div>
+            </section>
+          ) : (
+            <div class="wrap article-layout">
+              <aside>
+                {headings.length > 1 && (
+                  <nav class="contents" aria-label={t.detail}>
+                    <span class="eyebrow">{t.detail}</span>
+                    {headings.map((h) => (
+                      <a href={"#" + h.slug}>{h.text}</a>
+                    ))}
+                  </nav>
+                )}
+                <div class="side-note">
+                  TESTING SERVICE
+                  <br />
+                  <span>{d.kind === "aviation" ? "AVIATION" : "CZ + SK"}</span>
+                </div>
+              </aside>
+              <div>
+                <article class="prose">{Content && <Content />}</article>
+                {d.key === "aviation" && (
+                  <section class="partners">
+                    <h2>{lang === "sk" ? "Naši partneri" : "Our partners"}</h2>
+                    <Image
+                      src={partners}
+                      alt="Žilinská univerzita v Žiline"
+                      width={650}
+                      format="webp"
+                      loading="lazy"
+                    />
+                  </section>
+                )}
+                {d.kind === "references" && (
+                  <div class="download-list">
+                    {lang === "en" ? (
+                      <>
+                        <a href="https://drive.google.com/file/d/1TD1_VK_ORI7Ckqk6rvLvznGmCt8xz58z/view?usp=sharing">
+                          Our main list of references <span>↗</span>
+                        </a>
+                        <a href="https://drive.google.com/file/d/1wDjKAScMM4idIgvG_27cAyZavl46cln0/view?usp=sharing">
+                          Promotional presentation <span>↗</span>
+                        </a>
+                      </>
+                    ) : (
+                      <a href="https://drive.google.com/file/d/1fGjFYueDh0oi0DWyY603WWtxajNFD-Wq/view?usp=sharing">
+                        我们的宣传介绍 <span>↗</span>
+                      </a>
+                    )}
+                  </div>
+                )}
+                {relevantDownloads.length > 0 && (
+                  <section class="downloads" id="downloads">
+                    <h2>{t.downloads}</h2>
+                    <div class="download-list">
+                      {relevantDownloads.map((f) => (
+                        <a href={url("s/" + f.file)} download>
+                          <span>
+                            {f.title}
+                            <small>
+                              {f.file.split(".").pop()?.toUpperCase()}
+                            </small>
+                          </span>
+                          <span aria-hidden="true">↓</span>
+                        </a>
+                      ))}
+                    </div>
+                  </section>
+                )}
+                {d.key === "instruments" && (
+                  <p class="order-email">
+                    <a href="mailto:info.aviation@testing-service.org">
+                      info.aviation@testing-service.org ↗
+                    </a>
+                  </p>
+                )}
+                {d.key === "instruments" && lang === "sk" && (
+                  <div class="download-list">
+                    <a href={url("s/LZZI-Map.jpg")} download>
+                      Mapa · LZZI ↓
+                    </a>
+                    <a href="https://aim.lps.sk/eAIP/eAIP_SR/AIRAC193_EFF_24MAY2018/html/LZ-AD-2.LZZI-en-SK.html">
+                      Letisko AIP ↗
+                    </a>
+                  </div>
+                )}
+                {d.key === "aviation" && (
+                  <div class="download-list">
+                    <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32018R1139">
+                      EASA · No 2018/1139 ↗
+                    </a>
+                    <a href="https://eur-lex.europa.eu/legal-content/CS/TXT/?qid=1551125876356&uri=CELEX:32014R1321">
+                      EASA · No 1321/2014 ↗
+                    </a>
+                    {lang === "sk" && (
+                      <a href="http://www.caa.cz/file/6475/">
+                        No 216/2008 · ucl.cz ↗
+                      </a>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          {d.key === "aviation" && (
+            <section class="wrap gallery">
+              <div class="section-heading">
+                <h2>{t.gallery}</h2>
+                <span class="eyebrow">ŽILINA / LZZI</span>
+              </div>
+              <div class="gallery-grid">
+                {[
+                  "TESTING_CENTER-26%5B203%5D.jpg",
+                  "TESTING_CENTER-33%5B210%5D.jpg",
+                  "TESTING_CENTER-18%5B195%5D.jpg",
+                  "Nad_Stredn%C3%BDm_Slovenskom-23.jpg",
+                ].map((name, i) => (
+                  <Photo
+                    name={name}
+                    alt={
+                      [
+                        "Avionics testing equipment",
+                        "Aircraft at the testing center",
+                        "Instrument testing equipment",
+                        "Aerial view of Slovakia",
+                      ][i]
+                    }
+                    sizes="(min-width: 900px) 25vw, 50vw"
+                  />
+                ))}
+              </div>
+              <details class="package-details gallery-more">
+                <summary>
+                  {lang === "sk" ? "Fotogaléria" : "Photo gallery"}
+                  <span aria-hidden="true">+</span>
+                </summary>
+                <div class="gallery-grid">
+                  {gallery
+                    .filter(
+                      (p) =>
+                        ![
+                          "TESTING_CENTER-26%5B203%5D.jpg",
+                          "TESTING_CENTER-33%5B210%5D.jpg",
+                          "TESTING_CENTER-18%5B195%5D.jpg",
+                          "Nad_Stredn%C3%BDm_Slovenskom-23.jpg",
+                        ].includes(p.image),
+                    )
+                    .map((p) => (
+                      <Photo
+                        name={p.image}
+                        alt={p.alt[lang === "sk" ? "sk" : "en"]}
+                        widths={[400, 760]}
+                        sizes="(min-width: 900px) 25vw, 50vw"
+                      />
+                    ))}
+                </div>
+              </details>
+            </section>
+          )}
+          {d.kind === "service" && (
+            <section class="wrap related">
+              <span class="eyebrow">{t.related}</span>
+              <div>
+                {services
+                  .filter((p) => p.data.key !== d.key)
+                  .map((p) => (
+                    <a href={url(p.data.path + "/")}>
+                      <h3>{p.data.title}</h3>
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  ))}
+              </div>
+            </section>
+          )}
+        </>
+      )}
+    </Layout>
+  )
+)}

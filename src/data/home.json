@@ -1,0 +1,90 @@
+{
+  "sk": {
+    "intro": "Testing Service je úzko špecializovaná inšpekčná a poradenská spoločnosť s dlhotrvajúcou tradíciou s viac než 20 ročnými skúsenosťami.\n\nMáme reálnu prax zo všetkých odvetví priemyslu vrátane najnovších projektov. Naše ponúkané prémiové služby poskytujú dodávateľom, výrobcom a prevádzkovateľom zabezpečenie povinných legislatívnych požiadaviek z hľadiska bezpečnosti pre ich technológie a zariadenia .",
+    "services": [
+      {
+        "title": "Zabezpečenie povolení a schválení",
+        "text": "Podľa českej a slovenskej legislatívy, isté špecifické typy technológií potrebujú povolenie alebo schválenie ešte pred tým, než sa začnú inštalovať (na základe konštrukčnej dokumentácie) pričom všetky technológie po nainštalovaní potrebujú vykonať revízie alebo úradné skúšky najneskôr pred začatím produkcie. TESTING SERVICE ponúka kompletné zabezpečenie všetkých legislatívnych požiadaviek týkajúcich sa inštalácie, uvedenia do prevádzky a prevádzkovania vašich zariadení a technológie."
+      },
+      {
+        "title": "Poradenské služby - technické štandardy a legislatíva",
+        "text": "Legislatíva v Česku a na Slovensku špecificky ukladá niekoľko ďalších požiadaviek na výrobu, uvedenie do prevádzky, prevádzku, obsluhu, opravu a kontrolu technických zariadení. Navyše ešte existuje mnoho odlišností medzi európskymi , slovenskými a českými technickými normami, existujú aj špecifické požiadavky českej a slovenskej legislatívy, ktoré sú úplne odlišné od smerníc Európskej únie. Všetky tieto požiadavky musia byť jasne identifikované a zariadenia uvedené do prevádzky ich musia spĺňať."
+      },
+      {
+        "title": "Analýza Rizík, ATEX, PAWA",
+        "text": "Každý prevádzkovateľ technológie a zariadení je zodpovedný za zabezpečenie všeobecnej a operatívnej bezpečnosti na pracovisku. Ponúkame kompletné posúdenie zariadení, technológie a pracoviska za účelom minimalizovania rizík a tým pádom aj právnu ochranu zamestnávateľa a zväčšenú bezpečnosť zamestnancov."
+      },
+      {
+        "title": "Inšpekcie, revízie, certifikácie a profesionálne kvalifikácie",
+        "text": "Slovenská a česká legislatíva vyžaduje, aby technológie, zariadenia a stroje boli predmetom pravidelných špecializovaných inšpekcií a revízií. TESTING SERVICE má potrebné akreditácie k tomu, aby mohli byť tieto činnosti zabezpečené tak, aby splnili všetky povinné právne požiadavky."
+      }
+    ],
+    "capabilities": [
+      "vypracovanie konštrukčnej dokumentácie a schválenie",
+      "inšpekcie - revízie - certifikácie - povolenia",
+      "kompletné povinné výchovno - vzdelávacie aktivity pre zamestnancov",
+      "osvedčenia - preukazy - doklady",
+      "bezpečnostné systémy na kľúč",
+      "laserová bezpečnosť - kompletné riešenia vrátane LSO certifikácie",
+      "BOZP na kľúč",
+      "Avionics: IFR CHECK / VFR CHECK",
+      "Magnetos: Bendix King and Slick"
+    ]
+  },
+  "en": {
+    "intro": "Testing Service is a boutique legal and engineering consulting company with long standing tradition.\n\nWith more than 20 years of experience, our premium service is providing operators, manufacturers and suppliers with the fulfilment of Czech and Slovak local legal needs of their technology.",
+    "services": [
+      {
+        "title": "Permits & Approvals Assurance",
+        "text": "Certain types of technology need a legal permit or approval even before they are installed, while all of them require a permit before operation and production.\n\nTesting Service provides full administration of every legal requirement concerning installation and later production of your technology."
+      },
+      {
+        "title": "Consulting Services - technical legislation and engineering standards",
+        "text": "The legislation in Czechia or Slovakia specifically states further legal conditions for production, commissioning and operation and subsequent revisions of any technical devices. In addition, there are numerous discrepancies between the EU and local technical norms and decrees in Slovak Republic and Czech Republic."
+      },
+      {
+        "title": "Risk Assessment, ATEX, PAWA",
+        "text": "All employers and operators of technology and machinery are legally responsible for ensuring general workplace and operation safety.\n\nWe provide full assessment and analysis of machinery, technology and workplaces in order to minimise the risks and therefore ensuring the legal protection of the employer and health safety of the employees."
+      },
+      {
+        "title": "Inspections, testing, certifications and professional qualifications",
+        "text": "Slovak and Czech legislation requires the technology, machines and devices be subjected to both periodical and initial specialised inspections. We have required accreditations and to provide these inspections in order to meet the legal needs of the technology. In addition, we provide a complex testing (including environmental, safety and fire protection) to ensure that technology is fulfilling all legal requirements and is ready for commissioning."
+      }
+    ],
+    "capabilities": [
+      "Obtaining an operating permit and continued mandatory servicing",
+      "Preparation of design documentation and approval",
+      "Inspection – Certification – Permit",
+      "Complete compulsory educational activities for employees",
+      "Certificates – Licenses – Documents",
+      "Individual solutions for safety systems",
+      "Laser safety – complete solutions including LSO certification",
+      "Bespoke outsourcing for OHS",
+      "Control of aircraft instruments and aircraft magneto servicing",
+      "Avionics: IFR check / VFR check",
+      "Magnetos: Bendix King and Slick"
+    ]
+  },
+  "zh": {
+    "intro": "Testing Service 是一家具有悠久传统的精品法律与工程咨询公司\n\n凭借 20 多年经验，我们为运营商、制造商和供应商提供技术在捷克与斯洛伐克满足本地法规要求的一站式高端服务",
+    "services": [
+      {
+        "title": "许可与批准保障",
+        "text": "某些技术在安装前即需获得法律许可或批准，而所有技术在投产运行前都必须取得许可。\n\nTesting Service 全程管理您技术在安装及后续生产阶段的所有法律合规事项。"
+      },
+      {
+        "title": "咨询服务——技术法规与工程标准",
+        "text": "捷克或斯洛伐克的法律对任何技术设备的生产、调试、运行及后续检验提出了额外法律条件。此外，欧盟规范与斯洛伐克、捷克本地技术规范和法令之间存在诸多差异。"
+      },
+      {
+        "title": "风险评估、ATEX、防尘防爆（PAWA）",
+        "text": "所有雇主及技术、机械运营方依法负责确保工作场所与运营安全。\n\n我们对机器、技术和工作场所进行全面评估与分析，最大限度降低风险，从而保障雇主的法律权益和员工的健康安全。"
+      },
+      {
+        "title": "检验、测试、认证与专业资质",
+        "text": "斯洛伐克和捷克法律要求技术、机器和设备必须接受初次及定期专项检验。我们拥有相应资质，能够提供这些检验以满足技术的法律需求。此外，我们还提供综合测试（涵盖环境、安全与消防保护），确保技术符合所有法规要求并已准备好投运。"
+      }
+    ],
+    "capabilities": []
+  }
+}

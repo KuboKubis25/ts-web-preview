@@ -1,0 +1,293 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import logo from "../../_source/img/logo_zlate.png";
+import { languages, ui } from "../data/ui";
+import { url, absolute } from "../lib/urls";
+import { downloads } from "../data/downloads";
+import "@fontsource-variable/ibm-plex-sans/wght.css";
+import "../styles/global.css";
+interface Props {
+  page: CollectionEntry<"pages">["data"];
+}
+const { page } = Astro.props;
+const pages = await getCollection("pages");
+const t = ui[page.lang];
+const find = (key: string, lang = page.lang) =>
+  pages.find((p) => p.data.key === key && p.data.lang === lang)?.data;
+const home = find("home")!;
+const contact = find("contact") || find("contact", "en")!;
+const aviation = find("aviation") || find("aviation", "en")!;
+const references = find("references") || find("references", "en")!;
+const services = pages.filter(
+  (p) =>
+    p.data.kind === "service" &&
+    p.data.lang === (page.lang === "zh" ? "en" : page.lang),
+);
+const alternates = pages.filter((p) => p.data.key === page.key);
+const defaultPage =
+  find(page.key, "sk") ||
+  alternates.find((p) => p.data.lang === "en")?.data ||
+  home;
+const indexable =
+  import.meta.env.PUBLIC_INDEXABLE === "true" && page.key !== "not-found";
+const canonical = absolute(
+  page.path ? page.path + (page.path.endsWith(".html") ? "" : "/") : "",
+  Astro.site,
+);
+---
+
+<!doctype html>
+<html lang={page.lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{page.title === 'Testing Service' ? `${page.title} — ${page.description}` : `${page.title} | Testing Service`}</title>
+    <meta name="description" content={page.description} />
+    <meta name="robots" content={indexable ? "index, follow" : "noindex"} />
+    <link rel="canonical" href={canonical} />
+    {alternates.map((p) => (
+      <link
+        rel="alternate"
+        hreflang={p.data.lang}
+        href={absolute(p.data.path ? p.data.path + "/" : "", Astro.site)}
+      />
+    ))}
+    {page.key !== "not-found" && (
+      <link
+        rel="alternate"
+        hreflang="x-default"
+        href={absolute(
+          defaultPage.path ? defaultPage.path + "/" : "",
+          Astro.site,
+        )}
+      />
+    )}
+    <link rel="icon" href={url("favicon.ico")} sizes="any" />
+    <meta property="og:title" content={`${page.title} | Testing Service`} />
+    <meta property="og:description" content={page.description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta name="theme-color" content="#18292e" />
+  </head>
+  <body class:list={[page.kind === "aviation" && "aviation"]}>
+    <a href="#main" class="skip-link">
+      {t.skip}
+    </a>
+    <header class="site-header">
+      <div class="header-inner wrap">
+        <a class="brand" href={url(home.path ? home.path + "/" : "")}>
+          <Image
+            src={logo}
+            alt=""
+            width={68}
+            height={59}
+            fit="contain"
+            format="webp"
+            loading="eager"
+          />
+          <span>
+            TESTING SERVICE<small>INSPECTION · CERTIFICATION · PERMIT</small>
+          </span>
+        </a>
+        <nav class="language-switcher" aria-label={t.language}>
+          {languages.map((lang) => {
+            const target = find(page.key, lang) || find("home", lang)!;
+            return (
+              <a
+                href={url(target.path ? target.path + "/" : "")}
+                lang={lang}
+                aria-label={
+                  { sk: "SK — Slovenčina", en: "EN — English", zh: "中文" }[
+                    lang
+                  ]
+                }
+                aria-current={lang === page.lang ? "true" : undefined}
+              >
+                {lang === "zh" ? "中文" : lang.toUpperCase()}
+              </a>
+            );
+          })}
+        </nav>
+        <button
+          class="menu-toggle"
+          aria-expanded="false"
+          aria-controls="main-navigation"
+          data-open={t.menu}
+          data-close={t.close}
+        >
+          {t.menu}
+          <span aria-hidden="true">☰</span>
+        </button>
+        <nav id="main-navigation" class="main-navigation" aria-label={t.menu}>
+          <details class="services-menu">
+            <summary class:list={[page.kind === "service" && "current"]}>
+              {t.services}
+              <span aria-hidden="true">⌄</span>
+            </summary>
+            <div class="dropdown">
+              <a
+                class="dropdown-intro"
+                href={url(home.path ? `${home.path}/#services` : "#services")}
+              >
+                {t.all} <span aria-hidden="true">↗</span>
+              </a>
+              {services.map((p) => (
+                <a
+                  href={url(p.data.path + "/")}
+                  aria-current={page.path === p.data.path ? "page" : undefined}
+                >
+                  {p.data.title}
+                  {page.lang === "zh" && " (EN)"}
+                </a>
+              ))}
+            </div>
+          </details>
+          <a
+            href={url(aviation.path + "/")}
+            aria-current={page.kind === "aviation" ? "page" : undefined}
+          >
+            {t.aviation}
+          </a>
+          <a
+            href={url(references.path + "/")}
+            aria-current={page.kind === "references" ? "page" : undefined}
+          >
+            {t.references}
+            {page.lang === "sk" && <small> EN</small>}
+          </a>
+          <a
+            href={url(contact.path + "/")}
+            aria-current={page.kind === "contact" ? "page" : undefined}
+          >
+            {t.contact}
+          </a>
+          <a class="button header-cta" href={url(contact.path + "/#enquiry")}>
+            {t.cta}
+            <span aria-hidden="true">↗</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap footer-top">
+        <div>
+          <span class="eyebrow">TESTING SERVICE</span>
+          <h2>
+            {t.cta}
+            <span class="gold">.</span>
+          </h2>
+        </div>
+        <a class="footer-email" href="mailto:jakub.kubis@testing-service.org">
+          jakub.kubis@testing-service.org <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+      <div class="wrap footer-grid">
+        <div>
+          <h3>Testing Service s.r.o.</h3>
+          <p>
+            Timravy 31
+            <br />
+            036 01 Martin
+            <br />
+            Slovakia
+          </p>
+          <a href={url(contact.path + "/")}>{t.contact} ↗</a>
+          <p>
+            Aviation
+            <br />
+            <a href="mailto:info.aviation@testing-service.org">
+              info.aviation@testing-service.org
+            </a>
+          </p>
+        </div>
+        <div>
+          <h3>{t.legal}</h3>
+          <p>
+            Okresný súd Žilina
+            <br />
+            odd. Sro, vložka č. 118043/L
+          </p>
+          <p>
+            IČO: 36677213
+            <br />
+            IČ DPH: SK2022243982
+          </p>
+          <a href={url("ochrana-osobnych-udajov/")}>{t.privacy}</a>
+        </div>
+        <div class="footer-downloads">
+          <h3>{t.downloads}</h3>
+          <details>
+            <summary>{t.downloads} · PDF / XLSX</summary>
+            <ul>
+              {downloads.map((d) => (
+                <li>
+                  <a href={url("s/" + d.file)} download>
+                    {d.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
+          <p>
+            <a href={url(aviation.path + "/")}>Testing Service Aviation ↗</a>
+          </p>
+        </div>
+      </div>
+      <div class="wrap footer-bottom">
+        <span>Testing Service s.r.o.</span>
+        <span>INSPECTION · CERTIFICATION · PERMIT</span>
+      </div>
+    </footer>
+    <script>
+      const toggle = document.querySelector<HTMLButtonElement>(".menu-toggle");
+      const nav = document.querySelector<HTMLElement>("#main-navigation");
+      const dropdown =
+        document.querySelector<HTMLDetailsElement>(".services-menu");
+      document.documentElement.classList.add("js");
+      const close = () => {
+        toggle?.setAttribute("aria-expanded", "false");
+        nav?.classList.remove("is-open");
+        if (toggle) toggle.firstChild!.textContent = toggle.dataset.open!;
+        if (dropdown) dropdown.open = false;
+      };
+      toggle?.addEventListener("click", () => {
+        const open = toggle.getAttribute("aria-expanded") !== "true";
+        toggle.setAttribute("aria-expanded", String(open));
+        nav?.classList.toggle("is-open", open);
+        toggle.firstChild!.textContent = open
+          ? toggle.dataset.close!
+          : toggle.dataset.open!;
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          if (dropdown?.open) {
+            dropdown.open = false;
+            dropdown.querySelector("summary")?.focus();
+          } else if (toggle?.getAttribute("aria-expanded") === "true") {
+            close();
+            toggle.focus();
+          }
+        }
+      });
+      document.addEventListener("click", (event) => {
+        if (dropdown?.open && !dropdown.contains(event.target as Node))
+          dropdown.open = false;
+      });
+      nav?.addEventListener("focusout", () => {
+        setTimeout(() => {
+          if (!nav.contains(document.activeElement) && dropdown)
+            dropdown.open = false;
+        }, 0);
+      });
+      nav
+        ?.querySelectorAll("a")
+        .forEach((a) => a.addEventListener("click", close));
+      matchMedia("(min-width: 1050px)").addEventListener("change", close);
+    </script>
+  </body>
+</html>

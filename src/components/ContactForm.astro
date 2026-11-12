@@ -1,0 +1,86 @@
+---
+import { ui, type Lang } from "../data/ui";
+import { url } from "../lib/urls";
+const { lang } = Astro.props as { lang: Lang };
+const t = ui[lang];
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT?.trim();
+if (endpoint && !/^https:\/\//.test(endpoint))
+  throw new Error("PUBLIC_FORM_ENDPOINT must be an HTTPS URL.");
+---
+
+<form
+  action={endpoint || "mailto:jakub.kubis@testing-service.org"}
+  method="post"
+  enctype={endpoint ? "application/x-www-form-urlencoded" : "text/plain"}
+  data-mail-fallback={!endpoint || undefined}
+>
+  <h2>{t.enquiry}</h2>
+  <p class="muted">{t.required}</p>
+  <div class="form-row">
+    <label for="name">
+      {t.name} *
+      <input
+        id="name"
+        name="name"
+        autocomplete="name"
+        required
+        maxlength="200"
+      />
+    </label>
+    <label for="email">
+      {t.email} *
+      <input
+        id="email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        required
+        maxlength="254"
+      />
+    </label>
+  </div>
+  <label for="company">
+    {t.company}
+    <input
+      id="company"
+      name="company"
+      autocomplete="organization"
+      maxlength="200"
+    />
+  </label>
+  <label for="message">
+    {t.message} *
+    <textarea
+      id="message"
+      name="message"
+      rows="6"
+      required
+      maxlength="8000"
+    ></textarea>
+  </label>
+  <p class="small">
+    <a href={url("ochrana-osobnych-udajov/")}>{t.readPrivacy}</a>
+  </p>
+  {!endpoint && (
+    <p class="small" id="mail-hint">
+      {t.mailHint}
+    </p>
+  )}
+  <button
+    class="button"
+    type="submit"
+    aria-describedby={!endpoint ? "mail-hint" : undefined}
+  >
+    {endpoint ? t.send : t.mail} <span aria-hidden="true">↗</span>
+  </button>
+</form>
+<script>
+  document
+    .querySelector<HTMLFormElement>("form[data-mail-fallback]")
+    ?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget as HTMLFormElement);
+      const body = `${data.get("name")}\n${data.get("email")}\n${data.get("company")}\n\n${data.get("message")}`;
+      location.href = `mailto:jakub.kubis@testing-service.org?subject=${encodeURIComponent("Testing Service — " + data.get("name"))}&body=${encodeURIComponent(body)}`;
+    });
+</script>

@@ -1,0 +1,31 @@
+---
+import { Image } from "astro:assets";
+import durr from "../../_source/img/Durr-optimized-logo.png";
+import hyundai from "../../_source/img/Hyundai-250x250-bnw.png";
+import kia from "../../_source/img/KIA-optimized-logo.png";
+import rolls from "../../_source/img/Rolls-Royce-optimized.png";
+import vw from "../../_source/img/WW-optimized-logo.png";
+const logos = [
+  [durr, "Dürr"],
+  [hyundai, "Hyundai"],
+  [kia, "KIA"],
+  [rolls, "Rolls-Royce"],
+  [vw, "Volkswagen"],
+] as const;
+---
+
+<div class="logo-strip">
+  {logos.map(([src, alt]) => (
+    <div>
+      <Image
+        src={src}
+        alt={alt}
+        width={130}
+        height={90}
+        fit="contain"
+        format="webp"
+        loading="lazy"
+      />
+    </div>
+  ))}
+</div>

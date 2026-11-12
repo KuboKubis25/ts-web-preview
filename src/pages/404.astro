@@ -1,0 +1,32 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import { url } from "../lib/urls";
+const home = (await getCollection("pages")).find(
+  (p) => p.data.key === "home" && p.data.lang === "sk",
+)!;
+---
+
+<Layout
+  page={{
+    ...home.data,
+    title: "404 — Stránka sa nenašla",
+    description: "Page not found",
+    path: "404.html",
+    key: "not-found",
+  }}
+>
+  <section class="wrap page-hero">
+    <span class="eyebrow">404</span>
+    <h1>Stránka sa nenašla.</h1>
+    <p class="lead" lang="en">
+      This page could not be found.
+    </p>
+    <a class="button" href={url("")}>
+      Späť na úvod ↗
+    </a>{" "}
+    <a class="button" href={url("en/")}>
+      English ↗
+    </a>
+  </section>
+</Layout>
