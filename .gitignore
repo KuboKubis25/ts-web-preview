@@ -1,0 +1,4 @@
+_source/html/
+node_modules/
+dist/
+.astro/
