@@ -7,9 +7,8 @@ description: "Managing Czech and Slovak legal requirements of your technology."
 kind: "home"
 source: "_source/pages/testing-service-eng.md"
 image: "CarAssembly-min.jpg"
+packageLead: "In order to provide the best possible outcomes, we offer our services bundled in packages that aim to completely outsource any legal issues the operator might have with technology."
 ---
-
-## In order to provide the best possible outcomes, we offer our services bundled in packages that aim to completely outsource any legal issues the operator might have with technology.
 
 Employer/Operator Package Specialised Service designed specifically for Employers and Operators of Technology
 
@@ -33,7 +32,7 @@ This is our premium service for operators of technology. On a period basis, we e
 
 This service is offered for periods of the time and includes periodical deep safety/operational audit according to local legislation, thus making sure that not only are all of the periodic revisions in order, but also that the all of the operational manuals are correctly made and any hidden deficiencies are identified and fixed when discovered. It is unacceptable to find the same fault several times in a row in period revision reports.
 
-## Ensure the compatibility of your technology with local Czech and Slovak legislation through our Validation Red Star programme.
+Ensure the compatibility of your technology with local Czech and Slovak legislation through our Validation Red Star programme.
 
 Supplier Package
 
@@ -55,4 +54,4 @@ Operation package of services for suppliers focuses on ensuring that the technol
 
 This package allows you to ship the technology with all of the required local documentation ready at hand with Testing Service mark of Validation - Valid CZ, Valid SK.
 
-## The validation is awarded after only if no faults endangering the potential safety of operators are discovered. The validation of your technology then results in an increased confidence, trustworthiness and much longer-term relationship from your buyers.
+The validation is awarded after only if no faults endangering the potential safety of operators are discovered. The validation of your technology then results in an increased confidence, trustworthiness and much longer-term relationship from your buyers.

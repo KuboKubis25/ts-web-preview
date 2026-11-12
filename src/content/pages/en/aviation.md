@@ -9,9 +9,9 @@ source: "_source/pages/aviation-2.md"
 image: "TESTING_CENTER-10%5B187%5D.jpg"
 ---
 
-## TESTING SERVICE s.r.o. division AVIATION
+TESTING SERVICE s.r.o. division AVIATION
 
-## The periodic inspection of communication and navigation systems in aircraft is mandatory
+The periodic inspection of communication and navigation systems in aircraft is mandatory
 
 - for all category of aircrafts
 - IFR / VFR certified aircrafts
@@ -21,7 +21,7 @@ image: "TESTING_CENTER-10%5B187%5D.jpg"
 
 - also class G
 
-## It is an important condition for Airworthiness Review Certificates - ARC
+It is an important condition for Airworthiness Review Certificates - ARC
 
 - EASA: Regulation (EC) No 2018/1139 a No 1321/2014 http://www.easa.europa.eu/
 - Links to regulations:

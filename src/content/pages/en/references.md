@@ -6,7 +6,6 @@ title: "Our references"
 description: "Trusted by industry leaders."
 kind: "references"
 source: "_source/pages/references-en.md"
-image: "CarAssembly-min.jpg"
 ---
 
 ## Trusted by Industry Leaders

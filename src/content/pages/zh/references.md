@@ -6,7 +6,6 @@ title: "我们的行业案例"
 description: "深受行业领袖信赖"
 kind: "references"
 source: "_source/pages/references-zho.md"
-image: "CarAssembly-min.jpg"
 ---
 
 ## 深受行业领袖信赖

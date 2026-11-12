@@ -18,6 +18,8 @@ const pages = defineCollection({
       "legal",
     ]),
     image: z.string().optional(),
+    packageLead: z.string().optional(),
+    closing: z.string().optional(),
     source: z.string(),
   }),
 });

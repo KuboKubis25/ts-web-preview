@@ -9,11 +9,11 @@ source: "_source/pages/aviation.md"
 image: "TESTING_CENTER-10%5B187%5D.jpg"
 ---
 
-## TESTING SERVICE s.r.o. divízia AVIATION
+TESTING SERVICE s.r.o. divízia AVIATION
 
-## Pre bezpečné vykonanie letu je nevyhnutný správne pracujúci avionický systém
+Pre bezpečné vykonanie letu je nevyhnutný správne pracujúci avionický systém
 
-## Preto je periodické preskúšanie komunikačných a navigačných systémov v lietadlách povinné
+Preto je periodické preskúšanie komunikačných a navigačných systémov v lietadlách povinné
 
 - pre lietadlá všetkých kategórií
 - pre lietadlá s výbavou: VFR aj IFR
@@ -23,7 +23,7 @@ image: "TESTING_CENTER-10%5B187%5D.jpg"
 
 - áno, aj vrátane triedy G
 
-## Ide samozrejme o dôležitú podmienku pre zachovanie letovej spôsobilosti
+Ide samozrejme o dôležitú podmienku pre zachovanie letovej spôsobilosti
 
 - Potrebné pre splnenie predpisov a Nariadení Európskej komisie platných pre všetky členské štáty EU
 - EASA: Regulation (EC) No 2018/1139 a No 1321/2014 http://www.easa.europa.eu/

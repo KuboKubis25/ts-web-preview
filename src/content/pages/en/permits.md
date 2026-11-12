@@ -9,9 +9,9 @@ source: "_source/pages/permit-assurance.md"
 image: "shutterstock_448000054-min.jpg"
 ---
 
-## The legislation in Czech Republic and Slovak Republic states different legal requirements of the technology that must be met. However, both countries require multiple levels of permits and approvals necessary for installing and operating any technology, machinery or manufacturing equipment.
+The legislation in Czech Republic and Slovak Republic states different legal requirements of the technology that must be met. However, both countries require multiple levels of permits and approvals necessary for installing and operating any technology, machinery or manufacturing equipment.
 
-### Construction Permit
+## Construction Permit
 
 At first, the documentation required for construction permit must be compiled and sent for approval to relevant institution. This results in building permit to start the construction and it is issued by either the construction office or IPPC.
 
@@ -31,4 +31,4 @@ The operation permit is awarded by the same authority that issued the constructi
 
 With more than 20 years of experience and several large scale projects, we have streamlined our processes and communication with authorities in order to provide efficient and smooth delivery of permits and approvals to our clients. Testing Service offers complete processing and implementing of all legal requirements necessary for obtaining all appropriate permits.
 
-## By inspecting the technology, discovering discrepancies, checking and proofing the documentation, we ensure that its legally required documentation is in order in accordance to local law. This prevents unnecessary complications from any authority that usually result in a delay of production.
+By inspecting the technology, discovering discrepancies, checking and proofing the documentation, we ensure that its legally required documentation is in order in accordance to local law. This prevents unnecessary complications from any authority that usually result in a delay of production.

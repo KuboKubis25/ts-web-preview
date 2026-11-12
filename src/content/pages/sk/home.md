@@ -7,9 +7,8 @@ description: "Splnenie českých a slovenských legislatívnych požiadaviek pre
 kind: "home"
 source: "_source/pages/skmain.md"
 image: "CarAssembly-min.jpg"
+packageLead: "Aby sme mohli zabezpečiť najlepšie možné výsledky, ponúkame naše služby zviazané do jednotlivých balíčkov, ktoré majú za účel kompletne zabezpečiť akékoľvek právne požiadavky, ktoré prevádzkovateľ alebo dodávateľ má alebo bude mať s technológiou."
 ---
-
-## Aby sme mohli zabezpečiť najlepšie možné výsledky, ponúkame naše služby zviazané do jednotlivých balíčkov, ktoré majú za účel kompletne zabezpečiť akékoľvek právne požiadavky, ktoré prevádzkovateľ alebo dodávateľ má alebo bude mať s technológiou.
 
 Balík pre zamestnávateľa/prevádzkovateľa
 
@@ -33,7 +32,7 @@ Dodatočne ponúkame aj komplexné testovanie technológie pred uvedením do pre
 
 Red Star je naša prémiová služba pre prevádzkovateľov technológie. V pravidelných aj nepravidelných intervaloch kontrolujeme a zabezpečujeme, aby technológia bola 100% kompatibilná s lokálnymi zákonmi, vyhláškami, nariadeniami vlády a technickými normami (vrátane odporúčaných riešení). S touto službou sme schopní garantovať, že každá nezrovnalosť bude identifikovaná a že všetky lokálne právne požiadavky budú splnené počas prevádzky technológie na Slovensku alebo v Česku. Týmto sa zabezpečí, že žiadne ďalšie nároky v zmysle legislatívy , STN a ČSN na technológiu sa nevyskytnú od oprávnených subjektov. Dodatočne v rámci služby Red Star garantujeme aj správnosť všetkej zákonne povinnej dokumentácie a vykonanie všetkých vyžadovaných testov technológie.
 
-## Zaistite kompletnú kompatibilitu vašej technológie s českou a slovenskou legislatívou vďaka nášmu prémiovému Red Star programu.
+Zaistite kompletnú kompatibilitu vašej technológie s českou a slovenskou legislatívou vďaka nášmu prémiovému Red Star programu.
 
 Balík pre dodávateľov
 
@@ -73,4 +72,4 @@ Tento balík služieb Vám umožní dodať technológiu s náležite pripravenou
 
 Značka validácie je udelená až po tom, čo inšpekcie neodhalia žiadne potenciálne bezpečnostné rizika pre operátorov. Testing Service validácia Vašej technológie vyústi v zvýšení dôveryhodnosti a spoľahlivosti vašich zásielok, čo má za následok dlhodobejšie vzťahy s odberateľmi.
 
-## TESTING SERVICE validácia vašej technológie vyústi k zvýšeniu dôveryhodnosti a spoľahlivosti vašich zásielok, čo má za následok dlhodobejšie vzťahy s odberateľmi.
+TESTING SERVICE validácia vašej technológie vyústi k zvýšeniu dôveryhodnosti a spoľahlivosti vašich zásielok, čo má za následok dlhodobejšie vzťahy s odberateľmi.

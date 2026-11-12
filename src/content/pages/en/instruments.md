@@ -11,13 +11,13 @@ image: "TESTING_CENTER-32%5B209%5D.jpg"
 
 ## Aviation Instrument Testing
 
-### Testing of avionics IS mandatory
+Testing of avionics IS mandatory
 
-## Testing Service division Aviation offers services tailored to meet specified requirements according to EASA.
+Testing Service division Aviation offers services tailored to meet specified requirements according to EASA.
 
 Put your aircraft in a group and you have unbeatable prices
 
-## Contact us, we will answer you
+Contact us, we will answer you
 
 ### Download order form
 
@@ -25,15 +25,15 @@ Put your aircraft in a group and you have unbeatable prices
 
 Completed order send to info.aviation@testing-service.org
 
-## The question is: will you come to us or will we come to you?
+The question is: will you come to us or will we come to you?
 
-## AVIATION TESTING CENTER
+## Aviation testing center
 
-## Come for inspection of avionics to Žilina (LZZI/ILZ)
+Come for inspection of avionics to Žilina (LZZI/ILZ)
 
-## We will come for inspection with our inspection vehicle to you.
+We will come for inspection with our inspection vehicle to you.
 
-### we need:
+<h3 class="type-h4">We need:</h3>
 
 - arrange aircraft movements
 - 230V max. 50m from aircraft

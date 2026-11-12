@@ -16,7 +16,7 @@ image: "shutterstock_170715560-min.jpg"
 - Sprostredkovanie opravy avioniky
 - Poradenstvo v oblasti zástavby avioniky
 
-## 250hod./500hod./Revízia (kontrola) magnet Bendix King série S20/S200 a Slick série 4300/6300 : 236 €*/ks.
+250hod./500hod./Revízia (kontrola) magnet Bendix King série S20/S200 a Slick série 4300/6300 : 236 €*/ks.
 
 *bez DPH
 
