@@ -1,0 +1,444 @@
+{
+  "responsive": {
+    "failures": [],
+    "metrics": [
+      {
+        "name": "sk-home",
+        "width": 1440,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "hero": 680,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "en-home",
+        "width": 1440,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "hero": 680,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "zh-home",
+        "width": 1440,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "hero": 680,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-service",
+        "width": 1440,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-aviation",
+        "width": 1440,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-aviation-testing",
+        "width": 1440,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-contact",
+        "width": 1440,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "en-references",
+        "width": 1440,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "404",
+        "width": 1440,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-home",
+        "width": 1080,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "hero": 680,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "en-home",
+        "width": 1080,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "hero": 680,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "zh-home",
+        "width": 1080,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "hero": 680,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-service",
+        "width": 1080,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-aviation",
+        "width": 1080,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-aviation-testing",
+        "width": 1080,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-contact",
+        "width": 1080,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "en-references",
+        "width": 1080,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "404",
+        "width": 1080,
+        "overflow": false,
+        "tiny": [],
+        "header": 72,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-home",
+        "width": 1024,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "hero": 680,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "en-home",
+        "width": 1024,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "hero": 680,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "zh-home",
+        "width": 1024,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "hero": 680,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-service",
+        "width": 1024,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-aviation",
+        "width": 1024,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-aviation-testing",
+        "width": 1024,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-contact",
+        "width": 1024,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "en-references",
+        "width": 1024,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "404",
+        "width": 1024,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-home",
+        "width": 640,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "hero": 680,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "en-home",
+        "width": 640,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "hero": 680,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "zh-home",
+        "width": 640,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "hero": 680,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-service",
+        "width": 640,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-aviation",
+        "width": 640,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-aviation-testing",
+        "width": 640,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-contact",
+        "width": 640,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "en-references",
+        "width": 640,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "404",
+        "width": 640,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-home",
+        "width": 390,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "hero": 669.546875,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "en-home",
+        "width": 390,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "hero": 626.0625,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "zh-home",
+        "width": 390,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "hero": 663.65625,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-service",
+        "width": 390,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-aviation",
+        "width": 390,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-aviation-testing",
+        "width": 390,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "sk-contact",
+        "width": 390,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "en-references",
+        "width": 390,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      },
+      {
+        "name": "404",
+        "width": 390,
+        "overflow": false,
+        "tiny": [],
+        "header": 60,
+        "broken": [],
+        "focused": "BODY"
+      }
+    ]
+  },
+  "interaction_checks_passed": [
+    "Keyboard skip link",
+    "Desktop dropdown Escape and focus",
+    "Mobile menu expanded services, Escape and focus",
+    "Inline invalid fields and contact footer",
+    "Package disclosure",
+    "Gallery has eight featured images and decorative aerials",
+    "Cross-language destinations and Chinese duplicate removal",
+    "Contents current-section indicator",
+    "No-JavaScript mobile navigation"
+  ],
+  "detector_counts": {
+    "hero-eyebrow-chip": 21,
+    "cramped-padding": 51,
+    "flat-type-hierarchy": 2,
+    "tight-leading": 2
+  }
+}
