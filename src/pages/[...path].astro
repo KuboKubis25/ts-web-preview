@@ -3,6 +3,9 @@ import { getCollection, render, type CollectionEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import partners from "../../_source/img/Na%C5%A1i_Partneri.jpg";
+import Icon from "../components/Icon.astro";
+import LangTag from "../components/LangTag.astro";
+import LinkList, { type Row } from "../components/LinkList.astro";
 import Photo from "../components/Photo.astro";
 import Logos from "../components/Logos.astro";
 import ContactForm from "../components/ContactForm.astro";
@@ -51,15 +54,111 @@ const relevantDownloads = downloads.filter(
   (f) => f.page === d?.key && (f.lang === lang || f.lang === "both"),
 );
 const copy = homeCopy[lang];
-const homeTitle = {
-  sk: "Istota pre vaše technológie.",
-  en: "Confidence in your technology.",
+// The archived SK/EN heading is “Testing Service”; the compliance sentence is its lead.
+const homeLead = {
+  sk: "Splnenie českých a slovenských legislatívnych požiadaviek pre vašu technológiu",
+  en: "Managing Czech and Slovak legal requirements of your technology",
   zh: "管理您技术在捷克和斯洛伐克的法律合规要求",
 }[lang];
+const rows: Row[] = relevantDownloads.map((f) => ({
+  title: f.title,
+  href: url("s/" + f.file),
+  meta: f.file.split(".").pop()?.toUpperCase(),
+  download: true,
+}));
+if (d?.kind === "references") {
+  if (lang === "en")
+    rows.push(
+      {
+        title: "Our main list of references",
+        href: "https://drive.google.com/file/d/1TD1_VK_ORI7Ckqk6rvLvznGmCt8xz58z/view?usp=sharing",
+      },
+      {
+        title: "Promotional presentation",
+        href: "https://drive.google.com/file/d/1wDjKAScMM4idIgvG_27cAyZavl46cln0/view?usp=sharing",
+      },
+    );
+  else
+    rows.push({
+      title: "我们的宣传介绍",
+      href: "https://drive.google.com/file/d/1fGjFYueDh0oi0DWyY603WWtxajNFD-Wq/view?usp=sharing",
+    });
+}
+if (d?.key === "instruments") {
+  rows.push({
+    title: "info.aviation@testing-service.org",
+    href: "mailto:info.aviation@testing-service.org",
+    meta: t.email,
+  });
+  if (lang === "sk")
+    rows.push(
+      {
+        title: "Mapa · LZZI",
+        href: url("s/LZZI-Map.jpg"),
+        meta: "JPG",
+        download: true,
+      },
+      {
+        title: "Letisko AIP",
+        href: "https://aim.lps.sk/eAIP/eAIP_SR/AIRAC193_EFF_24MAY2018/html/LZ-AD-2.LZZI-en-SK.html",
+      },
+    );
+}
+if (d?.key === "aviation") {
+  rows.push(
+    {
+      title: "EASA · No 2018/1139",
+      href: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32018R1139",
+    },
+    {
+      title: "EASA · No 1321/2014",
+      href: "https://eur-lex.europa.eu/legal-content/CS/TXT/?qid=1551125876356&uri=CELEX:32014R1321",
+    },
+  );
+  if (lang === "sk")
+    rows.push({
+      title: "No 216/2008 · ucl.cz",
+      href: "http://www.caa.cz/file/6475/",
+    });
+}
+const featuredNames = [
+  "TESTING_CENTER-26%5B203%5D.jpg",
+  "TESTING_CENTER-33%5B210%5D.jpg",
+  "TESTING_CENTER-18%5B195%5D.jpg",
+  "TESTING_CENTER-21%5B198%5D.jpg",
+  "TESTING_CENTER-25%5B202%5D.jpg",
+  "TESTING_CENTER-32%5B209%5D.jpg",
+  "TESTING_CENTER-08%5B185%5D.jpg",
+  "TESTING_CENTER-06%5B183%5D.jpg",
+];
+const featured = featuredNames.map((name) =>
+  gallery.find((p) => p.image === name)!,
+);
+const remaining = gallery.filter((p) => !featuredNames.includes(p.image));
+const aerials = remaining.filter((p) => p.image.startsWith("Nad_"));
+const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
+const sectionName =
+  d?.kind === "service"
+    ? t.services
+    : d?.kind === "aviation"
+      ? "Aviation"
+      : d?.kind === "references"
+        ? t.references
+        : d?.kind === "contact"
+          ? t.contact
+          : t.legal;
 ---
 
 {target !== undefined ? (
-  <html lang="en">
+  <html
+    lang={
+      target.replace(/^\//, "").startsWith("en/")
+        ? "en"
+        : target.replace(/^\//, "").startsWith("zh/")
+          ? "zh"
+          : "sk"
+    }
+  >
     <head>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -90,20 +189,22 @@ const homeTitle = {
     <Layout page={d}>
       {d.kind === "home" ? (
         <>
-          <section class="home-hero">
+          <section class="home-hero on-dark">
             <div class="hero-copy">
-              <span class="eyebrow">TESTING SERVICE / CZ + SK</span>
-              <h1>{homeTitle}</h1>
-              <p class="hero-description">
-                {lang === "zh" ? copy.intro.split("\n\n")[0] : d.description}
-              </p>
-              <a class="button" href="#services">
+              <span class="eyebrow">
+                {lang === "sk"
+                  ? "Inšpekcie · Certifikácie · Povolenia · CZ + SK"
+                  : "Inspection · Certification · Permit · CZ + SK"}
+              </span>
+              <h1>
+                {lang === "zh" ? homeLead : d.title}
+                <span class="gold">.</span>
+              </h1>
+              {lang !== "zh" && <p class="hero-description">{homeLead}.</p>}
+              <a class="button button-on-dark" href="#services">
                 {t.offer}
-                <span aria-hidden="true">↓</span>
+                <Icon name="down" />
               </a>
-              <div class="hero-foot">
-                INSPECTION<span>—</span>CERTIFICATION<span>—</span>PERMIT
-              </div>
             </div>
             <div class="hero-visual">
               <Photo
@@ -114,114 +215,110 @@ const homeTitle = {
                     : "Industrial production line"
                 }
                 eager
+                sizes="(min-width: 640px) 50vw, 100vw"
               />
-              <div class="image-caption">
-                <span>TESTING SERVICE</span>
-                <span>CZ / SK</span>
-              </div>
             </div>
           </section>
           <section class="clients wrap">
             <div class="section-label">
               <span class="eyebrow">{t.clients}</span>
-              <a href={url(find("references")!.data.path + "/")}>
-                {t.references}
-                {lang === "sk" && " (EN)"} ↗
+              <a
+                class="text-link"
+                href={url(find("references")!.data.path + "/")}
+              >
+                <span>
+                  {t.references}
+                  <LangTag
+                    current={lang}
+                    target={find("references")!.data.lang}
+                  />
+                </span>
+                <Icon />
               </a>
             </div>
             <Logos />
           </section>
-          <section class="intro-section wrap">
-            <span class="eyebrow">01 / TESTING SERVICE</span>
+          <section class="intro-section wrap grid">
             <div>
-              {copy.intro
-                .split("\n\n")
-                .map((p, i) =>
-                  i === 0 ? <h2>{p}</h2> : <p class="lead">{p}</p>,
-                )}
+              {copy.intro.split("\n\n").map((p, i) => (
+                <p class={i === 0 ? "statement" : "lead"}>{p}</p>
+              ))}
             </div>
           </section>
           <section class="services-section" id="services">
             <div class="wrap">
-              <div class="section-heading">
-                <div>
-                  <span class="eyebrow">02 / {t.detail}</span>
-                  <h2>
-                    {t.offer}
-                    <span class="gold">.</span>
-                  </h2>
-                </div>
-                <span class="technical-label">CZ · SK / EN · STN · ČSN</span>
+              <div class="section-head">
+                <span class="eyebrow">{t.services}</span>
+                <h2>{t.offer}</h2>
               </div>
               <div class="service-grid">
                 {services.map((p, i) => (
-                  <article class="service-card">
-                    <a href={url(p.data.path + "/")}>
-                      <Photo
-                        name={p.data.image!}
-                        alt=""
-                        sizes="(min-width: 900px) 25vw, (min-width: 600px) 50vw, 100vw"
-                      />
-                      <div class="card-content">
-                        <span class="card-number">
-                          0{i + 1} <span aria-hidden="true">↗</span>
+                  <a class="service-card" href={url(p.data.path + "/")}>
+                    <Photo
+                      name={p.data.image!}
+                      alt=""
+                      sizes="(min-width: 1080px) 25vw, (min-width: 640px) 50vw, 100vw"
+                    />
+                    <div class="card-content">
+                      <span class="card-number">0{i + 1}</span>
+                      <h3>{copy.services[i]?.title || p.data.title}</h3>
+                      <p lang={p.data.lang}>{p.data.description}</p>
+                      <span class="text-link">
+                        <span>
+                          {t.more}
+                          <LangTag current={lang} target={p.data.lang} />
                         </span>
-                        <h3>{copy.services[i]?.title || p.data.title}</h3>
-                        <p>{copy.services[i]?.text || p.data.description}</p>
-                        <span class="text-link">{t.more}</span>
-                      </div>
-                    </a>
-                  </article>
+                        <Icon />
+                      </span>
+                    </div>
+                  </a>
                 ))}
               </div>
             </div>
           </section>
-          <section class="wrap packages">
-            <div class="section-heading">
-              <div>
-                <span class="eyebrow">03 / TESTING SERVICE</span>
-                <h2>
-                  {t.packages}
-                  <span class="gold">.</span>
-                </h2>
+          <section class="wrap packages grid">
+            <span class="eyebrow">{t.services}</span>
+            <div>
+              <div class="section-head">
+                <h2>{t.packages}</h2>
+                <p class="lead">{d.packageLead}</p>
               </div>
+              {copy.capabilities.length > 0 && (
+                <ul
+                  class="list capabilities"
+                  style={`--rows: ${Math.ceil(copy.capabilities.length / 2)}`}
+                >
+                  {copy.capabilities.map((c) => (
+                    <li>{c}</li>
+                  ))}
+                </ul>
+              )}
+              <details class="disclosure">
+                <summary>
+                  {t.packageDetails}
+                  <Icon name="plus" />
+                </summary>
+                <div class="prose">{Content && <Content />}</div>
+              </details>
             </div>
-            <details class="package-details">
-              <summary>
-                {t.detail}
-                <span aria-hidden="true">+</span>
-              </summary>
-              <div class="prose">{Content && <Content />}</div>
-            </details>
-            {copy.capabilities.length > 0 && (
-              <ul class="capabilities">
-                {copy.capabilities.map((c) => (
-                  <li>{c}</li>
-                ))}
-              </ul>
-            )}
           </section>
           {lang !== "zh" && (
-            <section class="aviation-feature">
-              <div class="wrap aviation-feature-grid">
+            <section class="aviation-feature aviation-scope">
+              <div class="wrap aviation-feature-grid grid">
                 <Photo
                   name="TESTING_CENTER-10%5B187%5D.jpg"
                   alt="Aviation Testing Center, Žilina"
                 />
                 <div>
-                  <span class="eyebrow">04 / AVIATION</span>
-                  <h2>
-                    Testing Service
-                    <br />
-                    <em>Aviation.</em>
-                  </h2>
-                  <p>{aviation[0].data.description}</p>
+                  <span class="eyebrow">Aviation</span>
+                  <h2>Testing Service Aviation</h2>
+                  <p class="lead">{aviation[0].data.description}</p>
                   <a
-                    class="button light"
+                    class="button button-secondary"
                     href={url(aviation[0].data.path + "/")}
                   >
                     {t.more}
-                    <span aria-hidden="true">↗</span>
+                    <Icon />
                   </a>
                 </div>
               </div>
@@ -230,38 +327,30 @@ const homeTitle = {
         </>
       ) : (
         <>
-          <div class="wrap breadcrumb">
-            <a href={url(lang === "sk" ? "" : lang + "/")}>{t.home}</a>
-            <span>/</span>
-            <span>{d.kind === "service" ? t.services : d.title}</span>
-          </div>
-          <section class:list={["page-hero wrap", d.image && "has-photo"]}>
-            <div>
-              <span class="eyebrow">
-                TESTING SERVICE
-                {d.kind === "aviation" ? " / AVIATION" : " / CZ + SK"}
-              </span>
-              <h1>
-                {d.title}
-                <span class="gold">.</span>
-              </h1>
-              <p class="lead">{d.description}</p>
-              {d.kind !== "contact" && d.kind !== "legal" && (
-                <a class="button" href={url(contact.data.path + "/#enquiry")}>
-                  {t.cta}
-                  <span aria-hidden="true">↗</span>
-                </a>
+          <nav class="wrap breadcrumb" aria-label="Breadcrumb">
+            <ol>
+              <li>
+                <a href={url(lang === "sk" ? "" : lang + "/")}>{t.home}</a>
+              </li>
+              {d.kind === "service" && (
+                <li>
+                  <a
+                    href={url(
+                      lang === "sk" ? "#services" : lang + "/#services",
+                    )}
+                  >
+                    {t.services}
+                  </a>
+                </li>
               )}
-            </div>
-            {d.image && (
-              <Photo
-                name={d.image}
-                alt={d.kind === "aviation" ? "Testing Service Aviation" : ""}
-                eager
-                sizes="(min-width: 900px) 42vw, 100vw"
-              />
-            )}
-          </section>
+              {d.kind === "aviation" && d.key !== "aviation" && (
+                <li>
+                  <a href={url(aviation[0].data.path + "/")}>Aviation</a>
+                </li>
+              )}
+              <li aria-current="page">{d.title}</li>
+            </ol>
+          </nav>
           {d.kind === "aviation" && (
             <nav class="section-nav wrap" aria-label="Aviation">
               {aviation.map((p) => (
@@ -274,36 +363,88 @@ const homeTitle = {
               ))}
             </nav>
           )}
+          <section
+            class:list={[
+              "page-hero wrap grid",
+              d.image && "has-photo",
+              d.kind === "contact" && "contact-hero",
+            ]}
+          >
+            <div>
+              <span class="eyebrow">{sectionName}</span>
+              <h1>
+                {d.title}
+                <span class="gold">.</span>
+              </h1>
+              <p class="lead">{d.description}</p>
+              {d.kind !== "contact" && d.kind !== "legal" && (
+                <a
+                  class="button button-secondary"
+                  href={url(contact.data.path + "/")}
+                >
+                  <span>
+                    {t.cta}
+                    <LangTag current={lang} target={contact.data.lang} />
+                  </span>
+                  <Icon />
+                </a>
+              )}
+            </div>
+            {d.image && (
+              <Photo
+                name={d.image}
+                alt={d.kind === "aviation" ? "Testing Service Aviation" : ""}
+                eager
+                sizes="(min-width: 1080px) 40vw, 100vw"
+              />
+            )}
+          </section>
           {d.kind === "references" && (
-            <section class="wrap clients">
+            <section class="wrap clients reference-clients">
               <Logos />
             </section>
           )}
           {d.kind === "contact" ? (
-            <section class="wrap contact-layout">
+            <section class="wrap contact-layout grid">
               <div class="contact-details">
-                <h2>Testing Service s.r.o.</h2>
-                <p class="address">
+                <h2 class="type-h3">Testing Service s.r.o.</h2>
+                <p class="lead address">
                   Timravy 31
                   <br />
                   036 01 Martin
                   <br />
-                  Slovakia
+                  {lang === "sk" ? "Slovensko" : "Slovakia"}
                 </p>
-                <a href="mailto:jakub.kubis@testing-service.org">
-                  jakub.kubis@testing-service.org ↗
-                </a>
-                <h3>Aviation</h3>
-                <a href="mailto:info.aviation@testing-service.org">
-                  info.aviation@testing-service.org ↗
-                </a>
+                <LinkList
+                  lang={lang}
+                  rows={[
+                    {
+                      title: "jakub.kubis@testing-service.org",
+                      href: "mailto:jakub.kubis@testing-service.org",
+                      meta: t.email,
+                    },
+                  ]}
+                />
+                <h3 class="type-h4">Aviation</h3>
+                <LinkList
+                  lang={lang}
+                  rows={[
+                    {
+                      title: "info.aviation@testing-service.org",
+                      href: "mailto:info.aviation@testing-service.org",
+                      meta: t.email,
+                    },
+                  ]}
+                />
                 <div class="future-office">
                   <span class="eyebrow">{t.soon}</span>
-                  <h3>Praha / Prague</h3>
+                  <h3 class="type-h4">Praha / Prague</h3>
                   <p>
                     Forum Karlín, Pernerova 51
                     <br />
-                    Prague, Czech Republic
+                    {lang === "sk"
+                      ? "Praha, Česká republika"
+                      : "Prague, Czech Republic"}
                   </p>
                 </div>
               </div>
@@ -312,172 +453,111 @@ const homeTitle = {
               </div>
             </section>
           ) : (
-            <div class="wrap article-layout">
+            <div class="wrap article-layout grid">
               <aside>
-                {headings.length > 1 && (
-                  <nav class="contents" aria-label={t.detail}>
-                    <span class="eyebrow">{t.detail}</span>
-                    {headings.map((h) => (
-                      <a href={"#" + h.slug}>{h.text}</a>
-                    ))}
-                  </nav>
-                )}
-                <div class="side-note">
-                  TESTING SERVICE
-                  <br />
-                  <span>{d.kind === "aviation" ? "AVIATION" : "CZ + SK"}</span>
-                </div>
+                {headings.length >= 2 &&
+                  headings.every((h) => h.text.length <= 80) && (
+                    <nav class="contents" aria-label={t.toc}>
+                      <span class="eyebrow">{t.toc}</span>
+                      {headings.map((h) => (
+                        <a href={"#" + h.slug}>{h.text}</a>
+                      ))}
+                    </nav>
+                  )}
               </aside>
               <div>
                 <article class="prose">{Content && <Content />}</article>
+                {rows.length > 0 && (
+                  <section class="downloads" id="downloads">
+                    <h2 class="type-h3">{t.downloadsLinks}</h2>
+                    <LinkList rows={rows} lang={lang} />
+                  </section>
+                )}
                 {d.key === "aviation" && (
                   <section class="partners">
-                    <h2>{lang === "sk" ? "Naši partneri" : "Our partners"}</h2>
+                    <h2 class="type-h3">
+                      {lang === "sk" ? "Naši partneri" : "Our partners"}
+                    </h2>
                     <Image
                       src={partners}
-                      alt="Žilinská univerzita v Žiline"
-                      width={650}
+                      alt="Žilinská univerzita – Letecké výcvikové a vzdelávacie centrum; Letisko Žilina"
+                      width={480}
                       format="webp"
                       loading="lazy"
                     />
                   </section>
                 )}
-                {d.kind === "references" && (
-                  <div class="download-list">
-                    {lang === "en" ? (
-                      <>
-                        <a href="https://drive.google.com/file/d/1TD1_VK_ORI7Ckqk6rvLvznGmCt8xz58z/view?usp=sharing">
-                          Our main list of references <span>↗</span>
-                        </a>
-                        <a href="https://drive.google.com/file/d/1wDjKAScMM4idIgvG_27cAyZavl46cln0/view?usp=sharing">
-                          Promotional presentation <span>↗</span>
-                        </a>
-                      </>
-                    ) : (
-                      <a href="https://drive.google.com/file/d/1fGjFYueDh0oi0DWyY603WWtxajNFD-Wq/view?usp=sharing">
-                        我们的宣传介绍 <span>↗</span>
-                      </a>
-                    )}
-                  </div>
-                )}
-                {relevantDownloads.length > 0 && (
-                  <section class="downloads" id="downloads">
-                    <h2>{t.downloads}</h2>
-                    <div class="download-list">
-                      {relevantDownloads.map((f) => (
-                        <a href={url("s/" + f.file)} download>
-                          <span>
-                            {f.title}
-                            <small>
-                              {f.file.split(".").pop()?.toUpperCase()}
-                            </small>
-                          </span>
-                          <span aria-hidden="true">↓</span>
-                        </a>
-                      ))}
-                    </div>
+                {d.kind === "service" && (
+                  <section class="closing-cta">
+                    <h2 class="type-h4">{t.cta}</h2>
+                    {d.closing && <p class="small muted">{d.closing}</p>}
+                    <a
+                      class="button button-primary"
+                      href={url(contact.data.path + "/")}
+                    >
+                      {t.cta}
+                      <Icon />
+                    </a>
                   </section>
-                )}
-                {d.key === "instruments" && (
-                  <p class="order-email">
-                    <a href="mailto:info.aviation@testing-service.org">
-                      info.aviation@testing-service.org ↗
-                    </a>
-                  </p>
-                )}
-                {d.key === "instruments" && lang === "sk" && (
-                  <div class="download-list">
-                    <a href={url("s/LZZI-Map.jpg")} download>
-                      Mapa · LZZI ↓
-                    </a>
-                    <a href="https://aim.lps.sk/eAIP/eAIP_SR/AIRAC193_EFF_24MAY2018/html/LZ-AD-2.LZZI-en-SK.html">
-                      Letisko AIP ↗
-                    </a>
-                  </div>
-                )}
-                {d.key === "aviation" && (
-                  <div class="download-list">
-                    <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32018R1139">
-                      EASA · No 2018/1139 ↗
-                    </a>
-                    <a href="https://eur-lex.europa.eu/legal-content/CS/TXT/?qid=1551125876356&uri=CELEX:32014R1321">
-                      EASA · No 1321/2014 ↗
-                    </a>
-                    {lang === "sk" && (
-                      <a href="http://www.caa.cz/file/6475/">
-                        No 216/2008 · ucl.cz ↗
-                      </a>
-                    )}
-                  </div>
                 )}
               </div>
             </div>
           )}
           {d.key === "aviation" && (
             <section class="wrap gallery">
-              <div class="section-heading">
+              <div class="section-head grid">
+                <span class="eyebrow">Žilina · LZZI</span>
                 <h2>{t.gallery}</h2>
-                <span class="eyebrow">ŽILINA / LZZI</span>
               </div>
               <div class="gallery-grid">
-                {[
-                  "TESTING_CENTER-26%5B203%5D.jpg",
-                  "TESTING_CENTER-33%5B210%5D.jpg",
-                  "TESTING_CENTER-18%5B195%5D.jpg",
-                  "Nad_Stredn%C3%BDm_Slovenskom-23.jpg",
-                ].map((name, i) => (
+                {featured.map((p) => (
                   <Photo
-                    name={name}
-                    alt={
-                      [
-                        "Avionics testing equipment",
-                        "Aircraft at the testing center",
-                        "Instrument testing equipment",
-                        "Aerial view of Slovakia",
-                      ][i]
-                    }
-                    sizes="(min-width: 900px) 25vw, 50vw"
+                    name={p.image}
+                    alt={p.alt[lang === "sk" ? "sk" : "en"]}
+                    sizes="(min-width: 640px) 25vw, 50vw"
                   />
                 ))}
               </div>
-              <details class="package-details gallery-more">
+              <details class="disclosure gallery-more">
                 <summary>
-                  {lang === "sk" ? "Fotogaléria" : "Photo gallery"}
-                  <span aria-hidden="true">+</span>
+                  {t.morePhotos} ({remaining.length})<Icon name="plus" />
                 </summary>
                 <div class="gallery-grid">
-                  {gallery
-                    .filter(
-                      (p) =>
-                        ![
-                          "TESTING_CENTER-26%5B203%5D.jpg",
-                          "TESTING_CENTER-33%5B210%5D.jpg",
-                          "TESTING_CENTER-18%5B195%5D.jpg",
-                          "Nad_Stredn%C3%BDm_Slovenskom-23.jpg",
-                        ].includes(p.image),
-                    )
-                    .map((p) => (
+                  {otherPhotos.map((p) => (
+                    <Photo
+                      name={p.image}
+                      alt={p.alt[lang === "sk" ? "sk" : "en"]}
+                      widths={[400, 760]}
+                      sizes="(min-width: 640px) 25vw, 50vw"
+                    />
+                  ))}
+                </div>
+                <div class="aerial-group" role="group" aria-label={t.aerials}>
+                  <h3>{t.aerials}</h3>
+                  <div class="gallery-grid">
+                    {aerials.map((p) => (
                       <Photo
                         name={p.image}
-                        alt={p.alt[lang === "sk" ? "sk" : "en"]}
+                        alt=""
                         widths={[400, 760]}
-                        sizes="(min-width: 900px) 25vw, 50vw"
+                        sizes="(min-width: 640px) 25vw, 50vw"
                       />
                     ))}
+                  </div>
                 </div>
               </details>
             </section>
           )}
           {d.kind === "service" && (
-            <section class="wrap related">
+            <section class="wrap related grid">
               <span class="eyebrow">{t.related}</span>
-              <div>
+              <div class="list">
                 {services
                   .filter((p) => p.data.key !== d.key)
                   .map((p) => (
                     <a href={url(p.data.path + "/")}>
                       <h3>{p.data.title}</h3>
-                      <span aria-hidden="true">↗</span>
+                      <Icon />
                     </a>
                   ))}
               </div>

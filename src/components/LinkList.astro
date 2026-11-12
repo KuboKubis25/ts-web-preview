@@ -1,0 +1,38 @@
+---
+import Icon from "./Icon.astro";
+import LangTag from "./LangTag.astro";
+import type { Lang } from "../data/ui";
+export interface Row {
+  title: string;
+  href: string;
+  meta?: string;
+  download?: boolean;
+  lang?: Lang;
+}
+interface Props {
+  rows: Row[];
+  lang: Lang;
+}
+const { rows, lang } = Astro.props;
+---
+
+<div class="list">
+  {rows.map((row) => (
+    <a href={row.href} download={row.download || undefined}>
+      <span>
+        {row.title}
+        {row.lang && <LangTag current={lang} target={row.lang} />}
+        {row.meta && <small>{row.meta}</small>}
+      </span>
+      <Icon
+        name={
+          row.download
+            ? "down"
+            : /^https?:/.test(row.href)
+              ? "external"
+              : "right"
+        }
+      />
+    </a>
+  ))}
+</div>

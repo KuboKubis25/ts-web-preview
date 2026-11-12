@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import Icon from "../components/Icon.astro";
 import Layout from "../layouts/Layout.astro";
 import { url } from "../lib/urls";
 const home = (await getCollection("pages")).find(
@@ -16,17 +17,23 @@ const home = (await getCollection("pages")).find(
     key: "not-found",
   }}
 >
-  <section class="wrap page-hero">
-    <span class="eyebrow">404</span>
-    <h1>Stránka sa nenašla.</h1>
-    <p class="lead" lang="en">
-      This page could not be found.
-    </p>
-    <a class="button" href={url("")}>
-      Späť na úvod ↗
-    </a>{" "}
-    <a class="button" href={url("en/")}>
-      English ↗
-    </a>
+  <section class="wrap page-hero grid">
+    <div>
+      <span class="eyebrow">404</span>
+      <h1>
+        Stránka sa nenašla<span class="gold">.</span>
+      </h1>
+      <p class="lead" lang="en">
+        This page could not be found.
+      </p>
+      <div class="action-row">
+        <a class="button button-primary" href={url("")}>
+          Späť na úvod <Icon />
+        </a>
+        <a class="button button-secondary" href={url("en/")} lang="en">
+          English <Icon />
+        </a>
+      </div>
+    </div>
   </section>
 </Layout>

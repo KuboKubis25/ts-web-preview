@@ -1,0 +1,14 @@
+---
+import type { Lang } from "../data/ui";
+interface Props {
+  current: Lang;
+  target: Lang;
+}
+const { current, target } = Astro.props;
+---
+
+{current !== target && (
+  <span class="lang-tag" lang={target}>
+    {target === "zh" ? "中文" : target.toUpperCase()}
+  </span>
+)}
