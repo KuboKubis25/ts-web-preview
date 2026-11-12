@@ -7,7 +7,6 @@ description: "Majte prehľad v miestnej technickej legislatíve a technických n
 kind: "service"
 source: "_source/pages/consulting-services-sk.md"
 image: "shutterstock_404036110-min.jpg"
-closing: "Napíšte nám a my sa vám ozveme."
 ---
 
 Existuje 66 slovenských a 33 českých skupín vyhradených technických zariadení a každá skupina musí legálne spĺňať mierne odlišné požiadavky. Okrem toho sa približne 60% ČSN a STN odlišuje od základných európskych noriem (EN).

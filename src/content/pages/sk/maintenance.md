@@ -21,5 +21,3 @@ image: "shutterstock_170715560-min.jpg"
 *bez DPH
 
 V cene nie je zahrnutá oprava alebo výmena dielov, ktoré je potrebné vymeniť pretože nespĺňajú podmienky pre ich ďalšiu prevádzku alebo je predpísaná ich pravidelná výmena v zmysle predpisov výrobcov (MM a OM a platných SB/AD). Cenovú ponuku na diely, ktoré bude nutné vymeniť Vám poskytneme ihneď po vykonaní kontroly.
-
-## Kontaktujte nás

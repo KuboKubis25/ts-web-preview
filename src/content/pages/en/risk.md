@@ -20,7 +20,7 @@ Testing Service provides a third party analysis that identifies the safety risks
 
 Make sure your required safety files are in order.
 
-Employers are required to have elaborated numerous files in regard to the workplace and technology safety. - operational rules for restricted technical devices - electric, pressure, lifting an gas - protocol determining external influences - determining legally mandatory inspection periods of any technology - ATEX 137 must be elaborated by each employer if any area or technology poses a potential explosion risk
+Employers are required to have elaborated numerous files in regard to the workplace and technology safety. – operational rules for restricted technical devices – electric, pressure, lifting an gas – protocol determining external influences – determining legally mandatory inspection periods of any technology – ATEX 137 must be elaborated by each employer if any area or technology poses a potential explosion risk
 
 These documents are important part of employers’ operational guidebook and are subject to an inspection. We offer elaboration and administration of any of the required documentations.
 
@@ -32,7 +32,7 @@ There is no excuse in neglecting the safety of employees. Sadly, our experience 
 
 ## Three key steps
 
-The whole process can be divided into three key steps. - Inspection of the workplace, technology, documentation and processes - Analysis of findings and determination of possible complications and neglects - Development of safety designs that offset the issues
+The whole process can be divided into three key steps. – Inspection of the workplace, technology, documentation and processes – Analysis of findings and determination of possible complications and neglects – Development of safety designs that offset the issues
 
 Regular independent risk and safety assessment is the best way to avoid potential work related accidents and injuries. The usual result of such accidents are extrajudicial settlements, which result in heavy financial liability.
 

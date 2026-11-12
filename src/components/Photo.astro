@@ -8,13 +8,15 @@ interface Props {
   eager?: boolean;
   sizes?: string;
   widths?: number[];
+  ratio?: number;
 }
 const {
   name,
   alt,
   class: className,
   eager = false,
-  widths = [400, 760, 1200, 1600],
+  ratio = 3 / 2,
+  widths = [400, 720, 1080, 1440, 2000],
   sizes = "(min-width: 1080px) 50vw, 100vw",
 } = Astro.props;
 const assets = import.meta.glob<{ default: ImageMetadata }>(
@@ -23,13 +25,30 @@ const assets = import.meta.glob<{ default: ImageMetadata }>(
 );
 const src = assets[`../../_source/img/${name}`]?.default;
 if (!src) throw new Error(`Missing source image: ${name}`);
+// Crop framed photos before resizing: wide panoramas cannot supply their original
+// width at 3:2. The home cover keeps its native ratio and declares crop-aware sizes.
+const aspect = ratio || src.width / src.height;
+const maxWidth = Math.floor(Math.min(src.width, src.height * aspect));
+// Always include the largest available candidate, without generating enlarged assets.
+const safeWidths = [
+  ...new Set([
+    ...widths.filter((width) => width <= maxWidth),
+    Math.min(Math.max(...widths), maxWidth),
+  ]),
+].sort((a, b) => a - b);
 ---
 
 <Image
   src={src}
+  width={maxWidth}
+  height={Math.floor(maxWidth / aspect)}
+  fit="cover"
+  data-source-width={src.width}
+  data-source-height={src.height}
+  style={`--photo-max-width: ${Math.min(src.width, src.height * 1.5)}px`}
   alt={alt}
   class={className}
-  widths={widths}
+  widths={safeWidths}
   sizes={sizes}
   format="webp"
   quality={80}

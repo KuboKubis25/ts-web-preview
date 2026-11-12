@@ -30,7 +30,7 @@ Dodatočne ponúkame aj komplexné testovanie technológie pred uvedením do pre
 
 ## Program Red Star
 
-Red Star je naša prémiová služba pre prevádzkovateľov technológie. V pravidelných aj nepravidelných intervaloch kontrolujeme a zabezpečujeme, aby technológia bola 100% kompatibilná s lokálnymi zákonmi, vyhláškami, nariadeniami vlády a technickými normami (vrátane odporúčaných riešení). S touto službou sme schopní garantovať, že každá nezrovnalosť bude identifikovaná a že všetky lokálne právne požiadavky budú splnené počas prevádzky technológie na Slovensku alebo v Česku. Týmto sa zabezpečí, že žiadne ďalšie nároky v zmysle legislatívy , STN a ČSN na technológiu sa nevyskytnú od oprávnených subjektov. Dodatočne v rámci služby Red Star garantujeme aj správnosť všetkej zákonne povinnej dokumentácie a vykonanie všetkých vyžadovaných testov technológie.
+Red Star je naša prémiová služba pre prevádzkovateľov technológie. V pravidelných aj nepravidelných intervaloch kontrolujeme a zabezpečujeme, aby technológia bola 100% kompatibilná s lokálnymi zákonmi, vyhláškami, nariadeniami vlády a technickými normami (vrátane odporúčaných riešení). S touto službou sme schopní garantovať, že každá nezrovnalosť bude identifikovaná a že všetky lokálne právne požiadavky budú splnené počas prevádzky technológie na Slovensku alebo v Česku. Týmto sa zabezpečí, že žiadne ďalšie nároky v zmysle legislatívy, STN a ČSN na technológiu sa nevyskytnú od oprávnených subjektov. Dodatočne v rámci služby Red Star garantujeme aj správnosť všetkej zákonne povinnej dokumentácie a vykonanie všetkých vyžadovaných testov technológie.
 
 Zaistite kompletnú kompatibilitu vašej technológie s českou a slovenskou legislatívou vďaka nášmu prémiovému Red Star programu.
 
@@ -68,7 +68,7 @@ Operačný balík služieb pre dodávateľov sa sústreďuje na zaistenie dodrž
 
 - zvýšte hodnotu vášho produktu dodaním právne korektných bezpečnostných manuálov
 
-Tento balík služieb Vám umožní dodať technológiu s náležite pripravenou zákonne vyžadovanou dokumentáciou a spolu s Testing Service značkou validácie - TS Valid SK/ TS Valid CZ, ktorá značí prevádzkovateľom, že vaša technológia už prešla našou validáciou.
+Tento balík služieb Vám umožní dodať technológiu s náležite pripravenou zákonne vyžadovanou dokumentáciou a spolu s Testing Service značkou validácie – TS Valid SK/ TS Valid CZ, ktorá značí prevádzkovateľom, že vaša technológia už prešla našou validáciou.
 
 Značka validácie je udelená až po tom, čo inšpekcie neodhalia žiadne potenciálne bezpečnostné rizika pre operátorov. Testing Service validácia Vašej technológie vyústi v zvýšení dôveryhodnosti a spoľahlivosti vašich zásielok, čo má za následok dlhodobejšie vzťahy s odberateľmi.
 

@@ -6,7 +6,8 @@ import Icon from "../components/Icon.astro";
 import LangTag from "../components/LangTag.astro";
 import { languages, ui } from "../data/ui";
 import { url, absolute } from "../lib/urls";
-import { downloads } from "../data/downloads";
+import { downloads, downloadTitle } from "../data/downloads";
+import { serviceKeys, aviationKeys, serviceTitle } from "../data/sections";
 import "@fontsource-variable/ibm-plex-sans/wght.css";
 import "../styles/global.css";
 interface Props {
@@ -21,13 +22,17 @@ const home = find("home")!;
 const contact = find("contact") || find("contact", "en")!;
 const aviation = find("aviation") || find("aviation", "en")!;
 const references = find("references") || find("references", "en")!;
-const services = pages.filter(
-  (p) =>
-    p.data.kind === "service" &&
-    p.data.lang === (page.lang === "zh" ? "en" : page.lang),
-);
-const aviationPages = ["aviation", "instruments", "maintenance"].map(
-  (key) => find(key) || find(key, "en")!,
+const services = serviceKeys.map((key) => find(key) || find(key, "en")!);
+const aviationPages = aviationKeys.map((key) => find(key) || find(key, "en")!);
+const divisionEmail =
+  page.kind === "aviation"
+    ? "info.aviation@testing-service.org"
+    : "jakub.kubis@testing-service.org";
+const footerFiles = downloads.filter(
+  (file) =>
+    file.lang === (page.lang === "zh" ? "en" : page.lang) ||
+    file.lang === "both" ||
+    ["legal", "inspections", "maintenance"].includes(file.page),
 );
 const alternates = pages.filter((p) => p.data.key === page.key);
 const defaultPage =
@@ -96,7 +101,7 @@ const canonical = absolute(
             format="webp"
             loading="eager"
           />
-          <span>TESTING SERVICE</span>
+          <span lang="en">TESTING SERVICE</span>
         </a>
         <nav class="language-switcher" aria-label={t.language}>
           {languages.map((lang) => {
@@ -129,10 +134,14 @@ const canonical = absolute(
           data-close={t.close}
         >
           <Icon name="menu" />
+          <span class="menu-close">
+            <Icon name="close" />
+          </span>
           <span class="menu-label">{t.menu}</span>
         </button>
         <nav id="main-navigation" class="main-navigation" aria-label={t.menu}>
-          <details class="services-menu" open>
+          <span class="eyebrow mobile-services-label">{t.services}</span>
+          <details class="services-menu">
             <summary class:list={[page.kind === "service" && "current"]}>
               {t.services}
               <Icon name="chevron" />
@@ -147,12 +156,12 @@ const canonical = absolute(
               </a>
               {services.map((p) => (
                 <a
-                  href={url(p.data.path + "/")}
-                  aria-current={page.path === p.data.path ? "page" : undefined}
+                  href={url(p.path + "/")}
+                  aria-current={page.path === p.path ? "page" : undefined}
                 >
                   <span>
-                    {p.data.title}
-                    <LangTag current={page.lang} target={p.data.lang} />
+                    {serviceTitle(p, page.lang)}
+                    <LangTag current={page.lang} target={p.lang} />
                   </span>
                 </a>
               ))}
@@ -177,7 +186,11 @@ const canonical = absolute(
             </span>
           </a>
           <a
-            class="button button-header header-cta"
+            class:list={[
+              "button button-header header-cta",
+              page.kind === "contact" && "button-secondary",
+            ]}
+            aria-current={page.kind === "contact" ? "page" : undefined}
             href={url(contact.path + "/")}
           >
             <span>
@@ -197,11 +210,8 @@ const canonical = absolute(
         <div class="wrap footer-top grid">
           <h2>{t.cta}</h2>
           <div class="footer-action">
-            <a
-              class="footer-email"
-              href="mailto:jakub.kubis@testing-service.org"
-            >
-              jakub.kubis@testing-service.org
+            <a class="footer-email" href={`mailto:${divisionEmail}`}>
+              {divisionEmail}
             </a>
             <a
               class="button button-on-dark"
@@ -218,21 +228,25 @@ const canonical = absolute(
       )}
       <div class="wrap footer-grid grid">
         <div>
-          <h3 class="type-h4">Testing Service s.r.o.</h3>
-          <p>
+          <h3 class="type-h4" lang="en">
+            Testing Service s.r.o.
+          </h3>
+          <p lang={page.lang === "sk" ? "sk" : "en"}>
             Timravy 31
             <br />
             036 01 Martin
             <br />
             {page.lang === "sk" ? "Slovensko" : "Slovakia"}
           </p>
-          <a href="mailto:jakub.kubis@testing-service.org">
-            jakub.kubis@testing-service.org
-          </a>
+          {page.kind === "contact" && (
+            <a href="mailto:jakub.kubis@testing-service.org">
+              jakub.kubis@testing-service.org
+            </a>
+          )}
         </div>
         <div>
           <h3 class="type-h4">{t.legal}</h3>
-          <p>
+          <p lang="sk">
             Okresný súd Žilina
             <br />
             odd. Sro, vložka č. 118043/L
@@ -250,12 +264,15 @@ const canonical = absolute(
         <div class="footer-downloads">
           <h3 class="type-h4">{t.downloads}</h3>
           <ul>
-            {downloads
-              .filter((f) => f.lang === page.lang || f.lang === "both")
+            {footerFiles
+              .filter((f) => f.division === "industry")
               .map((f) => (
                 <li>
                   <a href={url("s/" + f.file)} download>
-                    {f.title}
+                    <span>
+                      {downloadTitle(f, page.lang)}
+                      <LangTag current={page.lang} target={f.lang} />
+                    </span>
                     <Icon name="down" />
                   </a>
                 </li>
@@ -263,8 +280,8 @@ const canonical = absolute(
           </ul>
         </div>
         <div>
-          <h3 class="type-h4">Aviation</h3>
-          <p>Aviation Testing Center · Letisko Žilina (LZZI)</p>
+          <h3 class="type-h4">{t.aviation}</h3>
+          <p lang="en">Aviation Testing Center · Žilina (LZZI)</p>
           <a href="mailto:info.aviation@testing-service.org">
             info.aviation@testing-service.org
           </a>
@@ -273,19 +290,34 @@ const canonical = absolute(
               <li>
                 <a href={url(p.path + "/")}>
                   <span>
-                    {p.title}
+                    <span lang={p.lang}>{p.title}</span>
                     <LangTag current={page.lang} target={p.lang} />
                   </span>
                   <Icon />
                 </a>
               </li>
             ))}
+            {footerFiles
+              .filter((f) => f.division === "aviation")
+              .map((f) => (
+                <li>
+                  <a href={url("s/" + f.file)} download>
+                    <span>
+                      {downloadTitle(f, page.lang)}
+                      <LangTag current={page.lang} target={f.lang} />
+                    </span>
+                    <Icon name="down" />
+                  </a>
+                </li>
+              ))}
           </ul>
         </div>
       </div>
       <div class="wrap footer-bottom">
         <span>© Testing Service s.r.o.</span>
-        <span class="tagline">Inspection · Certification · Permit</span>
+        <span class="tagline" lang="en">
+          Inspection · Certification · Permit
+        </span>
       </div>
     </footer>
     <script>
@@ -299,12 +331,14 @@ const canonical = absolute(
         toggle?.setAttribute("aria-expanded", "false");
         nav?.classList.remove("is-open");
         if (toggle) toggle.setAttribute("aria-label", toggle.dataset.open!);
-        if (dropdown) dropdown.open = !desktop.matches;
+        document.documentElement.classList.remove("menu-open");
+        if (dropdown) dropdown.open = false;
       };
       toggle?.addEventListener("click", () => {
         const open = toggle.getAttribute("aria-expanded") !== "true";
         toggle.setAttribute("aria-expanded", String(open));
         nav?.classList.toggle("is-open", open);
+        document.documentElement.classList.toggle("menu-open", open);
         toggle.setAttribute(
           "aria-label",
           open ? toggle.dataset.close! : toggle.dataset.open!,
@@ -342,18 +376,13 @@ const canonical = absolute(
       nav
         ?.querySelectorAll("a")
         .forEach((a) => a.addEventListener("click", close));
-      const syncServices = () => {
-        if (dropdown) dropdown.open = !desktop.matches;
-      };
-      desktop.addEventListener("change", () => {
-        close();
-        syncServices();
-      });
-      toggle?.addEventListener("click", syncServices);
-      dropdown?.addEventListener("toggle", () => {
-        if (!desktop.matches && !dropdown.open) dropdown.open = true;
-      });
-      syncServices();
+      desktop.addEventListener("change", close);
+      const activeTab = document.querySelector<HTMLElement>(
+        '.section-nav [aria-current="page"]',
+      );
+      if (activeTab)
+        activeTab.parentElement!.scrollLeft =
+          activeTab.offsetLeft - activeTab.parentElement!.offsetLeft;
     </script>
     <script>
       const contentsLinks = [

@@ -9,7 +9,7 @@ source: "_source/pages/aviation-testing-service-2.md"
 image: "TESTING_CENTER-32%5B209%5D.jpg"
 ---
 
-## Aviation Instrument Testing
+## Aviation instrument testing
 
 Testing of avionics IS mandatory
 
@@ -27,7 +27,7 @@ Completed order send to info.aviation@testing-service.org
 
 The question is: will you come to us or will we come to you?
 
-## Aviation testing center
+## Aviation Testing Center
 
 Come for inspection of avionics to Žilina (LZZI/ILZ)
 

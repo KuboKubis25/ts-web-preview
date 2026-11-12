@@ -8,10 +8,6 @@ kind: "references"
 source: "_source/pages/references-en.md"
 ---
 
-## Trusted by Industry Leaders
-
 We proudly collaborate with companies across the aviation, industrial, and automotive sectors—helping them meet the highest standards in safety, compliance, and performance.
 
-## Our References
-
-Our clients include leading manufacturers, system integrators, and certification authorities operating in regulated environments across Europe. You can see our main list of references here. You can also watch our promotional presentation.
+Our clients include leading manufacturers, system integrators, and certification authorities operating in regulated environments across Europe. You can see our main list of references [here](https://drive.google.com/file/d/1TD1_VK_ORI7Ckqk6rvLvznGmCt8xz58z/view?usp=sharing). You can also watch our promotional presentation.

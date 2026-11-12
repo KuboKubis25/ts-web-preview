@@ -7,7 +7,7 @@ description: "管理您技术在捷克和斯洛伐克的法律合规要求"
 kind: "home"
 source: "_source/pages/zho.md"
 image: "CarAssembly-min.jpg"
-packageLead: "雇主 / 运营商套餐"
+packageLead: "专为技术雇主与运营商量身打造的专业服务"
 ---
 
 专为技术雇主与运营商量身打造的专业服务

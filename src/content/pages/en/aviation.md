@@ -6,7 +6,7 @@ title: "Testing Service Aviation"
 description: "Control and testing of avionics systems. Aircraft magneto servicing."
 kind: "aviation"
 source: "_source/pages/aviation-2.md"
-image: "TESTING_CENTER-10%5B187%5D.jpg"
+image: "20190628_141438.jpg"
 ---
 
 TESTING SERVICE s.r.o. division AVIATION
@@ -21,20 +21,19 @@ The periodic inspection of communication and navigation systems in aircraft is m
 
 - also class G
 
-It is an important condition for Airworthiness Review Certificates - ARC
+It is an important condition for Airworthiness Review Certificates – ARC
 
-- EASA: Regulation (EC) No 2018/1139 a No 1321/2014 http://www.easa.europa.eu/
+- EASA: Regulation (EC) No 2018/1139 a No 1321/2014 [easa.europa.eu](http://www.easa.europa.eu/)
 - Links to regulations:
-
-- No 2018/1139
-- No 1321/2014
+  – No 2018/1139
+  – No 1321/2014
 
 ## Our offer
 
-## Aviation Testing
+### Aviation Testing
 
 Control and testing of avionics systems (COMMUNICATION AND NAVIGATION)
 
-## Aviation Service
+### Aviation Service
 
 Overhaul and 500 hour inspection of aircraft magnetos, mediation of repair of avionics and consultancy in the avionics

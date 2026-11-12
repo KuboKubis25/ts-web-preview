@@ -35,7 +35,7 @@ Naši inšpektori identifikujú akékoľvek nevyriešené riziká a situácie, v
 
 Neexistuje ospravedlnenie pri zanedbaní bezpečnosti zamestnancov.
 
-Bohužiaľ, naše skúsenosti naznačujú, že to je presne to, čo sa deje - aby sa zjednodušili prevádzkové procesy bezpečnostné systémy sa vypínajú, alebo sa mnohé revízne činnosti udejú len na “papieri od stola” čo je najväčší hazard - pretože podľa zákona je zodpovedný zamestnávateľ a nie dodávateľ takej služby.
+Bohužiaľ, naše skúsenosti naznačujú, že to je presne to, čo sa deje – aby sa zjednodušili prevádzkové procesy bezpečnostné systémy sa vypínajú, alebo sa mnohé revízne činnosti udejú len na “papieri od stola” čo je najväčší hazard – pretože podľa zákona je zodpovedný zamestnávateľ a nie dodávateľ takej služby.
 
 Snažíme sa určiť, kde sa takéto zanedbávanie deje v procesnej línii, a navrhnúť riešenie, ktoré je dokonale bezpečné a operačne vyhovujúce.
 

@@ -13,7 +13,7 @@ skúšky avionických systémov sú povinné
 
 Vyplnený formulár odošlite na info.aviation@testing-service.org
 
-## Aviation testing center
+## Aviation Testing Center
 
 Prileťte na „STK“ avioniky Vášho lietadla na letisko do Žiliny (LZZI)
 

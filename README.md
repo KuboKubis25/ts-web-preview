@@ -8,6 +8,7 @@ Use Node **22.23.4 or newer supported LTS** (`nvm use` reads `.nvmrc`).
 
 ```sh
 npm ci
+npx playwright install --with-deps chromium # once, for the build QA gate
 npm run dev
 ```
 
@@ -23,9 +24,11 @@ Visit `http://localhost:4321/ts-web-preview/`. Astro 7 runs preview as a backgro
 
 ```sh
 npm run check       # Astro + TypeScript diagnostics
-npm run build       # Production HTML, responsive WebP assets, sitemap, robots, redirects
+npm run build       # Production output, then the required browser QA gate
 npm run check:links # Check dist, using its canonical URL to discover the actual base
 ```
+
+`npm run check:layout` checks every content route at 390, 640, 1024, 1080 and 1440px: reading-column widths, sibling overlap, page overflow, mobile contact order, image pixel resolution, keyboard/menu/form behavior, and axe accessibility. It serves the built files on a temporary local port and discovers the base path from the build. A failure fails `npm run build`. `npm run qa:capture` also writes `docs/review/qa-v2.json` and screenshots in `docs/review/shots-v2/`. CI installs Chromium before building.
 
 The link checker validates internal hrefs, images/srcsets, form actions, fragments, sitemap URLs, all 27 legacy redirects, image dimensions/alt attributes, one H1 per content page, and robots consistency. External websites are not crawled.
 

@@ -89,7 +89,7 @@ if (endpoint && !/^https:\/\//.test(endpoint))
     type="submit"
     aria-describedby={!endpoint ? "mail-hint" : undefined}
   >
-    {endpoint ? t.send : t.mail} <Icon />
+    {endpoint ? t.send : t.mail} <Icon name={endpoint ? "right" : "external"} />
   </button>
 </form>
 <script>

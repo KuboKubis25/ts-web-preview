@@ -7,7 +7,7 @@ export interface Row {
   href: string;
   meta?: string;
   download?: boolean;
-  lang?: Lang;
+  lang?: Lang | "both";
 }
 interface Props {
   rows: Row[];
@@ -28,7 +28,7 @@ const { rows, lang } = Astro.props;
         name={
           row.download
             ? "down"
-            : /^https?:/.test(row.href)
+            : /^(https?:|mailto:)/.test(row.href)
               ? "external"
               : "right"
         }
