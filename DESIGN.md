@@ -20,13 +20,15 @@ colors:
   gold-on-dark-hover: "#edd09a"
   aviation: "#25667c"
   aviation-on-dark: "#a4d1df"
+  aviation-on-dark-hover: "#c4e3ec"
+  error: "#9b2c1f"
 typography:
   display:
     fontFamily: "IBM Plex Sans Variable, Arial, PingFang SC, Microsoft YaHei, sans-serif"
-    fontSize: "clamp(2.75rem, 1.6rem + 3.6vw, 4.5rem)"
+    fontSize: "clamp(2.5rem, 1.6rem + 2.4vw, 3.75rem)"
     fontWeight: 500
-    lineHeight: 1.05
-    letterSpacing: "-0.03em"
+    lineHeight: 1.08
+    letterSpacing: "-0.028em"
   h1:
     fontFamily: "IBM Plex Sans Variable, Arial, PingFang SC, Microsoft YaHei, sans-serif"
     fontSize: "clamp(2.25rem, 1.5rem + 2.4vw, 3.5rem)"
@@ -45,6 +47,12 @@ typography:
     fontWeight: 400
     lineHeight: 1.35
     letterSpacing: "-0.01em"
+  prose-h2:
+    fontFamily: "IBM Plex Sans Variable, Arial, PingFang SC, Microsoft YaHei, sans-serif"
+    fontSize: "1.75rem"
+    fontWeight: 500
+    lineHeight: 1.25
+    letterSpacing: "-0.015em"
   h3:
     fontFamily: "IBM Plex Sans Variable, Arial, PingFang SC, Microsoft YaHei, sans-serif"
     fontSize: "1.375rem"
@@ -98,8 +106,12 @@ spacing:
   "9": "96px"
   "10": "128px"
   gutter: "clamp(20px, 5vw, 64px)"
+  grid-gap: "24px"
   section-y: "clamp(64px, 3rem + 4vw, 120px)"
   container: "1312px"
+  measure: "38rem"
+  header: "72px"
+  header-compact: "60px"
 components:
   button-primary:
     backgroundColor: "{colors.ink}"
@@ -157,216 +169,235 @@ components:
     textColor: "{colors.ink}"
     typography: "{typography.body}"
     padding: "16px 0"
+    height: "56px"
 ---
 
 # Design System: Testing Service
+
+<!-- Round 2 (2026-11-12): refined after the v1 review (docs/review/review-2.md). Changes from round 1 are
+summarised in "Changes in round 2" at the end. Where this file and review-1.md disagree, this file wins. -->
 
 ## Overview
 
 **Creative North Star: "The Inspection Report"**
 
-The site should read like a well-made inspection report or a certificate dossier from a serious technical body: a strict grid, hairline rules, labelled fields, numbered items, generous margins, and one signature mark (the gold of the seal). Authority comes from order and precision, not from decoration. Every label carries real information (a jurisdiction, a regulation, a file type, a section name), and anything that only looks "technical" gets cut.
+The site should read like a well-made inspection report or a certificate dossier from a serious technical body: a strict grid, hairline rules, labelled fields, numbered items, generous margins, and one signature mark (the gold of the seal). Authority comes from order and precision, not from decoration. Every label carries real information (a jurisdiction, a regulation, a file type, a section name it doesn't already repeat), and anything that only *looks* "technical" gets cut.
 
-This is a refinement of the incumbent v0 world (graphite-navy, warm paper, gold, IBM Plex Sans, square corners, hairlines), not a replacement. What changes is discipline: one type scale, one spacing scale, one 12-column grid with fixed column starts, one button family, one section-header pattern, one list-row pattern, and one image treatment, used identically on every page and in every language. The dark colour appears in exactly three places: the home hero, the header CTA/buttons, and the footer. Everything else sits on paper and stone.
+This is a refinement of the incumbent world (graphite-navy, warm paper, gold, IBM Plex Sans, square corners, hairlines), not a replacement. The discipline is: one type scale, one spacing scale, one 12-column grid with fixed column starts and **one collapse rule**, one button family, one section-header pattern, one list-row pattern, one page ending, one image treatment, used identically on every page, in both divisions and in every language. The dark colour appears in exactly three places: the home hero, buttons/header CTA, and the footer. Everything else sits on paper and stone.
 
-Density is calm and document-like: long legal prose is the core content, so the reading column is narrow (max 68ch) and the page relies on whitespace and rules rather than boxes.
+Density is calm and document-like: long legal prose is the core content, so the reading column is narrow (`measure` = 38rem ≈ 70 characters) and the page relies on whitespace and rules rather than boxes.
 
 **Key Characteristics:**
 - Graphite ink on warm paper, gold used as a seal (sparingly), aviation blue as the division accent.
 - IBM Plex Sans only. Hierarchy comes from size and weight, never from extra typefaces.
 - Square corners everywhere (0px). Hairline 1px rules instead of shadows and boxes.
-- A 12-column grid where *content always starts at column 5* on desktop, so every page shares the same left edge for reading text.
-- No decorative microcopy, no faux-technical captions, no section numbering for its own sake.
+- A 12-column grid where *reading content always starts at column 5* on desktop; below 1080px everything is one column.
+- No decorative microcopy, no faux-technical captions, no labels that repeat their own heading.
 
 ## Colors
 
 A restrained, warm-neutral palette: graphite-teal ink, paper and stone neutrals, one gold accent, and a separate aviation blue that replaces gold inside the Aviation division.
 
 ### Primary
-- **Seal Gold** (`gold`): the brand accent on light surfaces. Used for the single full stop that ends each page's h1, the active-nav underline, hover colour of text links, the focus ring, and small numerals in service cards. AA as text on paper (5.27:1) and stone (4.8:1). Never a background fill on light surfaces.
-- **Seal Gold on Dark** (`gold-on-dark`): the same role on ink surfaces. It's the only colour used as a button fill (primary button on dark: home hero, footer). 8.47:1 against ink.
+- **Seal Gold** (`gold`): the brand accent on light surfaces. Used for the full stop that ends each page's h1, the active-nav underline, hover colour of text links and list rows, the focus ring, and card numerals. AA as text on paper (5.27:1) and stone (4.8:1). Never a background fill on light surfaces.
+- **Seal Gold on Dark** (`gold-on-dark`): the same role on ink surfaces, and the fill of `button-on-dark` (home hero, footer). 8.47:1 against ink.
 
 ### Secondary
-- **Aviation Blue** (`aviation`) / **Aviation Blue on Dark** (`aviation-on-dark`): the division accent. Inside `body.aviation` (all three aviation pages) and inside the home "Aviation" teaser it *replaces* gold one for one in every accent role: h1 full stop, eyebrow, active underlines, link hover, focus ring, footer arrows. It's never used alongside gold in the same component.
+- **Aviation Blue** (`aviation`) / **on Dark** (`aviation-on-dark`) / **on Dark hover** (`aviation-on-dark-hover`): the division accent. Inside `body.aviation` (all three aviation pages) and `.aviation-scope` (home Aviation teaser) it *replaces* gold one for one in every accent role, **including the `button-on-dark` fill and its hover** (`aviation-on-dark` → `aviation-on-dark-hover`). Never used alongside gold in the same component.
 
 ### Neutral
 - **Graphite Ink** (`ink`): headings, UI text, primary button fill, dark surfaces (home hero, footer).
-- **Ink Raised** (`ink-raised`): the only second dark tone. Used for the image-overlay surface on dark, and for the mobile menu panel when it's opened over a dark hero. Replaces the ad-hoc `#203c49`.
-- **Ink Hover** (`ink-hover`): hover state of ink buttons. Replaces the ad-hoc `#33494e`.
-- **Body Text** (`text`): long-form prose paragraphs and list items (9.3:1). Replaces the ad-hoc `#465659`.
+- **Ink Raised** (`ink-raised`): the only second dark tone (image placeholder on dark, mobile menu over a dark hero).
+- **Ink Hover** (`ink-hover`): hover state of ink buttons.
+- **Body Text** (`text`): long-form prose and list items (9.3:1).
 - **Muted** (`muted`): metadata, eyebrows on light, captions, breadcrumb, form help (5.78:1 on paper).
-- **Paper** (`paper`): the page background.
-- **Stone** (`stone`): alternate section band and form panel. Replaces the ad-hoc `#eceee9` literals.
-- **White** (`white`): input fields and button text on ink. Not a section background.
-- **Hairline** (`line`): all 1px dividers and list rules on light.
-- **Strong Hairline** (`line-strong`): input borders and the secondary-button border (3.19:1, meets 1.4.11 non-text contrast; the v0 `#98a5a3` fails at 2.39:1).
-- **Hairline on Dark** (`line-on-dark`), **Text on Dark** (`text-on-dark`), **Muted on Dark** (`muted-on-dark`): the footer and hero equivalents.
+- **Paper** (`paper`): the page background. **Stone** (`stone`): alternate section band and form panel. **White** (`white`): inputs and text on ink, never a section background.
+- **Hairline** (`line`), **Strong Hairline** (`line-strong`, input and secondary-button borders, 3.19:1), **Hairline/Text/Muted on Dark**: as named.
+- **Error** (`error`): invalid field border and message only.
 
 ### Named Rules
-**The Seal Rule.** Gold (or aviation blue) covers well under 5% of any screen. It marks one thing per component: an active state, a numeral, or the full stop. If two gold elements sit side by side, one of them is wrong.
+**The Seal Rule.** Gold (or aviation blue) covers well under 5% of any screen. It marks one thing per component: an active state, a numeral, or the full stop.
 
-**The One Full Stop Rule.** The coloured full stop is a brand signature with exactly one use: the end of the page's h1 (the home display headline included). Never on h2, card titles, the footer, or form headings.
+**The One Full Stop Rule.** The coloured full stop ends the page's h1 (home included) and nothing else. In Chinese the h1 ends with the same Latin gold `.` (not `。`), for one brand mark across languages.
 
-**The Accent Swap Rule.** Components read `var(--accent)` / `var(--accent-on-dark)` and never a literal gold. `body.aviation` and `.aviation-scope` reassign both variables. A hard-coded gold anywhere means a missed swap.
+**The Accent Swap Rule.** Components read `var(--accent)`, `var(--accent-on-dark)` and `var(--accent-on-dark-hover)` and never a literal colour. `body.aviation` and `.aviation-scope` reassign all three. A hard-coded gold anywhere means a missed swap; a swap without a distinct hover value is a bug.
 
-**The Visible Focus Rule.** The focus ring is `2px solid var(--focus)` at 3px offset. `--focus` = `--accent` on light surfaces, and every dark band (`.on-dark`: home hero, footer, mobile menu over dark) sets `--focus: var(--accent-on-dark)`. A ring on ink at the light-surface accent measures 2.3–2.7:1 and fails 3:1.
+**The Visible Focus Rule.** `2px solid var(--focus)` at 3px offset (2px for inputs). `--focus` = `--accent` on light surfaces; every `.on-dark` band sets `--focus: var(--accent-on-dark)`.
 
-**The Two-Dark Rule.** Only `ink` and `ink-raised` exist as dark surfaces. Two dark bands are never stacked against each other without a paper or stone section between them, except the footer.
+**The Two-Dark Rule.** Only `ink` and `ink-raised` exist as dark surfaces. Two dark bands are never stacked without a paper or stone section between them, except the footer.
 
 ## Typography
 
-**Display / Body Font:** IBM Plex Sans Variable (fallback Arial, then PingFang SC / Microsoft YaHei for CJK)
-
-**Character:** a single engineered grotesque with a slight typewriter warmth. It reads like technical documentation set by a careful typographer. Weight 500 for headings, 400 for text, 600 only for labels and h4.
+**Font:** IBM Plex Sans Variable (fallback Arial, then PingFang SC / Microsoft YaHei for CJK). Weight 500 for headings, 400 for text, 600 only for labels, h4 and the brand wordmark.
 
 ### Hierarchy
-- **Display** (500, `clamp(2.75rem, 1.6rem + 3.6vw, 4.5rem)`, lh 1.05, -0.03em): home hero h1 only. `max-width: 13ch; text-wrap: balance`.
-- **H1** (500, `clamp(2.25rem, 1.5rem + 2.4vw, 3.5rem)`, lh 1.1, -0.025em): interior page titles. `max-width: 20ch; text-wrap: balance`.
-- **H2** (500, `clamp(1.75rem, 1.3rem + 1.4vw, 2.5rem)`, lh 1.15, -0.02em): section headings on structured pages (home sections, gallery, related, contact). Inside prose, h2 uses the **Prose H2** step below.
-- **Statement** (400, `clamp(1.375rem, 1.15rem + 0.8vw, 1.875rem)`, lh 1.35, -0.01em, max 34ch): a full-sentence positioning paragraph, e.g. the home intro "Testing Service je úzko špecializovaná…". Sentences are never set as h2.
-- **Prose H2** (500, 1.75rem / 28px, lh 1.25, -0.015em, margin 56px 0 16px): section headings inside Markdown articles.
-- **H3** (500, 1.375rem / 22px, lh 1.3, -0.01em): card titles, related-service titles, prose sub-sections (prose h3 margin 40px 0 12px).
-- **H4** (600, 1.125rem / 18px, lh 1.4, 0): small headed groups (footer column headings, contact sub-heads, "Potrebujeme:"-style labels in prose).
-- **Lead** (400, `clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem)`, lh 1.55, colour `muted`, max 52ch): the one-sentence page description under h1, section intros.
-- **Body** (400, 1.0625rem / 17px, lh 1.65, colour `text`, max 68ch): prose and card descriptions (cards use **Small**).
-- **Small** (400, 0.875rem / 14px, lh 1.55): card descriptions, footer text, form help, breadcrumb.
-- **UI** (500, 0.9375rem / 15px, lh 1.2): nav links, buttons, list-row titles, language switcher.
-- **Label** (600, 0.75rem / 12px, +0.12em, UPPERCASE, colour `muted`): eyebrows, file-type tags, card numerals, the lang-tag.
+- **Display** (500, `clamp(2.5rem, 1.6rem + 2.4vw, 3.75rem)` = 40→60px, lh 1.08, −0.028em): the home hero h1 only. `max-width: 18ch`, balanced. The display h1 **states the offer** (the compliance sentence from the source copy), never just the company name; the header already says the name.
+- **H1** (500, 36→56px, lh 1.1, −0.025em): interior page titles. `max-width: 20ch`.
+- **H2** (500, 28→40px, lh 1.15, −0.02em): section headings on structured pages (home sections, gallery, footer top row).
+- **Statement** (400, 22→30px, lh 1.35, −0.01em, max 34ch): a full-sentence positioning paragraph (home intro). Sentences are never set as headings.
+- **Prose H2** (500, 28px, lh 1.25, −0.015em, margin 56px 0 16px): h2 inside Markdown.
+- **H3** (500, 22px, lh 1.3): card titles, prose sub-sections (margin 40px 0 12px), and the headings of the blocks that follow an article (downloads, partners, closing CTA).
+- **H4** (600, 18px, lh 1.4): footer column headings, contact sub-heads, "Potrebujeme:"-style labels in prose.
+- **Lead** (400, 18→20px, lh 1.55, `muted`, max 52ch): the one-sentence page description under h1 and section intros. **A lead only ever comes from frontmatter (`description`, `packageLead`)**; the first paragraph of Markdown is ordinary Body.
+- **Body** (400, 17px, lh 1.65, `text`, max `measure`): prose, list-row titles.
+- **Small** (400, 14px, lh 1.55): card descriptions, footer text, form help, breadcrumb, contents nav.
+- **UI** (500, 15px, lh 1.2): nav links, buttons, disclosure summaries, tabs, language switcher. Never 400.
+- **Label** (600, 12px, +0.12em, UPPERCASE, `muted`): eyebrows, file-type meta, card numerals, lang-tag. Never 400.
 
 ### Named Rules
-**The 12px Floor Rule.** Nothing on the site renders below 0.75rem (12px): no 0.49rem logo subtitles, no 0.5rem hero footers, no 0.65rem captions. Text too unimportant to be 12px gets deleted.
+**The 12px Floor Rule.** Nothing renders below 0.75rem (12px).
 
-**The Step Rule.** Every font-size in CSS is one of the tokens above. No component-local sizes (v0 has 40+ distinct sizes; the target has 12).
+**The Step Rule.** Every font-size, weight and line-height pair in CSS is one of the tokens above. No component-local values.
 
-**The Wrap Rule.** All headings get `text-wrap: balance`; paragraphs, leads and list items get `text-wrap: pretty`. No orphans in display type.
+**The Wrap Rule.** Headings `text-wrap: balance`; paragraphs, leads and list items `text-wrap: pretty`.
 
-**The CJK Rule.** Under `:lang(zh)`, headings get `letter-spacing: 0`, `font-weight: 600`, `line-height: 1.3`; body `line-height: 1.8`; labels drop `text-transform` and letter-spacing to `0.04em`. Negative tracking is a Latin-only optimisation.
+**The Measure Rule.** Reading text is capped by `measure` (38rem ≈ 608px ≈ 70 characters of Plex at 17px), not by `68ch` (which renders ≈ 88 characters because Plex is narrower than its `0` glyph). Only running text is capped. List stacks, the closing strip and the related list span the full content area (cols 5–12), so every right-aligned icon sits on the container's right edge.
+
+**The CJK Rule.** Under `:lang(zh)`: headings `letter-spacing: 0`, weight 600, `line-height: 1.3`, `word-break: keep-all` plus `overflow-wrap: anywhere` (so 捷克 / 法律 / 认证 never split; authors may also insert `<wbr>` between phrases); body `line-height: 1.8`; labels keep 600 and drop letter-spacing to 0.04em. **Latin strings inside a ZH page carry `lang="en"`** and keep the Latin rules (uppercase labels, tracking).
+
+**The Source Typography Rule.** Source copy keeps its words. Typographic normalisation is allowed and expected: hyphen used as a dash → en dash with spaces (" – "), no space before punctuation ("zariadenia ." → "zariadenia."), sentence case for headings and titles ("Analýza Rizík" → "Analýza rizík", "Povolenie-povolenie" → "Povolenie – povolenie"). This is not a rewrite.
 
 ## Layout
 
 **Container:** `width: min(100% - 2 × gutter, 1312px)`, centred. Gutter `clamp(20px, 5vw, 64px)`.
 
-**Grid:** 12 columns, column gap 24px (desktop ≥1080px), 16px (below). Every multi-column section uses this grid (no more `1fr 2.1fr`, `1fr 2.3fr`, `1.2fr 1fr`, `1.1fr 1fr`, `1fr 1.3fr` one-offs). Fixed spans:
+**Grid:** 12 columns, `grid-gap` 24px, at ≥1080px. **Below 1080px every grid is one column.** Fixed spans at ≥1080px:
 
 | Pattern | Left | Right |
 |---|---|---|
-| **Label + content** (home intro, article, packages, related heading, gallery heading) | cols 1–3: eyebrow/aside | cols 5–12: content (prose capped at 68ch, i.e. ≈ cols 5–11) |
-| **Page hero with photo** | cols 1–7: eyebrow, h1, lead, action | cols 8–12: image 4:3 |
-| **Home hero** | full-bleed split 50/50, copy aligned to container col 1 | photo bleeds to the right viewport edge |
-| **Contact** | cols 1–4: details | cols 5–12: form panel |
-| **Card grid** | 4 × 3 cols (≥1080), 2 × 6 cols (640–1079), 1 col (<640) | |
-| **Footer** | 4 × 3 cols | |
+| **Label + content** (home intro, packages, article, related, contact) | cols 1–3: label | cols 5–12: content (running text capped at `measure`) |
+| **Full-width section** (home services, gallery, clients) | section header and grid span cols 1–12 | |
+| **Page hero with photo** | cols 1–7: copy | cols 8–12: image |
+| **Home hero** | full-bleed split 7/5: copy aligned to container col 1 | photo bleeds to the right viewport edge |
+| **Aviation teaser** | cols 1–6: image | cols 8–12: copy |
+| **Card grid** | 4 columns when its container is ≥1120px wide, otherwise 2; 1 column below 640px | |
+| **Gallery** | 4 columns, 24px gap (same lines as the card grid); 2 columns below 640px, 16px gap | |
+| **Footer** | 4 × 3 cols; 2 × 1 at 640–1079px; 1 column below 640px | |
 
-**The Column-Five Rule.** On desktop, all reading content (intro statement, prose, packages list, contact form, related list) starts at column 5. A visitor scrolling any page sees one left edge for content and one for labels.
+**The Column-Five Rule.** On desktop, all reading content starts at column 5 (x = 509px at 1440). One left edge for content, one (col 1) for labels and full-width sections.
 
-**Vertical rhythm** (4px base, tokens `spacing.1–10`):
-- Section padding: `section-y` = `clamp(64px, 3rem + 4vw, 120px)` top and bottom, the same for every section on every page. No per-section overrides.
-- Section header → section content: 48px (32px below 640px).
-- Eyebrow → heading: 16px. Heading → lead: 16px. Lead → action: 32px.
-- Prose paragraph spacing: 0 0 16px; list items 4px apart; lists 16px from surrounding paragraphs.
-- Page hero: breadcrumb at 24px below the header; hero block padding 48px top, 64px bottom; then one hairline; then the article starts after `section-y`/2 (48px).
-- Separation between sections is either a background change (paper ↔ stone) **or** a hairline, never both and never two hairlines in a row.
+**The Collapse Rule (mobile-first).** Every `grid-column` span is declared **only inside `@media (width >= 1080px)`**. Base styles are one column, so nothing can outrank the collapse. No ID selectors in layout CSS. Stacked label + content grids use `row-gap: 0` (the label's own 16px margin is the gap). A layout verification at 390, 640 and 1024px is part of done (see the QA gate in review-2.md).
 
-**Breakpoints:** only two. `sm` = 640px, `md` = 1080px (navigation collapses below `md`). Everything else is fluid via `clamp()`. Remove the v0 1600 / 1250 / 1049 / 700 / 400 set.
+**Vertical rhythm** (4px base):
+- Section padding: `section-y` top and bottom for every section. Exceptions are named: the clients strip (48px), the page hero (48px top, 64px bottom), the article (`section-y / 2` top after the hero hairline).
+- A section that directly follows an article **on the same background** (related, gallery) drops its top padding to 0 and starts 64px after the article's last block; an article's bottom padding then becomes 64px, never `section-y + section-y`.
+- Section header → section content: 48px (32px below 640px). Eyebrow → heading 16px. Heading → lead 16px. Lead → action 32px.
+- Separation between sections is a background change **or** a hairline, never both, never two hairlines within 48px of each other, never neither.
 
-**Header height:** 72px desktop, 60px below `md`. The header is `position: sticky; top: 0` on paper with a bottom hairline, so long legal pages keep navigation and the CTA in reach. `scroll-padding-top` = header height + 24px.
+**Breakpoints:** `sm` = 640px, `md` = 1080px, plus one container query (card grid at 1120px inline size). Nothing else.
+
+**Header height:** 72px at ≥1080px, 60px below. Sticky on paper with a bottom hairline. `scroll-padding-top` = header + 24px.
 
 ## Elevation & Depth
 
-Flat by default. Depth comes from tonal bands (paper → stone → ink) and 1px hairlines. The only shadow in the system is on the desktop services dropdown, which floats over content: `box-shadow: 0 12px 32px rgb(24 41 46 / 0.10)`. Cards, forms and images have no shadow and no hover lift.
-
-**The Flat Report Rule.** If something needs separation, use a hairline or a tonal step. A shadow outside the dropdown is a bug.
+Flat. Depth comes from tonal bands and hairlines. The only shadow is the desktop services dropdown: `0 12px 32px rgb(24 41 46 / 0.10)`. Active underlines may be drawn with `box-shadow: inset 0 -2px` (that's a rule, not elevation).
 
 ## Shapes
 
-Square corners (0px) on everything: buttons, cards, inputs, images, the form panel, the dropdown. The only rounded value is the 2px focus-ring radius. Rules are 1px `line` (or `line-on-dark`). Active states use a **2px accent underline** (nav, language switcher, aviation sub-nav), the system's one "marker" shape. Cards may use a 2px accent top rule on hover, the same marker.
+Square corners everywhere; 2px focus-ring radius only. Rules are 1px. Active states use a **2px accent underline** (nav, language switcher, aviation tabs); cards use a 2px accent top rule on hover.
 
-Photography is always rectangular at fixed ratios: 3:2 (cards, gallery), 4:3 (page hero), full-bleed cover (home hero). All photos get the same treatment: `filter: saturate(0.8)`. Logos are never filtered except in the client strip (grayscale).
+Photography: rectangular, fixed ratios: **3:2** (cards, gallery, teaser, page hero), full-bleed cover (home hero). (Round 1's 4:3 page hero is retired: one ratio for every framed photo.) All photos get `filter: saturate(0.8)`. **Resolution rule:** a photo is never displayed larger than its source pixels at 1×; every `<Photo>` emits widths up to 2× its largest displayed size (or the source width, whichever is smaller). The panoramic Testing Center sources (1500 × 408–516px) are cropped for 3:2 to ≈ 680 × 455; use them at ≤ 460px displayed width (gallery, cards), and use a non-panoramic source for any larger frame. Logos are never filtered except in the client strip.
 
 ## Components
 
 ### Header / Navigation / Language switcher
-- **Layout (≥1080px):** brand at col 1; then the nav (Služby ▾, Aviation, Referencie; there is no separate "Kontakt" link, because the CTA *is* the contact entry and goes to the contact page), then the header CTA, then a 1px vertical hairline (24px tall), then the language switcher. All items vertically centred on the 72px bar.
-- **Brand:** the logo **roundel only**, cropped from `logo_zlate.png` (the gold ring with red T.S., *without* the red wordmark and tagline bar, which are illegible at header size), 40px tall (32px below `md`), plus the text "TESTING SERVICE" in UI type (15px, 600, +0.04em, uppercase). No tagline in the header; the tagline appears once, in the footer bottom row.
-- **Nav links:** UI type, ink, 44px hit height, 28px gap. Hover: colour `accent`. Current page or section: ink text + 2px `accent` underline 6px below the baseline (the same marker as the language switcher). The "Služby" summary is current on service pages.
-- **Cross-language tag:** when a nav target exists only in another language, append a **lang-tag**: Label type, `muted`, 1px `line` border, padding 1px 4px, 6px left margin (e.g. Referencie `EN`). The same component is used in the nav, the dropdown, card links, the footer and the home clients link, replacing the mixed `<small> EN</small>`, " (EN)" and "(EN)" in labels.
-- **Services dropdown (desktop):** 360px panel, white, 1px `line` border, the dropdown shadow, opening 12px below the bar, left-aligned to the summary. Rows: UI type, 16px vertical padding, hairline between. The first row is "Všetky služby →" in Label style. Chevron: a 10px CSS/SVG chevron, not the `⌄` glyph.
-- **Header CTA:** `button-header` (44px tall, 20px horizontal padding, label + → icon, 8px gap). It must never be taller than the nav hit area.
-- **Language switcher:** three items, SK · EN · 中文, UI type at 14px, 44 × 44 hit area each, current item ink 600 with the 2px accent underline, others `muted`, hover ink.
-- **Below 1080px:** row = brand · language switcher · menu button. The menu button is 44 × 44 minimum, 1px `line-strong` border, showing a 3-line SVG icon plus the label "Menu" (hide the label below 400px, keep `aria-label`). The open panel spans the full width under the header on paper: links at 17px with 52px rows and hairlines between, services listed expanded and indented 16px, the CTA as a full-width `button-primary` at the bottom.
+- **≥1080px:** brand at col 1; nav (Služby ▾, Aviation, Referencie), header CTA, a 24px vertical hairline, language switcher. All vertically centred on the 72px bar.
+- **Brand:** logo roundel only (from `logo_zlate.png`, original colours), 40px (32px below `md`), plus "TESTING SERVICE" (UI size, 600, +0.04em, uppercase), whole brand link 44px tall. Below 640px the wordmark is an intentional **two-line stacked lockup**: 13px/600, line-height 1.1, +0.06em, block height equal to the 32px roundel.
+- **Nav links:** UI, ink, 44px hit height, 28px gap. Hover `accent`. Current: 2px `accent` underline. On the contact page the header CTA is current: render it as `button-secondary` (44px) with `aria-current="page"`.
+- **Services dropdown (desktop):** ships **closed** (`<details>` without `open`); JS opens it in the mobile panel. 360px white panel, 1px `line` border, the dropdown shadow, 12px below the bar. First row "Všetky služby →" in Label 600. Rows UI 500, 16px vertical padding, hairlines. Order and names come from the single service list (see *Content model*).
+- **Lang-tag:** Label 600, `muted`, 1px `line` border, padding 1px 4px, 6px left margin. **Inside a button or on dark:** no border, `color: currentColor`, `opacity: .75`. File rows get the tag from data, never from "(SK)" text in a title.
+- **Language switcher:** SK · EN · 中文, 14px, 44 × 44 each, current ink 600 with the underline, others `muted`.
+- **Below 1080px:** brand · language switcher · menu button (44 × 44, 1px `line-strong`; label "Menu" visible ≥640px, `aria-label` always). Open state: icon becomes ✕, `aria-expanded="true"`; the panel covers the viewport below the header (`height: calc(100dvh - header)`, paper, scrolls internally, body scroll locked). Contents: a Label row "Služby", the four services indented 16px (52px rows, hairlines), Aviation, Referencie, then the CTA as full-width `button-primary`.
 
 ### Buttons
-- **Shape:** square, 48px tall, 24px horizontal padding, UI type, label then icon with a **fixed 12px gap** (not `space-between` with 2rem). The icon is a 16px SVG arrow.
-- **Primary (light surfaces):** ink fill, white text. Hover `ink-hover`. Focus: 2px `accent` outline, 3px offset.
-- **On dark:** `gold-on-dark` fill, ink text. Hover `gold-on-dark-hover`. Used for the home hero action and the footer "contact" action.
-- **Secondary:** transparent, 1px `line-strong` border, ink text. On dark: 1px `rgb(255 255 255 / .4)` border, white text. Used for the interior page-hero CTA (so it doesn't compete with the header CTA) and for "Aviation" on the home teaser.
-- **Text link:** UI type, ink, 1px underline at 4px offset in `line-strong`, turning `accent` on hover.
-- **Arrow grammar (the Arrow Rule):** → internal page, ↗ external site (Drive, EUR-Lex, AIP), ↓ file download or in-page jump. Never decorative.
+- 48px tall (44px header), 24px padding (23px + 1px border for secondary), UI type, label then a 16px SVG icon with a fixed 12px gap (8px in the header).
+- **Primary** (light): ink / white, hover `ink-hover`. **On dark:** `accent-on-dark` fill, ink text, hover `accent-on-dark-hover` (gold in industry, blue in aviation). **Secondary:** transparent, 1px `line-strong`; on dark `rgb(255 255 255 / .4)`.
+- **Text link:** UI, ink, 1px underline at 4px offset in `line-strong`, `accent` on hover. A standalone text link (not inline in prose) has a 44px-tall hit area (`display: inline-flex; min-height: 44px; align-items: center`).
+- **The Arrow Rule:** → internal page, ↗ leaves the site (external site **or** `mailto:`), ↓ file download or in-page jump. Never decorative.
 
 ### Section header
-One pattern for every section on every page: `eyebrow` (Label, `muted`, *informational*: "Služby", "Referencie", "Aviation", "Na stiahnutie"), then 16px, then h2, then an optional lead (16px below, max 52ch), with an optional trailing text link aligned to the h2 baseline on the right (desktop) or below the lead (mobile). In label + content sections the header sits in cols 1–3 (eyebrow) and cols 5–12 (h2 + lead). No numbering ("01 /", "02 /"), no "TESTING SERVICE" filler eyebrows, no coloured full stop.
+`eyebrow` (optional) → 16px → h2 → optional lead (16px, max 52ch) → optional trailing text link.
+
+**The Informative Eyebrow Rule.** An eyebrow must add information that its heading lacks and must not repeat the previous section's eyebrow. If it would repeat or paraphrase the heading ("Služby" over "Naše služby", "Kontakt" over "Kontakt.", "References" over "Our references"), omit it. Allowed eyebrows: the home hero line, the parent section on child pages ("Služby" over a service h1), "Žilina · LZZI" over the gallery, "Aviation" over the home teaser, "Čoskoro" over the Prague office, a Label row inside a list. In label + content sections the label column may be empty.
 
 ### Home hero
-Ink band, `min-height: min(680px, 88svh)`. Copy column: eyebrow in `gold-on-dark` ("Inšpekcie · Certifikácie · Povolenia · CZ + SK", or the localised equivalent from existing copy), display h1 (max 13ch, balanced), lead in `text-on-dark` (max 36ch), one `button-on-dark` (→ #services, ↓ icon). Photo: cover, bleeds right, `object-position: 60% 50%`, the standard saturate(0.8). **No caption bar, no tagline footer** inside the hero. Below 640px: copy first (padding 48px gutter 40px), then the photo at 4:3.
+Ink band, `min-height: min(640px, 80svh)`, grid 7 / 5 at ≥1080px. Copy column is a flex column, **vertically centred** (`justify-content: center`), padding 96px block, 64px right. Contents: eyebrow in `accent-on-dark` ("Inšpekcie · Certifikácie · Povolenia · CZ + SK" / "Inspection · Certification · Permit · CZ + SK"; on the ZH page the same Latin line marked `lang="en"`), display h1 = the compliance sentence + gold full stop, then one `button-on-dark` (→ #services, ↓). No lead paragraph (the h1 is the claim). Photo cover, bleeds right, `object-position: 60% 50%`, srcset up to 1440w. **Below 1080px:** stacked, copy first (padding 48px gutter 40px), then the photo at 3:2 full width.
 
 ### Page hero (interior)
-Breadcrumb (Small, `muted`, full trail: Úvod / Služby / *Current*, or Úvod / Aviation / *Current*; every ancestor a link; current item ink, not linked). Then the grid: cols 1–7 eyebrow (section name), h1 + accent full stop, lead, secondary button; cols 8–12 the 4:3 photo, top-aligned with the eyebrow. Without a photo, the text block spans cols 1–8. One hairline below the hero, always.
+Breadcrumb (Small, full trail, ancestors linked, current item ink). Aviation pages: then the aviation tabs. Then the grid: cols 1–7 [eyebrow per the Informative Eyebrow Rule], h1 + full stop, lead, optional action; cols 8–12 the 3:2 photo, top-aligned with the first text line. Without a photo the copy spans cols 1–8. One hairline below the hero, always. Padding 48px top, 64px bottom on every page (contact included).
+- **Hero action:** service and aviation pages that have downloads show a `button-secondary` "Na stiahnutie ↓" (`#downloads`); otherwise no hero button (the header CTA and the closing strip already ask for contact). Never a second "Kontaktujte nás" in the hero.
+- **Below 1080px:** copy, then the photo at 3:2, `max-height: 50svh`, `object-fit: cover`.
 
 ### Aviation sub-navigation
-On all three aviation pages, directly under the breadcrumb and above the h1 (so the division reads as one place): a row of three tabs in UI type, 44px tall, 32px gap, 1px hairline under the whole row, current tab with the 2px `aviation` underline sitting on that hairline.
+On all three aviation pages, under the breadcrumb, above the h1: three tabs, UI 500, 44px tall, 32px gap, 1px hairline under the row, current tab with the 2px `aviation` underline on that hairline. Horizontal scroll below 640px with the current tab scrolled into view. Because the tabs name the division, aviation page heroes have **no eyebrow**.
 
 ### Service card
-- Grid item linking the whole card; `background: paper` on a stone band.
-- Image 3:2 on top; content padding 24px.
-- Card internals use **CSS subgrid** (`grid-row: span 4; grid-template-rows: subgrid`) so numeral, title, description and link line up across all four cards whatever the title length.
-- Numeral row: Label in `accent` ("01"). No duplicate ↗ icon in the corner.
-- Title: H3. Description: Small, `muted`, from the page's short `description` (one or two sentences), max 4 lines.
-- Link: "Podrobnosti →" text link, pinned to the bottom.
-- Hover/focus-within: 2px `accent` top rule over the image, title gets an underline. No colour or saturation change on the image.
+- Whole card is the link; `paper` on a `stone` band. Image 3:2 on top (16:9 below 640px to shorten the mobile stack); content padding 24px.
+- Content rows use subgrid so numeral, title, description and link line up across a row.
+- Numeral: Label 600 in `accent`. Title: H3, **the same string as the page h1** (single service list). Description: Small `muted`, 1–2 sentences, max 4 lines, **in the card's language**; if the target page doesn't exist in this language, the card shows the localised short description from the home data, and only the link carries the lang-tag.
+- Link: "Podrobnosti →" text link pinned to the bottom. EN "Details", ZH "详情" (same word in every language).
+- Hover/focus-within: 2px accent top rule, title underline.
 
-### Lists
-- **List row** (downloads, external references, related services, capabilities): one component. A hairline-topped stack; each row 16px vertical padding (min 56px tall), UI-type title in ink, an optional Label meta line below (e.g. `PDF`, `XLSX`), the arrow-grammar icon right-aligned. Hover: title in `accent`. The last row closes with a hairline. Adjacent lists merge into one stack with **one** heading; a list is never followed by an empty bordered row.
-- **Capabilities list** (home packages): list rows without icons, Body type in ink, laid out in **2 columns** in cols 5–12 (1 column below 640px), filling column by column (`grid-auto-flow: column` with the row count computed from the item count) so there are no ragged half-empty rows.
-- **Prose lists:** standard bullets in `muted`, 20px indent, items 4px apart, text colour `text`.
+### Lists (one component)
+- **List row:** hairline-topped stack; each row min 56px, 16px vertical padding; title **Body 17px, 500, ink**; optional meta line below in Label 600 `muted` (`PDF`, `XLSX`, `E-MAIL`) or an optional Small `muted` description; the arrow-grammar icon right-aligned, 16px. Hover: title and icon in `accent`. The last row closes with a hairline. Used for downloads, external links, e-mail rows, related pages and contact details.
+- **Disclosure row:** a list row whose icon is + / −. When it follows a list it is the **last row of that stack** (no extra margin, no second top rule).
+- **Capabilities list** (home packages): list rows without icons, Body 400 ink, 2 columns filling column by column; 1 column below 640px.
+- **Prose lists:** bullets in `muted`, 20px indent, 4px between items, nested lists indented a further 20px.
 
-### Article (prose page)
-Label + content grid. Aside (cols 1–3): `position: sticky; top: header + 24px`; "Obsah" eyebrow plus links to the page's h2s, Small type, 1px left rule, current/hover in `accent`. It's shown only when the page has ≥2 h2s of ≤80 characters each, and hidden below 1080px. No "TESTING SERVICE / CZ + SK" side note. Content (cols 5–11): `.prose`, max 68ch. After the prose, in order: downloads and links (one merged list-row stack), partners, then a closing CTA strip (hairline, h4 "Máte otázku k tejto službe?" or the existing `t.cta` string, plus a primary button).
+### Article (prose page) and the one page ending
+Label + content grid. Aside (cols 1–3, sticky at header + 24px): "Obsah" eyebrow plus links to the page's h2s, Small, 1px left rule, current in `accent`; shown when the page has ≥2 non-empty h2s, hidden below 1080px. Content (cols 5–12): `.prose` capped at `measure`.
+
+After the prose, **every service page and every aviation page** ends with the same sequence, each block 48px apart, each headed in H3:
+1. **Na stiahnutie a odkazy** (`#downloads`): one merged list-row stack (files, external references, e-mail rows). Omit when empty.
+2. **Partners** (aviation index only): partner image at its natural size (≤480px), no white box (`mix-blend-mode: multiply` or a transparent asset).
+3. **Closing strip:** a 1px hairline, H3 "Máte otázku k tejto službe?" (EN "Questions about this service?", ZH "对这项服务有疑问？"), the page's `closing` text in Body `text` if it exists and is not the same sentence as the heading, then `button-primary` with `t.cta`. The heading never equals the button label.
+4. **Related** (label + content section, top padding 0, 64px after the closing strip): label "Ďalšie služby" (industry) or "Aviation" (aviation pages); a list stack of the sibling pages, titles in list-row type, → icon.
 
 ### Gallery
-Section header (eyebrow "Žilina · LZZI", h2), then a 4-column 3:2 grid (2 columns below 640px), 16px gap. The "more photos" disclosure uses the same list-row look (hairline, UI-type label, + / − icon at 16px).
+On a **stone** band (it follows the article, so it needs the tonal change). Full-width section header: eyebrow "Žilina · LZZI", h2. 4-column 3:2 grid, 24px gap; 2 columns 16px gap below 640px. "Ďalšie fotografie (57)" as a disclosure row.
 
 ### Forms (contact)
-Form panel on `stone`, 40px padding (24px below 640px), square. Labels: Small 500 ink, 8px above the field. Inputs: `input` token, white, 1px `line-strong`, 48px tall, textarea min 160px. Focus: 2px `accent` outline at 2px offset, border becomes ink. Invalid (after interaction, `:user-invalid`): border and help text in a dark red `#9b2c1f` with the message below the field. Required marker: `*` in `muted` plus the existing "Povinné polia…" note. Two fields per row ≥640px.
+Contact section: label + content grid at ≥1080px (details cols 1–4, form cols 5–12), **one column below 1080px** with the form first and the details after. Form panel on `stone`, 40px padding (24px below 640px). Labels Small 500 ink, 8px above the field. Inputs: `input` token. Focus: 2px `accent` outline at 2px offset, border ink. Invalid (`:user-invalid`): `error` border and message. Two fields per row ≥640px.
+- **Details column:** H3 company name; address in **Body** `text` (not Lead); e-mail rows as list rows (↗, meta `E-MAIL`); H4 "Aviation" + its e-mail row; then "Čoskoro" eyebrow + H4 "Praha" (SK) / "Prague" (EN) + address, separated by 48px **without** another hairline (the list already closes with one).
 
 ### Clients strip
-Eyebrow "Naši klienti" left, text link "Referencie EN →" right (with lang-tag). Logos sit in a 5-column row (3 + 2 centred below 640px), each normalised to a **36px optical height** (tune per logo: wide marks such as Dürr shorter, round marks such as VW taller, so they read as equal), grayscale, `opacity: .7`, 1 at hover. 48px above and below; one hairline below.
+Full-width section, 48px block padding, one hairline below. Row: eyebrow "Naši klienti" left, text link "Referencie EN →" right (44px hit area). Logos in 5 equal cells (3 + 2 centred below 640px), **40px optical height** (tuned per logo via `--logo-scale`), grayscale, `opacity: .7`, 1 on hover. On the references page the same strip sits between the hero hairline and the article, with the article keeping its own top hairline: no strip-specific border overrides.
 
-### Aviation teaser (home)
-**Light** section on stone (not a third dark band) inside `.aviation-scope`, so accents swap to aviation blue. Grid: image cols 1–6 at 3:2, copy cols 8–12: eyebrow "Aviation", h2 "Testing Service Aviation", lead, secondary button "Podrobnosti →". The TS-A logo (`TS-A_Logo.png`) may appear at 56px above the eyebrow as the division mark.
+### Aviation teaser (home, all three languages)
+Light section on stone inside `.aviation-scope`. Image cols 1–6 at 3:2 (a non-panoramic or 2× source; not the same photo as the aviation page hero), copy cols 8–12: optional TS-A mark 56px, eyebrow "Aviation", h2 "Testing Service Aviation", lead, `button-secondary` "Podrobnosti →" (with lang-tag on ZH, linking the EN page). Below 1080px stacked, image 3:2 `max-height: 50svh`.
 
 ### Footer
-Ink band, padding `section-y` top, 32px bottom.
-- **Top row:** h2 "Kontaktujte nás" (white, no full stop) in cols 1–7; on the right (cols 8–12, baseline-aligned) the email as a text link at Lead size and a `button-on-dark` "Napíšte nám →" to the contact form. 48px below, one `line-on-dark` hairline.
-- **Grid (4 × 3 cols):** Company (name, address, main email), Legal (court register, IČO, IČ DPH, privacy link), Downloads (the files listed directly as links, no `<details>` wrapper repeating the heading), Aviation ("Aviation Testing Center · Letisko Žilina (LZZI)", exactly as the content already states it; the info.aviation email; links to the three Aviation pages). Column headings H4 white; text Small `text-on-dark`; links without underline, underline on hover, 32px min hit height.
-- **Bottom row:** hairline, then "© Testing Service s.r.o." left and the tagline "Inspection · Certification · Permit" (Label, `muted-on-dark`) right. Below 640px both stack left-aligned.
+Ink band, padding `section-y` top (64px when the top row is hidden, i.e. on the contact page), 32px bottom.
+- **Top row:** h2 `t.cta` (white, no full stop) in cols 1–7; cols 8–12 right-aligned: the division's e-mail as a text link at Lead size (industry pages: jakub.kubis@; aviation pages: info.aviation@), then `button-on-dark` "Napíšte nám →". 48px below, one `line-on-dark` hairline. Below 1080px all left-aligned.
+- **Grid:** Company (name, address; no e-mail, it's in the top row), Legal (register, IČO, IČ DPH, privacy link), Downloads (**industry documents and GDPR only**), Aviation (location line, info.aviation e-mail, links to the three pages, then the aviation documents). Headings H4 white; text Small `text-on-dark`; links 32px min height, icon directly after the label (8px), underline on hover.
+- **Bottom row:** hairline, "© Testing Service s.r.o." left, tagline Label `muted-on-dark` right; stacked below 640px.
+
+## Content model (single sources of truth)
+- **Services:** one ordered array `["permits", "consulting", "risk", "inspections"]` exported from one module and consumed by the dropdown, mobile menu, home cards, related lists and footer. Each service has exactly one display title per language, used as the h1, card title, dropdown row and related row. (The owner picks the final short titles; until then, use the page `title`.)
+- **Aviation pages:** `["aviation", "instruments", "maintenance"]`, same treatment.
+- **Downloads:** `{ file, title, page, lang, division: "industry" | "aviation" }`. Titles contain no language notation; `lang` drives the lang-tag.
+- **UI strings:** every key exists in SK, EN and ZH; no English strings in the ZH table.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** take every size, colour, space and breakpoint from the frontmatter tokens, exposed as CSS custom properties in `src/styles/global.css` (`--color-*`, `--text-*`, `--space-*`).
-- **Do** start reading content at grid column 5 on desktop on every page (the Column-Five Rule).
-- **Do** use the same section padding (`section-y`) for every section.
-- **Do** swap accents through `--accent` / `--accent-on-dark` only (the Accent Swap Rule).
-- **Do** label cross-language links with the one lang-tag component.
-- **Do** keep the reading column at max 68ch and set full sentences as Statement or Lead, never as headings.
-- **Do** crop the logo to the roundel for the header and keep the brand assets' original colours.
+- **Do** take every size, colour, space and breakpoint from the tokens, exposed as `--color-*`, `--text-*`, `--space-*`.
+- **Do** write layout CSS mobile-first: spans only inside `@media (width >= 1080px)`.
+- **Do** start reading content at column 5 on desktop and cap running text at `measure`.
+- **Do** end every service and aviation page with the same four-block ending.
+- **Do** swap accents (including button fill and hover) through `--accent*` only.
+- **Do** label cross-language links with the lang-tag component, from data.
+- **Do** check every page at 390, 640, 1024 and 1440px before calling a change done.
 
 ### Don't:
-- **Don't** add decorative "technical" microcopy: no "TESTING SERVICE / CZ + SK" eyebrows on every hero, no "01 / TESTING SERVICE" section numbers, no "CZ · SK / EN · STN · ČSN" floating labels, no caption bar on photos, no repeated tagline lines.
-- **Don't** set any text below 12px.
+- **Don't** add decorative "technical" microcopy, or eyebrows that repeat their heading.
+- **Don't** set any text below 12px, or UI/Label text at weight 400.
 - **Don't** put the coloured full stop on anything except the page h1.
-- **Don't** stack two dark bands, or use a dark tone other than `ink` / `ink-raised`.
-- **Don't** create component-local font sizes, paddings or grid ratios.
-- **Don't** use shadows except on the services dropdown, or rounded corners anywhere.
-- **Don't** let a CTA button be taller than 48px (44px in the header).
-- **Don't** use ↗ for internal links.
+- **Don't** repeat the same call to action twice in one viewport, or use the CTA string as both heading and button.
+- **Don't** stack two dark bands, use shadows outside the dropdown, or round corners.
+- **Don't** infer a lead from the first Markdown paragraph.
+- **Don't** display a photo larger than its source resolution.
+- **Don't** use ↗ for internal links or → for `mailto:`.
+
+## Changes in round 2
+Display token resized for a sentence-length claim (40→60px, 18ch) and the hero grid widened to 7/5; Collapse Rule (mobile-first spans, `row-gap: 0`); container-query card grid; one photo ratio (3:2) and a resolution rule; `measure` token replaces 68ch; list-row title fixed at Body 500 for every list; disclosure becomes the last row of its list; Informative Eyebrow Rule; one page ending for service and aviation pages; hero action is the download jump, never a second contact button; aviation button fill and hover tokens; lang-tag inside buttons/on dark; mailto uses ↗; dropdown ships closed; mobile menu open state; footer splits industry and aviation documents and shows the division e-mail; ZH Latin strings marked `lang="en"` plus `keep-all` headings; Source Typography Rule; content model.
