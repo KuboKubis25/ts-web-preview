@@ -48,12 +48,13 @@
   --text-h1: clamp(2.25rem, 1.5rem + 2.4vw, 3.5rem);
   --text-h2: clamp(1.75rem, 1.3rem + 1.4vw, 2.5rem);
   --text-statement: clamp(1.375rem, 1.15rem + 0.8vw, 1.875rem);
-  --text-prose-h2: 1.75rem;
   --text-h3: 1.375rem;
   --text-h4: 1.125rem;
   --text-lead: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);
   --text-body: 1.0625rem;
   --text-small: 0.875rem;
+  --text-field-label: var(--text-small);
+  --leading-field-label: var(--leading-small);
   --text-ui: 0.9375rem;
   --text-label: 0.75rem;
   --space-1: 4px;
@@ -73,6 +74,7 @@
   --measure: 40rem;
   --rail-top: var(--space-9);
   --rail-baseline-offset: 6px;
+  --rail-offset-heading: 16px;
   --nav-gap: 28px;
   --header-height: var(--header);
   --control-height: var(--space-7);
@@ -440,15 +442,17 @@ body.aviation,
   padding-inline: var(--button-header-x);
 }
 .text-link {
-  display: inline-flex;
-  align-items: center;
+  display: inline-block;
+  padding-block: calc((var(--hit-height) - 1lh) / 2);
   min-height: var(--hit-height);
-  gap: var(--space-2);
   font-size: var(--text-ui);
   line-height: var(--leading-ui);
   font-weight: var(--weight-ui);
   text-decoration: underline;
   text-decoration-color: var(--color-line-strong);
+}
+.text-link .icon {
+  margin-left: var(--space-2);
 }
 a.text-link:hover {
   color: var(--accent);
@@ -954,6 +958,9 @@ html.menu-open {
   overflow-y: auto;
   padding-top: var(--rail-baseline-offset);
 }
+.rail--heading-first {
+  padding-top: var(--rail-offset-heading);
+}
 .facts {
   margin: 0;
 }
@@ -997,6 +1004,9 @@ html.menu-open {
   border-left: 1px solid var(--color-line);
   color: var(--color-muted);
   white-space: normal;
+  display: block;
+}
+.contents .rail-text {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -1032,6 +1042,21 @@ html.menu-open {
 }
 .prose :is(h2, h3, h4) {
   color: var(--color-ink);
+}
+.prose .prose-label {
+  font: var(--weight-h4) var(--text-h4)/var(--leading-h4) var(--font-h4);
+  letter-spacing: var(--tracking-h4);
+}
+.prose :is(h2, h3, h4) + :is(h3, h4) {
+  margin-top: var(--space-4);
+}
+.prose .key-line {
+  font: var(--weight-list) var(--text-list)/var(--leading-list) var(--font-list);
+  color: var(--color-ink);
+  margin-block: var(--space-5) var(--space-1);
+}
+.prose .key-line + p {
+  margin-top: var(--space-1);
 }
 .prose > :first-child {
   margin-top: 0;
@@ -1153,9 +1178,9 @@ html.menu-open {
 }
 .enquiry-form label {
   display: block;
-  font-size: var(--text-small);
-  line-height: var(--leading-small);
-  font-weight: var(--weight-display);
+  font-size: var(--text-field-label);
+  line-height: var(--leading-field-label);
+  font-weight: var(--weight-field-label);
   margin-top: var(--space-4);
 }
 .enquiry-form :is(input, textarea) {
@@ -1265,13 +1290,19 @@ html.menu-open {
   line-height: var(--leading-small);
 }
 .footer-grid ul {
+  display: grid;
+  row-gap: var(--space-2);
   list-style: none;
   padding: 0;
   margin: 0;
 }
+.footer-grid li {
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+}
 .footer-grid a {
-  display: flex;
-  align-items: center;
+  vertical-align: top;
+  display: inline-block;
   min-height: var(--hit-height);
   text-decoration: none;
   overflow-wrap: anywhere;
@@ -1468,16 +1499,22 @@ body:lang(zh),
     border-bottom: 0;
   }
   .footer-grid a {
-    min-height: var(--space-6);
+    min-height: var(--space-5);
   }
 }
 @media (width < 1080px) {
+  /* Keep the current item in the trail while its text wraps during font swap. */
+  .breadcrumb li[aria-current] {
+    flex: 1;
+    min-width: 0;
+  }
   .breadcrumb li {
     display: inline-flex;
     align-items: center;
   }
   .breadcrumb a {
     display: inline-flex;
+    min-width: var(--hit-height);
     min-height: var(--hit-height);
     align-items: center;
   }
@@ -1725,5 +1762,14 @@ body:lang(zh),
 .link-list .email-domain .icon { display: inline; vertical-align: middle; }
 
 @media (width >= 1080px) {
-  .page-hero > img { aspect-ratio: 16 / 9; }
+  .page-hero > img {
+    align-self: stretch;
+    contain: size;
+    width: 100%;
+    height: auto;
+    min-height: 240px;
+    max-height: 300px;
+    aspect-ratio: auto;
+    object-fit: cover;
+  }
 }

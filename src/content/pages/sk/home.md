@@ -40,12 +40,12 @@ Naše služby pripravené na mieru pre dodávateľov (výrobcov) technológií d
 
 Operačný balík služieb pre dodávateľov sa sústreďuje na zaistenie dodržania lokálnych právnych nárokov (dodatočne k EU smerniciam (CE) ) dodávaných technológii do Českej a Slovenskej republiky. Tieto služby pomáhajú zabezpečiť hladký predaj technológie a pridávajú hodnotu v podobe rýchleho a bezproblémového odovzdania technológie prevádzkovateľom. Kompletný balík zahŕňa nasledovné služby.
 
-- inšpekcia a validácia produktu / technológie počas výroby alebo inštalácie pred odovzdaním zákazníkovi
+- inšpekcia a validácia produktu/technológie počas výroby alebo inštalácie pred odovzdaním zákazníkovi
 
-- zabezpečte, že Váš produkt / technológia je v súlade nielen s normami EN ale aj s lokálnou legislatívou a normami ČSN a STN
+- zabezpečte, že Váš produkt/technológia je v súlade nielen s normami EN ale aj s lokálnou legislatívou a normami ČSN a STN
 - usadenie technológie do lokálnej legislatívy
 
-- dodajte technológiu s predpripravenými inšpekčnými a revíznymi lehotami a požiadavkami na odborné spôsobilosti pre obsluhy / opravy
+- dodajte technológiu s predpripravenými inšpekčnými a revíznymi lehotami a požiadavkami na odborné spôsobilosti pre obsluhy/opravy
 - vypracovanie potrebnej bezpečnostnej dokumentácie v súlade s požiadavkami národnej legislatívy
 
 - zvýšte hodnotu vášho produktu dodaním právne korektnej sprievodnej dokumentácie a návodov na obsluhu

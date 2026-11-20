@@ -26,22 +26,22 @@ Technológia dodávaná zo štátov mimo Európskej únie je vystavená značné
 ### Časté prípady našich poradenských služieb sa zameriavajú na niekoľko kľúčových situácii
 
 - bezpečnostné návrhy a riešenia pre technológie
-- Systémy EX pre potenciálne výbušné prostredie
+- systémy EX pre potenciálne výbušné prostredie
 - hygienické parametre v pracovných priestoroch
 - protipožiarna ochrana budov a technológií
 - environmentálne podmienky
 
-## Prevádzkovateľ: Prísna kontrola technológie pred prevzatím
+## Prevádzkovateľ: prísna kontrola technológie pred prevzatím
 
 ### Zabezpečenie, že platíte za technológiu bez akýchkoľvek právnych problémov
 
-Dodávatelia často považujú iba vyhlásenie CE za dostatočnú podmienku, aby ich technológia fungovala kdekoľvek v EÚ. Na Slovensku a v Českej republike to však nie je pravda. Vzhľadom na staršie STN / ČSN, vyhlášky a národné prílohy k normám STN-EN existuje množstvo dodatočných požiadaviek, ktoré musia byť splnené, aby bola technológia v súlade s miestnymi zákonmi. Ak sa podrobí kontrole, technológia s iba CE môže spôsobiť potenciálne oneskorenie výroby a/alebo rôzne právne poplatky v závislosti od závažnosti nedostatku.
+Dodávatelia často považujú iba vyhlásenie CE za dostatočnú podmienku, aby ich technológia fungovala kdekoľvek v EÚ. Na Slovensku a v Českej republike to však nie je pravda. Vzhľadom na staršie STN/ČSN, vyhlášky a národné prílohy k normám STN-EN existuje množstvo dodatočných požiadaviek, ktoré musia byť splnené, aby bola technológia v súlade s miestnymi zákonmi. Ak sa podrobí kontrole, technológia s iba CE môže spôsobiť potenciálne oneskorenie výroby a/alebo rôzne právne poplatky v závislosti od závažnosti nedostatku.
 
 TESTING SERVICE poskytuje podrobnú a dôslednú kontrolu a inšpekciu plnenia právnych požiadaviek a noriem ČSN, STN, EN pre technológiu (návrh) a požadovanú dokumentáciu. Technológia potom buď prešla due diligence procesom s TS schválením s výsledkom, že dodržiava miestne právne predpisy, alebo výsledok inšpekcie vyústi vo vypracovanie odborného posudku TS, v ktorom sa podrobne opisujú nedostatky, ktoré je potrebné opraviť pred inštaláciou technológie.
 
 ## Validácia technológie pred dodaním špeciálne pre dodávateľov
 
-Každá nová technológia dodávaná do Českej a Slovenskej republiky, musí byť v súlade s miestnymi právnymi predpismi a normami. Vzhľadom na rozdiely medzi normami a legislatívou EÚ a CZ / SK, certifikácia CE o zhode nestačí na to, aby poskytla úplnú ochranu pre prevádzkovateľa a obsluhu, a preto je potrebné vykonať ďalšie úpravy, aby sa zabezpečilo, že stroj/technológia je v súlade s miestnou legislatívou a spĺňa bezpečnostné požiadavky.
+Každá nová technológia dodávaná do Českej a Slovenskej republiky, musí byť v súlade s miestnymi právnymi predpismi a normami. Vzhľadom na rozdiely medzi normami a legislatívou EÚ a CZ/SK, certifikácia CE o zhode nestačí na to, aby poskytla úplnú ochranu pre prevádzkovateľa a obsluhu, a preto je potrebné vykonať ďalšie úpravy, aby sa zabezpečilo, že stroj/technológia je v súlade s miestnou legislatívou a spĺňa bezpečnostné požiadavky.
 
 ## Naše skúsenosti
 

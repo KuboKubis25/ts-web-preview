@@ -43,6 +43,7 @@ const safeWidths = [
   width={maxWidth}
   height={Math.floor(maxWidth / aspect)}
   fit="cover"
+  data-photo-name={name}
   data-source-width={src.width}
   data-source-height={src.height}
   style={`--photo-max-width: ${Math.min(src.width, src.height * 1.5)}px`}

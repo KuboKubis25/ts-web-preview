@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "node scripts/prepare.mjs && astro dev",
-    "build": "node scripts/prepare.mjs && astro build && npm run check:layout",
+    "build": "node scripts/prepare.mjs && astro build --force && npm run check:layout",
     "preview": "astro preview",
     "check:links": "node scripts/check-links.mjs",
     "check": "astro check",

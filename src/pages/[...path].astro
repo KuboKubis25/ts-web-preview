@@ -1,11 +1,14 @@
 ---
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import { typography, typographyCopy } from "../../scripts/rehype-typography.mjs";
+import { experimental_AstroContainer as AstroContainer } from "astro/container";
+import { articleOutline } from "../lib/article";
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import partners from "../assets/partners-cropped.png";
 import Facts from "../components/Facts.astro";
 import Icon from "../components/Icon.astro";
+import LinkLabel from "../components/LinkLabel.astro";
 import LangTag from "../components/LangTag.astro";
 import LinkList, { type Row } from "../components/LinkList.astro";
 import Photo from "../components/Photo.astro";
@@ -47,13 +50,14 @@ const services = serviceKeys.map((key) => find(key)!);
 const aviation = aviationKeys.map((key) => find(key)!);
 const content = page ? await render(page) : undefined;
 const Content = content?.Content;
-const headings = content?.headings.filter((h) => h.depth === 2 || h.depth === 3) || [];
+const contentHTML = Content && d?.kind !== "home" ? await (await AstroContainer.create()).renderToString(Content) : "";
+const { headings, headingFirst } = articleOutline(contentHTML);
 // Do not repeat a document already linked directly in the source prose.
 const relevantDownloads = downloads
   .filter((f) => f.page === d?.key && !page?.body?.includes("/s/" + f.file))
   .sort((a, b) => downloadOrder.indexOf(a.kind) - downloadOrder.indexOf(b.kind));
 const rawCopy = homeCopy[lang];
-const copy = { ...rawCopy, intro: typography(rawCopy.intro, lang), capabilities: rawCopy.capabilities.map((text) => typography(text, lang)), services: rawCopy.services.map((service) => typographyCopy(service, lang)) };
+const copy = { ...rawCopy, intro: typography(rawCopy.intro, lang), capabilities: rawCopy.capabilities.map((text) => typography(text, lang, true)), services: rawCopy.services.map((service) => typographyCopy(service, lang, true)) };
 const capabilities = copy.capabilities.length ? copy.capabilities : content?.headings.filter((h) => h.depth === 3).map((h) => h.text) || [];
 // The compliance sentence is existing source copy in all three languages.
 const homeLead = {
@@ -89,7 +93,7 @@ const railEntries = [
   ...(d?.kind === "service" ? [{ slug: "related", text: t.related, depth: 2 }] : []),
 ];
 const featuredNames = [
-  "TESTING_CENTER-26%5B203%5D.jpg",
+  "TESTING_CENTER-03%5B180%5D.jpg",
   "TESTING_CENTER-33%5B210%5D.jpg",
   "TESTING_CENTER-18%5B195%5D.jpg",
   "TESTING_CENTER-10%5B187%5D.jpg",
@@ -155,14 +159,14 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
               <h1>
                 {lang === "zh" ? (
                   homeLead
-                    .split(/(?=在捷克|和斯洛伐克|的法律合规要求)/)
+                    .split(/(?=在捷克和斯洛伐克的|法律合规要求)/)
                     .map((phrase, index) => (
                       <>
-                        <span class="nowrap">
-                          {phrase}
-                          {index === 3 && <span class="gold">.</span>}
+                        <span class={index === 1 ? undefined : "nowrap"}>
+                          {index === 1 ? phrase.split(/(?=斯洛伐克的)/).map((part, i) => <>{i > 0 && <wbr />}<span class="nowrap">{part}</span></>) : phrase}
+                          {index === 2 && <span class="gold">.</span>}
                         </span>
-                        {index < 3 && <wbr />}
+                        {index < 2 && <wbr />}
                       </>
                     ))
                 ) : (
@@ -187,7 +191,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                     : "Industrial production line"
                 }
                 eager
-                widths={[720, 1080, 1440, 1500]}
+                widths={[480, 720, 1080, 1440, 1500]}
                 ratio={0}
                 sizes="(min-width: 1080px) max(42vw, 1080px), 100vw"
               />
@@ -200,14 +204,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                 class="text-link"
                 href={url(find("references")!.data.path + "/")}
               >
-                <span>
-                  {t.references}
-                  <LangTag
-                    current={lang}
-                    target={find("references")!.data.lang}
-                  />
-                </span>
-                <Icon />
+                <LinkLabel title={t.references} current={lang} target={find("references")!.data.lang} />
               </a>
             </div>
             <Logos />
@@ -230,11 +227,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                       <h3>{serviceTitle(p.data, lang)}</h3>
                       <p>{lang === "zh" ? copy.services[i].description.split("。")[0] + "。" : copy.services[i].description}</p>
                       <span class="text-link">
-                        <span>
-                          {t.more}
-                          <LangTag current={lang} target={p.data.lang} />
-                        </span>
-                        <Icon />
+                        <LinkLabel title={t.more} current={lang} target={p.data.lang} />
                       </span>
                     </div>
                   </a>
@@ -350,7 +343,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                 alt={d.kind === "aviation" ? "Testing Service Aviation" : ""}
                 eager
                 widths={[400, 720, 1080, 1440, 2000]}
-                sizes="(min-width: 1080px) 37vw, 100vw"
+                sizes="(min-width: 1080px) max(37vw, 450px), 100vw"
               />
             )}
           </section>
@@ -409,12 +402,12 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
             <div class="wrap article-layout grid" data-rail-entries={railEntries.length} data-source={d.source}>
               <aside>
                 {(d.facts?.length || railEntries.length >= 2) && (
-                  <nav class="rail" aria-label={t.toc}>
+                  <nav class:list={["rail", headingFirst && "rail--heading-first"]} aria-label={t.toc}>
                     {d.facts && <Facts label={t.facts} facts={d.facts} />}
                     {railEntries.length >= 2 && <div class="contents">
                       <span class="eyebrow">{t.toc}</span>
                       {railEntries.map((h) => (
-                        <a class:list={[h.depth === 3 && "rail-subheading"]} href={"#" + h.slug} title={typography(h.text, lang)}>{typography(h.text, lang)}</a>
+                        <a class:list={[h.depth === 3 && "rail-subheading"]} href={"#" + h.slug} title={typography(h.text, lang)}><span class="rail-text">{typography(h.text, lang)}</span></a>
                       ))}
                     </div>}
                   </nav>
@@ -422,7 +415,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
               </aside>
               <div>
                 {d.facts && <Facts label={t.facts} facts={d.facts} class="mobile-facts" />}
-                <article class="prose">{Content && <Content />}</article>
+                <article class="prose" set:html={contentHTML} />
                 {rows.length > 0 && (
                   <section class="downloads" id="downloads">
                     <h2 class="type-h3">{t.downloadsLinks}</h2>

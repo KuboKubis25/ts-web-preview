@@ -14,7 +14,7 @@ Chráňte bezpečnosť svojich zamestnancov tým, že zabezpečíte, aby vaša t
 
 Podľa súčasných právnych predpisov je zamestnávateľ úplne zodpovedný za identifikáciu, znižovanie a odstraňovanie všetkých potenciálnych rizík súvisiacich s technológiou na pracovisku. Riziká musia byť odstránené v súlade s najnovšími vedecko-technickými poznatkami.
 
-## Dodržujete bezpečnostné štandardy a všetky právne predpisy Slovenskej / Českej republiky?
+## Dodržujete bezpečnostné štandardy a všetky právne predpisy Slovenskej/Českej republiky?
 
 Ako tretia strana, TESTING SERVICE poskytuje analýzu, ktorá identifikuje bezpečnostné riziká zamestnancov a potenciálne právne riziká pre prevádzkovateľa. Táto analýza môže byť použitá ako základ pre návrh bezpečnosti, ktorý spĺňa súčasné právne podmienky. V našom projektovom portfóliu sme vyvinuli niekoľko kompletných bezpečnostných návrhov a riešení v mnohých veľkých výrobných zariadeniach po celom Slovensku a Česku.
 

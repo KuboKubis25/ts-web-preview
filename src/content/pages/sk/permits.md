@@ -26,7 +26,7 @@ Podľa vyhlášky MPSVaR SR č. 508/2009 Z. z., technické zariadenia (elektrick
 
 ### Prvé uvedenie do prevádzky
 
-Pred prvým uvedením do prevádzky akejkoľvek technológie, alebo zariadenia je potrebné aby boli vykonané úkony podľa legislatívy (revízie / úradné skúšky sk. A). Tieto činnosti musia byť vykonané špecializovanou a oprávnenou spoločnosťou. TESTING SERVICE to zabezpečí na „kľúč“.
+Pred prvým uvedením do prevádzky akejkoľvek technológie, alebo zariadenia je potrebné aby boli vykonané úkony podľa legislatívy (revízie/úradné skúšky sk. A). Tieto činnosti musia byť vykonané špecializovanou a oprávnenou spoločnosťou. TESTING SERVICE to zabezpečí na „kľúč“.
 
 ### Povolenie na prevádzku
 

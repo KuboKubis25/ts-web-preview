@@ -73,8 +73,7 @@ export function review5Contract() {
     const preceding=start.previousElementSibling;
     check(Math.abs(box(first).top-box(preceding).bottom-expected)<=2,'hairline-gap',{gap:box(first).top-box(preceding).bottom,expected});
   }
-  const photo=hero?.querySelector(':scope > img');
-  if(photo && innerWidth>=1080) check(Math.abs(box(photo).width/box(photo).height-16/9)<0.01,'hero-photo-ratio',box(photo).toJSON());
+  // Round 6 replaces the fixed ratio with the copy-height contract in qa-review6.
   const contact=document.querySelector('.contact-details');
   if(contact){
     check(contact.querySelectorAll('h2.type-h3').length===3 && !contact.querySelector('h3'),'contact-heading-level',location.pathname);
@@ -95,14 +94,14 @@ export function review5Contract() {
 export function typographyLines() {
   if(document.documentElement.lang !== 'sk') return [];
   const failures=[];
-  const blocks=document.querySelectorAll('.prose p, .prose li, .prose h2, .prose h3, .prose h4, .statement, .capabilities li, .lead');
+  const blocks=document.querySelectorAll('.prose p, .prose li, .prose h2, .prose h3, .prose h4, .statement, .capabilities li, .lead, .list-title, .card-content p, .card-content h3');
   for(const block of blocks){
     if(!block.checkVisibility() || block.getBoundingClientRect().height===0)continue;
     const lines=new Map();
     const walker=document.createTreeWalker(block,NodeFilter.SHOW_TEXT);
     while(walker.nextNode()){
       const node=walker.currentNode;
-      if(node.parentElement.closest('code,pre,svg') || node.parentElement.closest('p,li,h2,h3,h4,.statement,.lead')!==block)continue;
+      if(node.parentElement.closest('code,pre,svg') || node.parentElement.closest('p,li,h2,h3,h4,.statement,.lead,.list-title')!==block)continue;
       for(let i=0;i<node.length;i++){
         const range=document.createRange();range.setStart(node,i);range.setEnd(node,i+1);
         const r=range.getBoundingClientRect();if(!r.width||!r.height)continue;
@@ -111,7 +110,7 @@ export function typographyLines() {
     }
     const text=[...lines.entries()].sort((a,b)=>a[0]-b[0]).map(([,line])=>line.trim());
     text.forEach((line,i)=>{
-      if((i<text.length-1 && /(?:^|\s)[AaIiKkOoSsUuVvZz]$/.test(line)) || /^–/.test(line)) failures.push({line,block:block.textContent.slice(0,100)});
+      if((i<text.length-1 && /(?:^|\s)[aikosuvz]$/.test(line) || /(?:^|[.!?:] )[AIKOSUVZ]$/.test(line)) || /^[–/]/.test(line) || (i < text.length-1 && /(?:^|\s)(?:No|č\.|Nr\.)$/.test(line)) || (/(?:Kategória|skupiny|sk\.|TWY)$/.test(line) && /^[AIKOSUVZ](?:\s|$)/.test(text[i+1] || ''))) failures.push({line,block:block.textContent.slice(0,100)});
     });
   }
   return failures;

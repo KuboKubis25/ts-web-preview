@@ -1,3 +1,4 @@
+import { review6Contract, typographyFixtures } from "./qa-review6.mjs";
 import { review5Contract, typographyLines } from "./qa-review5.mjs";
 import { sourceHeadings, normalizeHeading } from "./qa-source-headings.mjs";
 import { chromium } from "playwright";
@@ -7,6 +8,7 @@ import { readFile, readdir, stat, mkdir, writeFile } from "node:fs/promises";
 import { resolve, extname, relative } from "node:path";
 import assert from "node:assert/strict";
 
+typographyFixtures();
 const root = resolve("dist");
 const homeHTML = await readFile(resolve(root, "index.html"), "utf8");
 const base = new URL(homeHTML.match(/rel="canonical" href="([^"]+)"/)[1])
@@ -103,8 +105,10 @@ const shots = {
   "en/references/": "en-references",
   "sluzby/rizika-atex-pawa/": "sk-risk",
   "letectvo/technicka-udrzba/": "sk-maintenance",
+  "en/aviation/instrument-testing/": "en-aviation-testing",
+  "sluzby/technicke-poradenstvo/": "sk-consulting",
 };
-const shotDir = "docs/review/shots-v5";
+const shotDir = "docs/review/shots-v6";
 if (capture) await mkdir(shotDir, { recursive: true });
 async function ready() {
   await page.evaluate(async () => {
@@ -145,7 +149,7 @@ async function checkImagePixels(label, targetPage = page) {
             bitmap.height / r.height,
           );
           const issue =
-            supplied + 0.02 < available
+            supplied < 1 || supplied + 0.02 < available
               ? { image: image.currentSrc, supplied, available }
               : null;
           bitmap.close();
@@ -218,7 +222,7 @@ function layoutContract() {
     const endings = [
       ...article.querySelectorAll(".downloads, .partners, .related-block"),
     ];
-    const targets = [...prose.querySelectorAll("h2[id], h3[id]"), ...endings];
+    const targets = [...prose.querySelectorAll("h2[id], h3[id]")].filter(h => !h.matches(".prose-label") && !h.previousElementSibling?.matches("h2,h3,h4")).concat(endings);
     const hasFacts = !!article.querySelector(".facts");
     check(!!rail === (targets.length >= 2 || hasFacts), "rail-presence", {
       targets: targets.length,
@@ -234,7 +238,7 @@ function layoutContract() {
       check(
         entry.title === entry.textContent &&
           getComputedStyle(entry).whiteSpace === "normal" &&
-          getComputedStyle(entry).webkitLineClamp === "2",
+          getComputedStyle(entry.querySelector(".rail-text")).webkitLineClamp === "2",
         "rail-entry-label",
         entry.textContent,
       );
@@ -309,7 +313,7 @@ function layoutContract() {
               box(rail.querySelector(".eyebrow")).top -
                 box(prose.firstElementChild).top -
                 offset,
-            ) < 1 && offset === 6,
+            ) < 1 && offset === (rail.classList.contains("rail--heading-first") ? 16 : 6),
             "rail-first-line-alignment",
             offset,
           );
@@ -875,12 +879,12 @@ try {
       const articleSource = await page.locator('.article-layout').evaluateAll(elements => elements[0]?.dataset.source);
       if (articleSource && width === 1440) {
         const expected = await sourceHeadings(articleSource);
-        const rendered = await page.locator('.prose h2, .prose h3, .prose h4').evaluateAll(elements=>elements.map(el=>({text:el.textContent, tag:el.tagName})));
-        for (const heading of expected) if (!rendered.some(el=>normalizeHeading(el.text)===normalizeHeading(heading.text) && (heading.label ? el.tag==='H4' : ['H2','H3'].includes(el.tag)))) failures.push({route, sourceHeading:heading});
+        const rendered = await page.locator('.prose h2, .prose h3, .prose h4, .prose p, .prose li').evaluateAll(elements=>elements.map(el=>({text:el.textContent, tag:el.tagName, label:el.classList.contains('prose-label'), key:el.classList.contains('key-line')})));
+        for (const heading of expected) if (!rendered.some(el=>normalizeHeading(el.text)===normalizeHeading(heading.text) && (heading.representation === 'body' ? el.tag === 'P' : heading.representation === 'key-line' ? el.key : heading.representation === 'list' ? el.tag === 'LI' : heading.label ? el.label && ['H3','H4'].includes(el.tag) : ['H2','H3'].includes(el.tag)))) failures.push({route, sourceHeading:heading});
         const outline = await page.locator('.prose h2, .prose h3, .prose h4').evaluateAll(elements=>elements.map(el=>+el.tagName.slice(1)));
         if(outline.some((depth,i)=>depth>(i?outline[i-1]+1:2))) failures.push({route,headingLevelSkip:outline});
       }
-      const contract = [...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract)];
+      const contract = [...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract), ...await page.evaluate(review6Contract)];
       if ([390,1440].includes(width)) {
         const lines = await page.evaluate(typographyLines);
         if(lines.length) failures.push({route,width,typographyLines:lines});
@@ -1007,7 +1011,7 @@ try {
       .evaluate((el) => getComputedStyle(el).borderBottomWidth),
     "1px",
   );
-  const menuContract = [...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract)];
+  const menuContract = [...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract), ...await page.evaluate(review6Contract)];
   if (menuContract.length) failures.push({ menu: 390, contract: menuContract });
   await page.keyboard.press("Escape");
   assert.equal(
@@ -1153,7 +1157,7 @@ try {
       await page.goto(origin+route);await ready();
       await page.locator('.packages details').evaluate(el=>{el.dataset.qaExpanded='true';el.open=true;});
       await ready();
-      const contract=[...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract)];
+      const contract=[...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract), ...await page.evaluate(review6Contract)];
       const lines=await page.evaluate(typographyLines);
       if(contract.length || lines.length) failures.push({route,width,expandedPackages:contract,typographyLines:lines});
       if(capture && width===390 && route==='zh/') await page.screenshot({path:`${shotDir}/zh-home-packages-open-390.jpg`,fullPage:true,type:'jpeg',quality:85});
@@ -1217,6 +1221,38 @@ try {
   behaviors.push(
     "QA regression probes reject missing/displaced rail, wrong article gap and displaced footer closing",
   );
+  // Review-6 regression probes exercise the new assertions against broken DOMs.
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto(origin + "en/aviation/instrument-testing/");
+  await ready();
+  await page.evaluate(() => {
+    document.querySelector('.page-hero .lead').textContent = '### Broken lead';
+    const prose = document.querySelector('.prose');
+    const headings = [...prose.querySelectorAll('h2,h3')];
+    headings[0].textContent = document.querySelector('h1').textContent;
+    headings[1].style.marginTop = '40px';
+    const third = document.createElement('h3'); third.textContent = '250 €'; headings[1].after(third);
+    const label = prose.querySelector('.prose-label');
+    const wrongLabel = document.createElement('h4'); wrongLabel.className = 'prose-label'; wrongLabel.textContent = label.textContent; label.replaceWith(wrongLabel);
+    document.querySelector('.rail-text').style.height = '80px';
+    document.querySelector('.rail').style.paddingTop = '40px';
+    const photo = document.querySelector('.page-hero > img'); photo.style.minHeight = '320px'; photo.style.maxHeight = '320px';
+    document.querySelector('.footer-grid ul').style.rowGap = '24px';
+  });
+  const review6Rules = new Set((await page.evaluate(review6Contract)).map(issue => issue.rule));
+  for (const rule of ['no-markdown-in-descriptions', 'heading-does-not-repeat-h1', 'heading-stack-gap', 'at-most-two-headings', 'no-data-heading', 'label-outline-level', 'rail-two-line-clamp', 'rail-baseline', 'hero-photo-copy-height', 'footer-row-gap', 'footer-link-gap'])
+    assert.ok(review6Rules.has(rule), `QA must catch injected ${rule}`);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(origin + 'kontaktujte-nas/'); await ready();
+  await page.evaluate(() => {
+    document.querySelector('.text-link .icon').style.marginLeft = '24px';
+    document.querySelector('.breadcrumb a').style.minWidth = '0';
+    document.querySelector('.enquiry-form label').style.fontWeight = '400';
+  });
+  const mobileRules = new Set((await page.evaluate(review6Contract)).map(issue => issue.rule));
+  for (const rule of ['text-link-icon-gap', 'breadcrumb-hit-area', 'type-field-label'])
+    assert.ok(mobileRules.has(rule), `QA must catch injected ${rule}`);
+  behaviors.push('Review 6: injected heading, rail, hero, footer, link, breadcrumb and field-token regressions rejected');
   const retina = await browser.newContext({
     deviceScaleFactor: 2,
     reducedMotion: "reduce",
@@ -1273,7 +1309,7 @@ const report = {
   metrics,
 };
 await writeFile(
-  capture ? "docs/review/qa-v5.json" : "dist/qa-layout.json",
+  capture ? "docs/review/qa-v6.json" : "dist/qa-layout.json",
   JSON.stringify(report, null, 2) + "\n",
 );
 console.log(

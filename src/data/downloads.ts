@@ -22,6 +22,7 @@ export const downloads: Download[] = [
     kind: "form",
     file: "TS-AObjednavkaFinal_2024.xlsx",
     title: "Objednávka skúšok avioniky · 2024",
+    titleEn: "Avionics test order · 2024",
     page: "instruments",
     division: "aviation",
     lang: "sk",

@@ -4,7 +4,8 @@ import { readFile } from 'node:fs/promises';
 export const representedHeadings = {
   'aviation.md': {3:'Owner-approved repeated opening removed',35:'Partners ending'},
   'aviation-2.md': {3:'Owner-approved repeated opening removed',25:'Partners ending'},
-  'aviation-testing-service.md': {17:'Hero lead'},
+  'aviation-testing-service.md': {11:'Empty heading; content moved to hero',17:'Hero lead'},
+  'aviation-testing-service-2.md': {3:'Hero h1',17:'Order form moved to downloads; empty heading',25:'Empty heading'},
   'aviation-technical-maintenance.md': {16:'Footer contact action'},
   'references-en.md': {3:'Brand',5:'Hero lead (owner copy unchanged)',9:'Hero h1'},
   'references-zho.md': {3:'Brand',5:'Hero lead',9:'Hero h1'},
@@ -20,6 +21,9 @@ export async function sourceHeadings(source) {
     // Abbreviations and a terminal stop do not count as sentence boundaries.
     const sentences=text.replace(/\b(?:hod|s\.r\.o|č)\./g,'').replace(/[.!?]$/,'').split(/[.!?]\s+(?=\p{Lu})/u);
     if(text.length>110 || sentences.length>1 || representedHeadings[name]?.[sourceLine])return [];
-    return [{text,sourceLine,label: /^(Potrebujeme|Majte prichystané|we need):$/i.test(text)}];
+    const representation = name === 'aviation-testing-service.md' && sourceLine === 3 ? 'body'
+      : /[€%]|\d+\s*(?:hod\.|h\b|V\b|m\b)/.test(text) ? 'key-line'
+      : name === 'aviation-testing-service-2.md' && [31,41].includes(sourceLine) ? 'list' : 'heading';
+    return [{text,sourceLine,representation,label: /^(Potrebujeme|Majte prichystané|we need):$/i.test(text)}];
   });
 }

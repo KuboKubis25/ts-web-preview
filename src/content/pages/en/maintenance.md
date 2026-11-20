@@ -10,7 +10,6 @@ source: "_source/pages/aviation-technical-maintenance-1.md"
 
 ## Our specialization
 
-- 500 hour inspection and overhaul of aircraft magnetos
-- Bendix King series S20/S200 and Slick 4300/6300 (coming soon)
+- 500 hour inspection and overhaul of aircraft magnetos Bendix King series S20/S200 and Slick 4300/6300 (coming soon)
 - mediation of repair of avionics
 - consultancy about built in the avionics parts

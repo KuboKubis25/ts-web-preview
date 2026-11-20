@@ -20,11 +20,12 @@ export default function aviationDetails({ labels, paths }) {
             url: target,
             data: { hProperties: { className: ["text-link"] } },
             children: [
+              { type: "html", value: '<span class="nowrap">' },
               { type: "text", value: labels[lang] },
               {
                 type: "html",
                 value:
-                  '<svg class="icon icon-right" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false"><path d="M3 8h10M8 3l5 5-5 5" /></svg>',
+                  '<svg class="icon icon-right" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false"><path d="M3 8h10M8 3l5 5-5 5" /></svg></span>',
               },
             ],
           },

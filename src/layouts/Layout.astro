@@ -7,7 +7,7 @@ import EmailText from "../components/EmailText.astro";
 import Icon from "../components/Icon.astro";
 import FooterLink from "../components/FooterLink.astro";
 import LangTag from "../components/LangTag.astro";
-import { colors, spacing } from "../data/tokens";
+import { colors, spacing, typography as typeTokens } from "../data/tokens";
 import { languages, ui } from "../data/ui";
 import { url, absolute } from "../lib/urls";
 import { downloads, downloadTitle } from "../data/downloads";
@@ -34,6 +34,12 @@ const divisionEmail =
     ? "info.aviation@testing-service.org"
     : "jakub.kubis@testing-service.org";
 const accreditation = downloads.find((file) => file.file === "TS-Opravnenie.pdf")!;
+// A homogeneous destination column needs only one language marker.
+const columnLanguage = (targets: Array<"sk" | "en" | "zh" | "both">) =>
+  targets.length && targets.every(target => target === targets[0]) && targets[0] !== page.lang && targets[0] !== "both" ? targets[0] : undefined;
+const serviceLanguage = columnLanguage(services.map(p => p.lang));
+const aviationLanguage = columnLanguage(aviationPages.map(p => p.lang));
+const legalLanguage = columnLanguage(["sk", accreditation.lang]);
 const alternates = pages.filter((p) => p.data.key === page.key);
 const defaultPage =
   find(page.key, "sk") ||
@@ -81,7 +87,7 @@ const canonical = absolute(
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta name="theme-color" content={colors.ink} />
-    <style is:inline set:html={`:root { --color-ink: ${colors.ink}; --hairline-gap: ${spacing.hairlineGap}; }`} />
+    <style is:inline set:html={`:root { --color-ink: ${colors.ink}; --hairline-gap: ${spacing.hairlineGap}; --text-prose-h2: ${typeTokens["prose-h2"].size}; --weight-field-label: ${typeTokens["field-label"].weight}; }`} />
   </head>
   <body class:list={[page.kind === "aviation" && "aviation"]}>
     <header class="site-header">
@@ -248,7 +254,7 @@ const canonical = absolute(
           </p>
         </div>
         <div>
-          <h3 class="type-h4">{t.legal}</h3>
+          <h3 class="type-h4">{t.legal}{legalLanguage && <LangTag current={page.lang} target={legalLanguage} />}</h3>
           <p lang="sk">
             Okresný súd Žilina
             <br />
@@ -259,18 +265,22 @@ const canonical = absolute(
             <br />
             IČ DPH: SK2022243982
           </p>
-          <FooterLink href={url("ochrana-osobnych-udajov/")} title={t.privacy} current={page.lang} target="sk" />
-          <FooterLink href={url("s/" + accreditation.file)} title={downloadTitle(accreditation, page.lang)} current={page.lang} target={accreditation.lang} download />
+          <ul>
+            <li><FooterLink href={url("ochrana-osobnych-udajov/")} title={t.privacy} current={page.lang} target={legalLanguage ? undefined : "sk"} /></li>
+            <li><FooterLink href={url("s/" + accreditation.file)} title={downloadTitle(accreditation, page.lang)} current={page.lang} target={legalLanguage ? undefined : accreditation.lang} download /></li>
+          </ul>
         </div>
         <div>
-          <h3 class="type-h4">{t.services}</h3>
-          <ul>{services.map((p) => <li><FooterLink href={url(p.path + "/")} title={serviceTitle(p, page.lang)} current={page.lang} target={p.lang} /></li>)}</ul>
+          <h3 class="type-h4">{t.services}{serviceLanguage && <LangTag current={page.lang} target={serviceLanguage} />}</h3>
+          <ul>{services.map((p) => <li><FooterLink href={url(p.path + "/")} title={serviceTitle(p, page.lang)} current={page.lang} target={serviceLanguage ? undefined : p.lang} /></li>)}</ul>
         </div>
         <div>
-          <h3 class="type-h4">{t.aviation}</h3>
+          <h3 class="type-h4">{t.aviation}{aviationLanguage && <LangTag current={page.lang} target={aviationLanguage} />}</h3>
           <p lang="en">Aviation Testing Center · Žilina (LZZI)</p>
-          {page.kind !== "aviation" && <FooterLink href="mailto:info.aviation@testing-service.org" title="info.aviation@testing-service.org" current={page.lang} />}
-          <ul>{aviationPages.map((p) => <li><FooterLink href={url(p.path + "/")} title={p.title} current={page.lang} target={p.lang} textLang={p.lang} /></li>)}</ul>
+          <ul>
+            {page.kind !== "aviation" && <li><FooterLink href="mailto:info.aviation@testing-service.org" title="info.aviation@testing-service.org" current={page.lang} /></li>}
+            {aviationPages.map((p) => <li><FooterLink href={url(p.path + "/")} title={p.title} current={page.lang} target={aviationLanguage ? undefined : p.lang} textLang={p.lang} /></li>)}
+          </ul>
         </div>
       </div>
       <div class="wrap footer-bottom">

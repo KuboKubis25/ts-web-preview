@@ -1,8 +1,7 @@
 ---
 import EmailText from "./EmailText.astro";
 import { typography } from "../../scripts/rehype-typography.mjs";
-import Icon from "./Icon.astro";
-import LangTag from "./LangTag.astro";
+import LinkLabel from "./LinkLabel.astro";
 import type { Lang } from "../data/ui";
 interface Props {
   href: string;
@@ -15,8 +14,5 @@ interface Props {
 const { href, current, target, textLang, download } = Astro.props;
 const title = typography(Astro.props.title, textLang || current);
 const email = /^[^\s@]+@[^\s@]+$/.test(title);
-const split = title.lastIndexOf(" ");
-const prefix = split < 0 ? "" : title.slice(0, split + 1);
-const last = title.slice(split + 1);
 ---
-<a href={href} download={download || undefined}>{email ? <EmailText address={title} /> : <span lang={textLang}>{prefix}<span class="nowrap">{last}{target && <LangTag current={current} target={target} />}<Icon name={download ? "down" : /^(https?:|mailto:)/.test(href) ? "external" : "right"} /></span></span>}</a>
+<a href={href} download={download || undefined}>{email ? <EmailText address={title} /> : <LinkLabel title={title} current={current} target={target} textLang={textLang} icon={download ? "down" : /^(https?:|mailto:)/.test(href) ? "external" : "right"} />}</a>

@@ -1,0 +1,19 @@
+---
+import { typography } from "../../scripts/rehype-typography.mjs";
+import Icon from "./Icon.astro";
+import LangTag from "./LangTag.astro";
+import type { Lang } from "../data/ui";
+interface Props {
+  title: string;
+  current: Lang;
+  target?: Lang | "both";
+  textLang?: Lang;
+  icon?: "right" | "down" | "external";
+}
+const { current, target, textLang, icon = "right" } = Astro.props;
+const title = typography(Astro.props.title, textLang || current, true);
+const split = title.lastIndexOf(" ");
+const prefix = split < 0 ? "" : title.slice(0, split + 1);
+const last = title.slice(split + 1);
+---
+<span lang={textLang}>{prefix}<span class="nowrap">{last}{target && <LangTag current={current} target={target} />}<Icon name={icon} /></span></span>

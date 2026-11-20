@@ -12,7 +12,7 @@ image: "20190628_141438.jpg"
 ## The periodic inspection of communication and navigation systems in aircraft is mandatory
 
 - For all category of aircrafts.
-- IFR / VFR certified aircrafts.
+- IFR/VFR certified aircrafts.
 
 - From magnetic compass through transponder to radio navigation (GNSS from 2020).
 - For flying in EU airspace.
