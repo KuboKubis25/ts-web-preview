@@ -25,11 +25,11 @@ Regularly the technology supplied outside from European Union poses a significan
 
 ### Common cases of our consulting services occur in several key situations
 
-- safety designs and solutions for technology
-- EX proof systems for potentially explosive atmospheres
-- hygienic parameters in working areas
-- fire protection for buildings and technology
-- environmental conditions
+- Safety designs and solutions for technology.
+- EX proof systems for potentially explosive atmospheres.
+- Hygienic parameters in working areas.
+- Fire protection for buildings and technology.
+- Environmental conditions.
 
 ### Ensuring you are paying for technology without any legal issues
 

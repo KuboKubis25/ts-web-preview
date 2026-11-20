@@ -26,7 +26,7 @@ Completed order send to info.aviation@testing-service.org.
 
 ### We need:
 
-- arrange aircraft movements
-- 230 V max. 50 m from aircraft
-- aircraft logbook
-- previous records
+- Arrange aircraft movements.
+- 230 V max. 50 m from aircraft.
+- Aircraft logbook.
+- Previous records.

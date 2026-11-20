@@ -162,7 +162,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                     .split(/(?=在捷克和斯洛伐克的|法律合规要求)/)
                     .map((phrase, index) => (
                       <>
-                        <span class={index === 1 ? undefined : "nowrap"}>
+                        <span class="zh-line">
                           {index === 1 ? phrase.split(/(?=斯洛伐克的)/).map((part, i) => <>{i > 0 && <wbr />}<span class="nowrap">{part}</span></>) : phrase}
                           {index === 2 && <span class="gold">.</span>}
                         </span>
@@ -171,7 +171,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                     ))
                 ) : (
                   <>
-                    {typography(homeLead, lang)}
+                    {lang === "en" ? homeLead.split(/(Czech and Slovak)/).map(part => part === "Czech and Slovak" ? <span class="hero-place-names">{part}</span> : typography(part, lang)) : typography(homeLead, lang)}
                     <span class="gold">.</span>
                   </>
                 )}
@@ -193,7 +193,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                 eager
                 widths={[480, 720, 1080, 1440, 1500]}
                 ratio={0}
-                sizes="(min-width: 1080px) max(42vw, 1080px), 100vw"
+                sizes="(min-width: 1080px) max(calc(50vw - 12px), 1080px), 100vw"
               />
             </div>
           </section>

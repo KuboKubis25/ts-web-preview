@@ -1,3 +1,5 @@
+import { execFileSync } from "node:child_process";
+import { review7Contract, review7ContentChecks, review7Probes, review7Measurements } from "./qa-review7.mjs";
 import { review6Contract, typographyFixtures } from "./qa-review6.mjs";
 import { review5Contract, typographyLines } from "./qa-review5.mjs";
 import { sourceHeadings, normalizeHeading } from "./qa-source-headings.mjs";
@@ -9,6 +11,7 @@ import { resolve, extname, relative } from "node:path";
 import assert from "node:assert/strict";
 
 typographyFixtures();
+await review7ContentChecks();
 const root = resolve("dist");
 const homeHTML = await readFile(resolve(root, "index.html"), "utf8");
 const base = new URL(homeHTML.match(/rel="canonical" href="([^"]+)"/)[1])
@@ -90,11 +93,33 @@ await context.addInitScript(() => {
   }).observe({ type: "layout-shift", buffered: true });
 });
 const page = await context.newPage();
+const environment = { browser: browser.version(), cjkFonts: execFileSync('fc-list', [':lang=zh', 'family'], {encoding: 'utf8'}).trim().split('\n').filter(Boolean), fonts: {} };
+const fontSession = await context.newCDPSession(page);
+await fontSession.send('DOM.enable'); await fontSession.send('CSS.enable');
+async function recordFonts(key, selector) {
+  const { root } = await fontSession.send('DOM.getDocument');
+  const { nodeId } = await fontSession.send('DOM.querySelector', { nodeId: root.nodeId, selector });
+  environment.fonts[key] = {
+    platform: (await fontSession.send('CSS.getPlatformFontsForNode', {nodeId})).fonts,
+    declared: await page.locator(selector).evaluate(el => getComputedStyle(el).fontFamily),
+    documentFonts: await page.evaluate(() => [...document.fonts].map(f => ({family:f.family,status:f.status,weight:f.weight}))),
+  };
+}
 const failures = [],
   metrics = [],
   behaviors = [];
 page.on("pageerror", (error) => failures.push({ javascript: error.message }));
 const shots = {
+  "sluzby/inspekcie-a-skusky/": "sk-inspections",
+  "en/services/inspections-and-testing/": "en-inspections",
+  "en/services/permits-and-approvals/": "en-service",
+  "en/services/technical-consulting/": "en-consulting",
+  "en/services/risk-atex-pawa/": "en-risk",
+  "en/aviation/": "en-aviation",
+  "en/aviation/technical-maintenance/": "en-maintenance",
+  "zh/references/": "zh-references",
+  "ochrana-osobnych-udajov/": "sk-legal",
+  "404.html": "404",
   "": "sk-home",
   "en/": "en-home",
   "zh/": "zh-home",
@@ -108,7 +133,7 @@ const shots = {
   "en/aviation/instrument-testing/": "en-aviation-testing",
   "sluzby/technicke-poradenstvo/": "sk-consulting",
 };
-const shotDir = "docs/review/shots-v6";
+const shotDir = "docs/review/shots-v7";
 if (capture) await mkdir(shotDir, { recursive: true });
 async function ready() {
   await page.evaluate(async () => {
@@ -222,7 +247,14 @@ function layoutContract() {
     const endings = [
       ...article.querySelectorAll(".downloads, .partners, .related-block"),
     ];
-    const targets = [...prose.querySelectorAll("h2[id], h3[id]")].filter(h => !h.matches(".prose-label") && !h.previousElementSibling?.matches("h2,h3,h4")).concat(endings);
+    const targets = [...prose.querySelectorAll("h2[id], h3[id]")].filter(h => !h.matches(".prose-label") && (!h.previousElementSibling?.matches("h2,h3,h4") || (() => {
+      for (let next = h.nextElementSibling; next; next = next.nextElementSibling) {
+        if (!next.matches('h2,h3,h4')) continue;
+        if (+next.tagName[1] < +h.tagName[1]) return false;
+        if (next.tagName === h.tagName) return true;
+      }
+      return false;
+    })())).concat(endings);
     const hasFacts = !!article.querySelector(".facts");
     check(!!rail === (targets.length >= 2 || hasFacts), "rail-presence", {
       targets: targets.length,
@@ -313,7 +345,7 @@ function layoutContract() {
               box(rail.querySelector(".eyebrow")).top -
                 box(prose.firstElementChild).top -
                 offset,
-            ) < 1 && offset === (rail.classList.contains("rail--heading-first") ? 16 : 6),
+            ) < 1 && offset === (rail.classList.contains("rail--heading-first") ? 16 : 8),
             "rail-first-line-alignment",
             offset,
           );
@@ -608,6 +640,8 @@ function layoutContract() {
     "h2",
     "statement",
     "prose-h2",
+    "prose-h3",
+    "ui-current",
     "h3",
     "h4",
     "lead",
@@ -645,7 +679,7 @@ function layoutContract() {
       if (
         !visible(el) ||
         el.closest(".prose, p") ||
-        el.matches(".skip-link") ||
+        el.matches(".skip-link, .breadcrumb a") ||
         getComputedStyle(el).position === "absolute"
       )
         continue;
@@ -884,13 +918,14 @@ try {
         const outline = await page.locator('.prose h2, .prose h3, .prose h4').evaluateAll(elements=>elements.map(el=>+el.tagName.slice(1)));
         if(outline.some((depth,i)=>depth>(i?outline[i-1]+1:2))) failures.push({route,headingLevelSkip:outline});
       }
-      const contract = [...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract), ...await page.evaluate(review6Contract)];
-      if ([390,1440].includes(width)) {
+      if (width === 1440 && ['', 'en/', 'zh/'].includes(route)) await recordFonts(route === 'zh/' ? 'zhH1' : route === '' ? 'skH1' : 'enBody', route === 'en/' ? '.intro-section p:not(.statement)' : '.hero-copy h1');
+      const contract = [...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract), ...await page.evaluate(review6Contract), ...await page.evaluate(review7Contract)];
+      if ([390,640,1024,1080,1440].includes(width)) {
         const lines = await page.evaluate(typographyLines);
         if(lines.length) failures.push({route,width,typographyLines:lines});
       }
       if (contract.length) failures.push({ route, width, contract });
-      metrics.push({ route, width, cls, ...result, contract });
+      metrics.push({ route, width, cls, ...result, contract, review7: await page.evaluate(review7Measurements) });
       if (
         result.overflow ||
         result.narrow.length ||
@@ -909,13 +944,14 @@ try {
           ([640, 1024, 1080].includes(width) &&
             ["sk-home", "sk-contact", "sk-aviation-testing"].includes(name)) ||
           (width === 640 && ["sk-service", "en-home"].includes(name)) ||
-          (width === 1024 && name === "zh-home"))
+          ([1024,1080].includes(width) && name === "zh-home"))
       ) {
         // Capture the arrival state before accessibility probes can focus or scroll controls.
         await page.evaluate(() => {
           document.activeElement?.blur();
           scrollTo(0, 0);
         });
+        if (name === 'zh-home' && [390,1080,1440].includes(width)) await page.screenshot({path: `${shotDir}/zh-home-viewport-${width}.jpg`, type: 'jpeg', quality: 85});
         await page.screenshot({
           path: `${shotDir}/${name}-${width === 1440 ? "desktop" : width === 390 ? "mobile" : width}.jpg`,
           fullPage: true,
@@ -1011,7 +1047,7 @@ try {
       .evaluate((el) => getComputedStyle(el).borderBottomWidth),
     "1px",
   );
-  const menuContract = [...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract), ...await page.evaluate(review6Contract)];
+  const menuContract = [...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract), ...await page.evaluate(review6Contract), ...await page.evaluate(review7Contract)];
   if (menuContract.length) failures.push({ menu: 390, contract: menuContract });
   await page.keyboard.press("Escape");
   assert.equal(
@@ -1157,13 +1193,19 @@ try {
       await page.goto(origin+route);await ready();
       await page.locator('.packages details').evaluate(el=>{el.dataset.qaExpanded='true';el.open=true;});
       await ready();
-      const contract=[...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract), ...await page.evaluate(review6Contract)];
+      const contract=[...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract), ...await page.evaluate(review6Contract), ...await page.evaluate(review7Contract)];
       const lines=await page.evaluate(typographyLines);
       if(contract.length || lines.length) failures.push({route,width,expandedPackages:contract,typographyLines:lines});
       if(capture && width===390 && route==='zh/') await page.screenshot({path:`${shotDir}/zh-home-packages-open-390.jpg`,fullPage:true,type:'jpeg',quality:85});
     }
   }
   behaviors.push('Packages closed on arrival, expanded content checked in SK/EN/ZH at 390/1440');
+  if (capture) {
+    const files = new Set(await readdir(shotDir));
+    for (const file of await readdir('docs/review/shots-v6')) assert.ok(files.has(file), `Preserve v6 capture: ${file}`);
+    for (const name of ['sk-inspections','en-inspections','en-service','en-consulting','en-risk','en-aviation','en-maintenance','zh-references','sk-legal','404'])
+      for (const size of ['desktop','mobile']) assert.ok(files.has(`${name}-${size}.jpg`), `New capture: ${name}-${size}`);
+  }
   // Scroll-spy must also handle the exact bottom, even beyond all article targets.
   await page.setViewportSize({width:1440,height:1000});
   for(const route of ['sluzby/rizika-atex-pawa/','sluzby/povolenia-a-schvalenia/','letectvo/']) {
@@ -1246,13 +1288,15 @@ try {
   await page.goto(origin + 'kontaktujte-nas/'); await ready();
   await page.evaluate(() => {
     document.querySelector('.text-link .icon').style.marginLeft = '24px';
-    document.querySelector('.breadcrumb a').style.minWidth = '0';
+    const style = document.createElement('style'); style.textContent = '.breadcrumb a::after { width: 10px; height: 10px; }'; document.head.append(style);
     document.querySelector('.enquiry-form label').style.fontWeight = '400';
   });
   const mobileRules = new Set((await page.evaluate(review6Contract)).map(issue => issue.rule));
   for (const rule of ['text-link-icon-gap', 'breadcrumb-hit-area', 'type-field-label'])
     assert.ok(mobileRules.has(rule), `QA must catch injected ${rule}`);
   behaviors.push('Review 6: injected heading, rail, hero, footer, link, breadcrumb and field-token regressions rejected');
+  await review7Probes(page, origin, ready, layoutContract, review6Contract);
+  behaviors.push("Review 7: injected ZH, breadcrumb, prose-h3, footer, lead, sibling-rail, photo-floor, current-language, home-split and lang-tag regressions rejected; Markdown list fixtures rejected");
   const retina = await browser.newContext({
     deviceScaleFactor: 2,
     reducedMotion: "reduce",
@@ -1300,6 +1344,7 @@ try {
   await new Promise((resolve) => server.close(resolve));
 }
 const report = {
+  environment,
   base,
   routes: routes.length,
   viewports: [390, 640, 1024, 1440, 1080],
@@ -1309,7 +1354,7 @@ const report = {
   metrics,
 };
 await writeFile(
-  capture ? "docs/review/qa-v6.json" : "dist/qa-layout.json",
+  capture ? "docs/review/qa-v7.json" : "dist/qa-layout.json",
   JSON.stringify(report, null, 2) + "\n",
 );
 console.log(

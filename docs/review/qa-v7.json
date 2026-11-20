@@ -1,0 +1,2573 @@
+{
+  "environment": {
+    "browser": "158.0.8127.18",
+    "cjkFonts": [
+      "Unifont\\-JP",
+      "WenQuanYi Zen Hei Mono,文泉驛等寬正黑,文泉驿等宽正黑",
+      "Droid Sans Fallback",
+      "Unifont Sample",
+      "WenQuanYi Zen Hei Sharp,文泉驛點陣正黑,文泉驿点阵正黑",
+      "WenQuanYi Zen Hei,文泉驛正黑,文泉驿正黑",
+      "Unifont"
+    ],
+    "fonts": {
+      "enBody": {
+        "platform": [
+          {
+            "familyName": "IBM Plex Sans",
+            "postScriptName": "IBMPlexSans-Regular",
+            "isCustomFont": true,
+            "glyphCount": 186
+          }
+        ],
+        "declared": "\"IBM Plex Sans Variable\", \"Plex Fallback\", Arial, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+        "documentFonts": [
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "unloaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "unloaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "unloaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "unloaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "loaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "loaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "Plex Fallback",
+            "status": "loaded",
+            "weight": "normal"
+          },
+          {
+            "family": "Plex Fallback",
+            "status": "loaded",
+            "weight": "500 700"
+          }
+        ]
+      },
+      "skH1": {
+        "platform": [
+          {
+            "familyName": "IBM Plex Sans",
+            "postScriptName": "IBMPlexSans-Regular",
+            "isCustomFont": true,
+            "glyphCount": 75
+          }
+        ],
+        "declared": "\"IBM Plex Sans Variable\", \"Plex Fallback\", Arial, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+        "documentFonts": [
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "unloaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "unloaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "unloaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "unloaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "loaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "loaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "Plex Fallback",
+            "status": "loaded",
+            "weight": "normal"
+          },
+          {
+            "family": "Plex Fallback",
+            "status": "loaded",
+            "weight": "500 700"
+          }
+        ]
+      },
+      "zhH1": {
+        "platform": [
+          {
+            "familyName": "WenQuanYi Zen Hei",
+            "postScriptName": "WenQuanYiZenHei",
+            "isCustomFont": false,
+            "glyphCount": 11
+          }
+        ],
+        "declared": "\"IBM Plex Sans Variable\", \"Plex Fallback\", Arial, \"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+        "documentFonts": [
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "unloaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "unloaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "unloaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "unloaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "loaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "IBM Plex Sans Variable",
+            "status": "loaded",
+            "weight": "100 700"
+          },
+          {
+            "family": "Plex Fallback",
+            "status": "loaded",
+            "weight": "normal"
+          },
+          {
+            "family": "Plex Fallback",
+            "status": "loaded",
+            "weight": "500 700"
+          }
+        ]
+      }
+    }
+  },
+  "base": "/",
+  "routes": 23,
+  "viewports": [
+    390,
+    640,
+    1024,
+    1440,
+    1080
+  ],
+  "axeRuns": 46,
+  "failures": [],
+  "behaviors": [
+    "Expanded gallery: no overflow or image enlargement at 390/1440",
+    "Mobile menu: services visible, close icon, scroll lock, Escape and focus return",
+    "Desktop dropdown: closed on arrival, opens, Escape closes",
+    "Mobile aviation tabs: both fades in the middle, start-only at end, end-only at start",
+    "Contact form: required-field and email errors",
+    "QA regression probes: displaced heading, duplicate footer link, uneven rows and off-token leading rejected",
+    "Packages closed on arrival, expanded content checked in SK/EN/ZH at 390/1440",
+    "Risk/permits/aviation rail idle at arrival and last entry current at bottom",
+    "Rail stays at 96px and scroll-spy follows h3 and ending targets",
+    "QA regression probes reject missing/displaced rail, wrong article gap and displaced footer closing",
+    "Review 6: injected heading, rail, hero, footer, link, breadcrumb and field-token regressions rejected",
+    "Review 7: injected ZH, breadcrumb, prose-h3, footer, lead, sibling-rail, photo-floor, current-language, home-split and lang-tag regressions rejected; Markdown list fixtures rejected",
+    "Responsive photos at 2× density: home SK/ZH and Aviation at 390/1440, capped at source pixels",
+    "No JavaScript: mobile services visible, desktop dropdown closed"
+  ],
+  "metrics": [
+    {
+      "route": "404.html",
+      "width": 390,
+      "cls": 0.0004322290431654552,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "en/aviation/",
+      "width": 390,
+      "cls": 0.00011484064852138346,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "The periodic inspection of communication and navigation systems in aircraft is mandatory",
+          "It is an important condition for Airworthiness Review Certificates – ARC",
+          "Our offer",
+          "Aviation Testing",
+          "Aviation Service",
+          "Downloads and links",
+          "Our partners"
+        ],
+        "hero": {
+          "photo": 233.328125,
+          "copy": 230.96875
+        }
+      }
+    },
+    {
+      "route": "en/aviation/instrument-testing/",
+      "width": 390,
+      "cls": 0.00011484064852138346,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Testing of avionics is mandatory",
+          "Contact us, we will answer you",
+          "The question is: will you come to us or will we come to you?",
+          "Downloads and links"
+        ],
+        "hero": {
+          "photo": 233.328125,
+          "copy": 230.96875
+        }
+      }
+    },
+    {
+      "route": "en/aviation/technical-maintenance/",
+      "width": 390,
+      "cls": 0.006588431699834535,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Our specialization",
+          "Downloads and links"
+        ]
+      }
+    },
+    {
+      "route": "en/contact/",
+      "width": 390,
+      "cls": 0.0001776387288280552,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "en/",
+      "width": 390,
+      "cls": 0.0032254153758612333,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "en/references/",
+      "width": 390,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": []
+      }
+    },
+    {
+      "route": "en/services/inspections-and-testing/",
+      "width": 390,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Professional qualifications trainings",
+          "Establish your technology in local legislation",
+          "Complex testing before commissioning",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 233.328125,
+          "copy": 150.96875
+        }
+      }
+    },
+    {
+      "route": "en/services/permits-and-approvals/",
+      "width": 390,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Construction permit",
+          "Installation of RTDs",
+          "Comissioning",
+          "Operation",
+          "Our offer",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 233.328125,
+          "copy": 139.265625
+        }
+      }
+    },
+    {
+      "route": "en/services/risk-atex-pawa/",
+      "width": 390,
+      "cls": 0.0015237388851609352,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Do your safety standards comply with Slovak legislation?",
+          "Make sure your required safety files are in order",
+          "Prevent the possible accidents by conducting an independent third‑party analysis",
+          "Three key steps",
+          "Un‑prevented workplace accidents and injuries",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 233.328125,
+          "copy": 178.859375
+        }
+      }
+    },
+    {
+      "route": "en/services/technical-consulting/",
+      "width": 390,
+      "cls": 0.00023685163843740697,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "What do we do?",
+          "Do not wait until the technology is built",
+          "Make sure that you are buying and/or shipping technology conferring to the local legal standards",
+          "Common cases of our consulting services occur in several key situations",
+          "Ensuring you are paying for technology without any legal issues",
+          "Pre‑deliver validation of the technology for suppliers of technology",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 233.328125,
+          "copy": 111.375
+        }
+      }
+    },
+    {
+      "route": "",
+      "width": 390,
+      "cls": 0.0009348080623433828,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "footer": {
+          "height": 1429.71875,
+          "v6Height": 1517.71875,
+          "reduction": 88,
+          "requestedReduction": 200,
+          "requestedReductionPassed": false,
+          "exception": "DESIGN fixes link padding, section spacing and content; its specified changes yield less than the requested 200px reduction."
+        }
+      }
+    },
+    {
+      "route": "kontaktujte-nas/",
+      "width": 390,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "letectvo/",
+      "width": 390,
+      "cls": 0.00008267490017675324,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Pre bezpečné vykonanie letu je nevyhnutný správne pracujúci avionický systém",
+          "Preto je periodické preskúšanie komunikačných a navigačných systémov v lietadlách povinné",
+          "Ide samozrejme o dôležitú podmienku pre zachovanie letovej spôsobilosti",
+          "Naše služby",
+          "Aviation Testing",
+          "Aviation Service",
+          "Na stiahnutie a odkazy",
+          "Naši partneri"
+        ],
+        "hero": {
+          "photo": 233.328125,
+          "copy": 230.96875
+        }
+      }
+    },
+    {
+      "route": "letectvo/skusky-avioniky/",
+      "width": 390,
+      "cls": 0.00008267490017675324,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Pre pilotov: organizácia pri prílete",
+          "Na stiahnutie a odkazy"
+        ],
+        "hero": {
+          "photo": 233.328125,
+          "copy": 230.96875
+        }
+      }
+    },
+    {
+      "route": "letectvo/technicka-udrzba/",
+      "width": 390,
+      "cls": 0.00008267490017675324,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Naša špecializácia",
+          "Na stiahnutie a odkazy"
+        ]
+      }
+    },
+    {
+      "route": "ochrana-osobnych-udajov/",
+      "width": 390,
+      "cls": 0.00029606454804675865,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Testing Service s.r.o.",
+          "Na stiahnutie a odkazy"
+        ]
+      }
+    },
+    {
+      "route": "sluzby/inspekcie-a-skusky/",
+      "width": 390,
+      "cls": 0.0024567058242177847,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Testing Service disponuje požadovanými akreditáciami na poskytovanie týchto inšpekcií",
+          "Školenia odborných spôsobilostí",
+          "Zaveďte svoju technológiu do miestnej legislatívy",
+          "Komplexné testovanie pred uvedením do prevádzky",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 233.328125,
+          "copy": 150.96875
+        }
+      }
+    },
+    {
+      "route": "sluzby/povolenia-a-schvalenia/",
+      "width": 390,
+      "cls": 0.00023685163843740697,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Stavebné povolenie – povolenie začať stavbu",
+          "Inštalácia vyhradených technických zariadení – povolenie pre inštaláciu technických zariadení skupiny A",
+          "Prvé uvedenie do prevádzky",
+          "Povolenie na prevádzku",
+          "Naše služby",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 233.328125,
+          "copy": 150.96875
+        }
+      }
+    },
+    {
+      "route": "sluzby/rizika-atex-pawa/",
+      "width": 390,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Dodržujete bezpečnostné štandardy a všetky právne predpisy Slovenskej/Českej republiky?",
+          "Uistite sa, že vaša bezpečnostná dokumentácia a potrebné súbory sú v poriadku",
+          "Predchádzajte potenciálnym nehodám vďaka rigoróznej a nestrannej bezpečnostnej analýze od tretej strany",
+          "Neexistuje ospravedlnenie pri zanedbaní bezpečnosti zamestnancov",
+          "Tri kľúčové kroky",
+          "Nepredídené pracovné úrazy a nehody",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 233.328125,
+          "copy": 150.96875
+        }
+      }
+    },
+    {
+      "route": "sluzby/technicke-poradenstvo/",
+      "width": 390,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Čo robíme?",
+          "Nečakajte než sa technológia postaví",
+          "Uistite sa, že kupujete a/alebo dovážate technológiu, ktorá spĺňa miestne právne štandardy",
+          "Časté prípady našich poradenských služieb sa zameriavajú na niekoľko kľúčových situácii",
+          "Prevádzkovateľ: prísna kontrola technológie pred prevzatím",
+          "Validácia technológie pred dodaním špeciálne pre dodávateľov",
+          "Naše skúsenosti",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 233.328125,
+          "copy": 111.375
+        }
+      }
+    },
+    {
+      "route": "zh/",
+      "width": 390,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "zh/references/",
+      "width": 390,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": []
+      }
+    },
+    {
+      "route": "404.html",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "en/aviation/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "The periodic inspection of communication and navigation systems in aircraft is mandatory",
+          "It is an important condition for Airworthiness Review Certificates – ARC",
+          "Our offer",
+          "Aviation Testing",
+          "Aviation Service",
+          "Downloads and links",
+          "Our partners"
+        ],
+        "hero": {
+          "photo": 384,
+          "copy": 168.28125
+        }
+      }
+    },
+    {
+      "route": "en/aviation/instrument-testing/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Testing of avionics is mandatory",
+          "Contact us, we will answer you",
+          "The question is: will you come to us or will we come to you?",
+          "Downloads and links"
+        ],
+        "hero": {
+          "photo": 384,
+          "copy": 240.5625
+        }
+      }
+    },
+    {
+      "route": "en/aviation/technical-maintenance/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Our specialization",
+          "Downloads and links"
+        ]
+      }
+    },
+    {
+      "route": "en/contact/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "en/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "en/references/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": []
+      }
+    },
+    {
+      "route": "en/services/inspections-and-testing/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Professional qualifications trainings",
+          "Establish your technology in local legislation",
+          "Complex testing before commissioning",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 384,
+          "copy": 131.5625
+        }
+      }
+    },
+    {
+      "route": "en/services/permits-and-approvals/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Construction permit",
+          "Installation of RTDs",
+          "Comissioning",
+          "Operation",
+          "Our offer",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 384,
+          "copy": 117.28125
+        }
+      }
+    },
+    {
+      "route": "en/services/risk-atex-pawa/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Do your safety standards comply with Slovak legislation?",
+          "Make sure your required safety files are in order",
+          "Prevent the possible accidents by conducting an independent third‑party analysis",
+          "Three key steps",
+          "Un‑prevented workplace accidents and injuries",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 384,
+          "copy": 117.28125
+        }
+      }
+    },
+    {
+      "route": "en/services/technical-consulting/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "What do we do?",
+          "Do not wait until the technology is built",
+          "Make sure that you are buying and/or shipping technology conferring to the local legal standards",
+          "Common cases of our consulting services occur in several key situations",
+          "Ensuring you are paying for technology without any legal issues",
+          "Pre‑deliver validation of the technology for suppliers of technology",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 384,
+          "copy": 117.28125
+        }
+      }
+    },
+    {
+      "route": "",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "kontaktujte-nas/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "letectvo/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Pre bezpečné vykonanie letu je nevyhnutný správne pracujúci avionický systém",
+          "Preto je periodické preskúšanie komunikačných a navigačných systémov v lietadlách povinné",
+          "Ide samozrejme o dôležitú podmienku pre zachovanie letovej spôsobilosti",
+          "Naše služby",
+          "Aviation Testing",
+          "Aviation Service",
+          "Na stiahnutie a odkazy",
+          "Naši partneri"
+        ],
+        "hero": {
+          "photo": 384,
+          "copy": 197.28125
+        }
+      }
+    },
+    {
+      "route": "letectvo/skusky-avioniky/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Pre pilotov: organizácia pri prílete",
+          "Na stiahnutie a odkazy"
+        ],
+        "hero": {
+          "photo": 384,
+          "copy": 211.5625
+        }
+      }
+    },
+    {
+      "route": "letectvo/technicka-udrzba/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Naša špecializácia",
+          "Na stiahnutie a odkazy"
+        ]
+      }
+    },
+    {
+      "route": "ochrana-osobnych-udajov/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Testing Service s.r.o.",
+          "Na stiahnutie a odkazy"
+        ]
+      }
+    },
+    {
+      "route": "sluzby/inspekcie-a-skusky/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Testing Service disponuje požadovanými akreditáciami na poskytovanie týchto inšpekcií",
+          "Školenia odborných spôsobilostí",
+          "Zaveďte svoju technológiu do miestnej legislatívy",
+          "Komplexné testovanie pred uvedením do prevádzky",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 384,
+          "copy": 131.5625
+        }
+      }
+    },
+    {
+      "route": "sluzby/povolenia-a-schvalenia/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Stavebné povolenie – povolenie začať stavbu",
+          "Inštalácia vyhradených technických zariadení – povolenie pre inštaláciu technických zariadení skupiny A",
+          "Prvé uvedenie do prevádzky",
+          "Povolenie na prevádzku",
+          "Naše služby",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 384,
+          "copy": 160.5625
+        }
+      }
+    },
+    {
+      "route": "sluzby/rizika-atex-pawa/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Dodržujete bezpečnostné štandardy a všetky právne predpisy Slovenskej/Českej republiky?",
+          "Uistite sa, že vaša bezpečnostná dokumentácia a potrebné súbory sú v poriadku",
+          "Predchádzajte potenciálnym nehodám vďaka rigoróznej a nestrannej bezpečnostnej analýze od tretej strany",
+          "Neexistuje ospravedlnenie pri zanedbaní bezpečnosti zamestnancov",
+          "Tri kľúčové kroky",
+          "Nepredídené pracovné úrazy a nehody",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 384,
+          "copy": 88.28125
+        }
+      }
+    },
+    {
+      "route": "sluzby/technicke-poradenstvo/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Čo robíme?",
+          "Nečakajte než sa technológia postaví",
+          "Uistite sa, že kupujete a/alebo dovážate technológiu, ktorá spĺňa miestne právne štandardy",
+          "Časté prípady našich poradenských služieb sa zameriavajú na niekoľko kľúčových situácii",
+          "Prevádzkovateľ: prísna kontrola technológie pred prevzatím",
+          "Validácia technológie pred dodaním špeciálne pre dodávateľov",
+          "Naše skúsenosti",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 384,
+          "copy": 117.28125
+        }
+      }
+    },
+    {
+      "route": "zh/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "zh/references/",
+      "width": 640,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": []
+      }
+    },
+    {
+      "route": "404.html",
+      "width": 1024,
+      "cls": 0.00010454177856445313,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "en/aviation/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "The periodic inspection of communication and navigation systems in aircraft is mandatory",
+          "It is an important condition for Airworthiness Review Certificates – ARC",
+          "Our offer",
+          "Aviation Testing",
+          "Aviation Service",
+          "Downloads and links",
+          "Our partners"
+        ],
+        "hero": {
+          "photo": 400,
+          "copy": 180.21875
+        }
+      }
+    },
+    {
+      "route": "en/aviation/instrument-testing/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Testing of avionics is mandatory",
+          "Contact us, we will answer you",
+          "The question is: will you come to us or will we come to you?",
+          "Downloads and links"
+        ],
+        "hero": {
+          "photo": 400,
+          "copy": 264.4375
+        }
+      }
+    },
+    {
+      "route": "en/aviation/technical-maintenance/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Our specialization",
+          "Downloads and links"
+        ]
+      }
+    },
+    {
+      "route": "en/contact/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "en/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "en/references/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": []
+      }
+    },
+    {
+      "route": "en/services/inspections-and-testing/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Professional qualifications trainings",
+          "Establish your technology in local legislation",
+          "Complex testing before commissioning",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 400,
+          "copy": 153.640625
+        }
+      }
+    },
+    {
+      "route": "en/services/permits-and-approvals/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Construction permit",
+          "Installation of RTDs",
+          "Comissioning",
+          "Operation",
+          "Our offer",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 400,
+          "copy": 131.015625
+        }
+      }
+    },
+    {
+      "route": "en/services/risk-atex-pawa/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Do your safety standards comply with Slovak legislation?",
+          "Make sure your required safety files are in order",
+          "Prevent the possible accidents by conducting an independent third‑party analysis",
+          "Three key steps",
+          "Un‑prevented workplace accidents and injuries",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 400,
+          "copy": 131.015625
+        }
+      }
+    },
+    {
+      "route": "en/services/technical-consulting/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "What do we do?",
+          "Do not wait until the technology is built",
+          "Make sure that you are buying and/or shipping technology conferring to the local legal standards",
+          "Common cases of our consulting services occur in several key situations",
+          "Ensuring you are paying for technology without any legal issues",
+          "Pre‑deliver validation of the technology for suppliers of technology",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 400,
+          "copy": 100.21875
+        }
+      }
+    },
+    {
+      "route": "",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "kontaktujte-nas/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "letectvo/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Pre bezpečné vykonanie letu je nevyhnutný správne pracujúci avionický systém",
+          "Preto je periodické preskúšanie komunikačných a navigačných systémov v lietadlách povinné",
+          "Ide samozrejme o dôležitú podmienku pre zachovanie letovej spôsobilosti",
+          "Naše služby",
+          "Aviation Testing",
+          "Aviation Service",
+          "Na stiahnutie a odkazy",
+          "Naši partneri"
+        ],
+        "hero": {
+          "photo": 400,
+          "copy": 180.21875
+        }
+      }
+    },
+    {
+      "route": "letectvo/skusky-avioniky/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Pre pilotov: organizácia pri prílete",
+          "Na stiahnutie a odkazy"
+        ],
+        "hero": {
+          "photo": 400,
+          "copy": 233.640625
+        }
+      }
+    },
+    {
+      "route": "letectvo/technicka-udrzba/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Naša špecializácia",
+          "Na stiahnutie a odkazy"
+        ]
+      }
+    },
+    {
+      "route": "ochrana-osobnych-udajov/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Testing Service s.r.o.",
+          "Na stiahnutie a odkazy"
+        ]
+      }
+    },
+    {
+      "route": "sluzby/inspekcie-a-skusky/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Testing Service disponuje požadovanými akreditáciami na poskytovanie týchto inšpekcií",
+          "Školenia odborných spôsobilostí",
+          "Zaveďte svoju technológiu do miestnej legislatívy",
+          "Komplexné testovanie pred uvedením do prevádzky",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 400,
+          "copy": 153.640625
+        }
+      }
+    },
+    {
+      "route": "sluzby/povolenia-a-schvalenia/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Stavebné povolenie – povolenie začať stavbu",
+          "Inštalácia vyhradených technických zariadení – povolenie pre inštaláciu technických zariadení skupiny A",
+          "Prvé uvedenie do prevádzky",
+          "Povolenie na prevádzku",
+          "Naše služby",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 400,
+          "copy": 153.640625
+        }
+      }
+    },
+    {
+      "route": "sluzby/rizika-atex-pawa/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Dodržujete bezpečnostné štandardy a všetky právne predpisy Slovenskej/Českej republiky?",
+          "Uistite sa, že vaša bezpečnostná dokumentácia a potrebné súbory sú v poriadku",
+          "Predchádzajte potenciálnym nehodám vďaka rigoróznej a nestrannej bezpečnostnej analýze od tretej strany",
+          "Neexistuje ospravedlnenie pri zanedbaní bezpečnosti zamestnancov",
+          "Tri kľúčové kroky",
+          "Nepredídené pracovné úrazy a nehody",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 400,
+          "copy": 100.21875
+        }
+      }
+    },
+    {
+      "route": "sluzby/technicke-poradenstvo/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Čo robíme?",
+          "Nečakajte než sa technológia postaví",
+          "Uistite sa, že kupujete a/alebo dovážate technológiu, ktorá spĺňa miestne právne štandardy",
+          "Časté prípady našich poradenských služieb sa zameriavajú na niekoľko kľúčových situácii",
+          "Prevádzkovateľ: prísna kontrola technológie pred prevzatím",
+          "Validácia technológie pred dodaním špeciálne pre dodávateľov",
+          "Naše skúsenosti",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 400,
+          "copy": 131.015625
+        }
+      }
+    },
+    {
+      "route": "zh/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "zh/references/",
+      "width": 1024,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": []
+      }
+    },
+    {
+      "route": "404.html",
+      "width": 1440,
+      "cls": 0.00007083333333333334,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "en/aviation/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "The periodic inspection of communication and navigation systems in aircraft is mandatory",
+          "It is an important condition for Airworthiness Review Certificates – ARC",
+          "Our offer",
+          "Aviation Testing",
+          "Aviation Service",
+          "Downloads and links",
+          "Our partners"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 188.59375
+        }
+      }
+    },
+    {
+      "route": "en/aviation/instrument-testing/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Testing of avionics is mandatory",
+          "Contact us, we will answer you",
+          "The question is: will you come to us or will we come to you?",
+          "Downloads and links"
+        ],
+        "hero": {
+          "photo": 219.59375,
+          "copy": 219.59375
+        }
+      }
+    },
+    {
+      "route": "en/aviation/technical-maintenance/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Our specialization",
+          "Downloads and links"
+        ]
+      }
+    },
+    {
+      "route": "en/contact/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "en/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "en/references/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": []
+      }
+    },
+    {
+      "route": "en/services/inspections-and-testing/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Professional qualifications trainings",
+          "Establish your technology in local legislation",
+          "Complex testing before commissioning",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 170.1875
+        }
+      }
+    },
+    {
+      "route": "en/services/permits-and-approvals/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Construction permit",
+          "Installation of RTDs",
+          "Comissioning",
+          "Operation",
+          "Our offer",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 139.59375
+        }
+      }
+    },
+    {
+      "route": "en/services/risk-atex-pawa/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Do your safety standards comply with Slovak legislation?",
+          "Make sure your required safety files are in order",
+          "Prevent the possible accidents by conducting an independent third‑party analysis",
+          "Three key steps",
+          "Un‑prevented workplace accidents and injuries",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 139.59375
+        }
+      }
+    },
+    {
+      "route": "en/services/technical-consulting/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "What do we do?",
+          "Do not wait until the technology is built",
+          "Make sure that you are buying and/or shipping technology conferring to the local legal standards",
+          "Common cases of our consulting services occur in several key situations",
+          "Ensuring you are paying for technology without any legal issues",
+          "Pre‑deliver validation of the technology for suppliers of technology",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 108.59375
+        }
+      }
+    },
+    {
+      "route": "",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "kontaktujte-nas/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "letectvo/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Pre bezpečné vykonanie letu je nevyhnutný správne pracujúci avionický systém",
+          "Preto je periodické preskúšanie komunikačných a navigačných systémov v lietadlách povinné",
+          "Ide samozrejme o dôležitú podmienku pre zachovanie letovej spôsobilosti",
+          "Naše služby",
+          "Aviation Testing",
+          "Aviation Service",
+          "Na stiahnutie a odkazy",
+          "Naši partneri"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 188.59375
+        }
+      }
+    },
+    {
+      "route": "letectvo/skusky-avioniky/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Pre pilotov: organizácia pri prílete",
+          "Na stiahnutie a odkazy"
+        ],
+        "hero": {
+          "photo": 250.1875,
+          "copy": 250.1875
+        }
+      }
+    },
+    {
+      "route": "letectvo/technicka-udrzba/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Naša špecializácia",
+          "Na stiahnutie a odkazy"
+        ]
+      }
+    },
+    {
+      "route": "ochrana-osobnych-udajov/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Testing Service s.r.o.",
+          "Na stiahnutie a odkazy"
+        ]
+      }
+    },
+    {
+      "route": "sluzby/inspekcie-a-skusky/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Testing Service disponuje požadovanými akreditáciami na poskytovanie týchto inšpekcií",
+          "Školenia odborných spôsobilostí",
+          "Zaveďte svoju technológiu do miestnej legislatívy",
+          "Komplexné testovanie pred uvedením do prevádzky",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 170.1875
+        }
+      }
+    },
+    {
+      "route": "sluzby/povolenia-a-schvalenia/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Stavebné povolenie – povolenie začať stavbu",
+          "Inštalácia vyhradených technických zariadení – povolenie pre inštaláciu technických zariadení skupiny A",
+          "Prvé uvedenie do prevádzky",
+          "Povolenie na prevádzku",
+          "Naše služby",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 170.1875
+        }
+      }
+    },
+    {
+      "route": "sluzby/rizika-atex-pawa/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Dodržujete bezpečnostné štandardy a všetky právne predpisy Slovenskej/Českej republiky?",
+          "Uistite sa, že vaša bezpečnostná dokumentácia a potrebné súbory sú v poriadku",
+          "Predchádzajte potenciálnym nehodám vďaka rigoróznej a nestrannej bezpečnostnej analýze od tretej strany",
+          "Neexistuje ospravedlnenie pri zanedbaní bezpečnosti zamestnancov",
+          "Tri kľúčové kroky",
+          "Nepredídené pracovné úrazy a nehody",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 108.59375
+        }
+      }
+    },
+    {
+      "route": "sluzby/technicke-poradenstvo/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Čo robíme?",
+          "Nečakajte než sa technológia postaví",
+          "Uistite sa, že kupujete a/alebo dovážate technológiu, ktorá spĺňa miestne právne štandardy",
+          "Časté prípady našich poradenských služieb sa zameriavajú na niekoľko kľúčových situácii",
+          "Prevádzkovateľ: prísna kontrola technológie pred prevzatím",
+          "Validácia technológie pred dodaním špeciálne pre dodávateľov",
+          "Naše skúsenosti",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 139.59375
+        }
+      }
+    },
+    {
+      "route": "zh/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "zh/references/",
+      "width": 1440,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": []
+      }
+    },
+    {
+      "route": "404.html",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "en/aviation/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "The periodic inspection of communication and navigation systems in aircraft is mandatory",
+          "It is an important condition for Airworthiness Review Certificates – ARC",
+          "Our offer",
+          "Aviation Testing",
+          "Aviation Service",
+          "Downloads and links",
+          "Our partners"
+        ],
+        "hero": {
+          "photo": 212.90625,
+          "copy": 212.90625
+        }
+      }
+    },
+    {
+      "route": "en/aviation/instrument-testing/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Testing of avionics is mandatory",
+          "Contact us, we will answer you",
+          "The question is: will you come to us or will we come to you?",
+          "Downloads and links"
+        ],
+        "hero": {
+          "photo": 267.8125,
+          "copy": 267.8125
+        }
+      }
+    },
+    {
+      "route": "en/aviation/technical-maintenance/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Our specialization",
+          "Downloads and links"
+        ]
+      }
+    },
+    {
+      "route": "en/contact/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "en/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "en/references/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": []
+      }
+    },
+    {
+      "route": "en/services/inspections-and-testing/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Professional qualifications trainings",
+          "Establish your technology in local legislation",
+          "Complex testing before commissioning",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 187.8125
+        }
+      }
+    },
+    {
+      "route": "en/services/permits-and-approvals/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Construction permit",
+          "Installation of RTDs",
+          "Comissioning",
+          "Operation",
+          "Our offer",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 132.90625
+        }
+      }
+    },
+    {
+      "route": "en/services/risk-atex-pawa/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Do your safety standards comply with Slovak legislation?",
+          "Make sure your required safety files are in order",
+          "Prevent the possible accidents by conducting an independent third‑party analysis",
+          "Three key steps",
+          "Un‑prevented workplace accidents and injuries",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 132.90625
+        }
+      }
+    },
+    {
+      "route": "en/services/technical-consulting/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "What do we do?",
+          "Do not wait until the technology is built",
+          "Make sure that you are buying and/or shipping technology conferring to the local legal standards",
+          "Common cases of our consulting services occur in several key situations",
+          "Ensuring you are paying for technology without any legal issues",
+          "Pre‑deliver validation of the technology for suppliers of technology",
+          "Related services"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 132.90625
+        }
+      }
+    },
+    {
+      "route": "",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "kontaktujte-nas/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "letectvo/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Pre bezpečné vykonanie letu je nevyhnutný správne pracujúci avionický systém",
+          "Preto je periodické preskúšanie komunikačných a navigačných systémov v lietadlách povinné",
+          "Ide samozrejme o dôležitú podmienku pre zachovanie letovej spôsobilosti",
+          "Naše služby",
+          "Aviation Testing",
+          "Aviation Service",
+          "Na stiahnutie a odkazy",
+          "Naši partneri"
+        ],
+        "hero": {
+          "photo": 212.90625,
+          "copy": 212.90625
+        }
+      }
+    },
+    {
+      "route": "letectvo/skusky-avioniky/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Pre pilotov: organizácia pri prílete",
+          "Na stiahnutie a odkazy"
+        ],
+        "hero": {
+          "photo": 267.8125,
+          "copy": 267.8125
+        }
+      }
+    },
+    {
+      "route": "letectvo/technicka-udrzba/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Naša špecializácia",
+          "Na stiahnutie a odkazy"
+        ]
+      }
+    },
+    {
+      "route": "ochrana-osobnych-udajov/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Testing Service s.r.o.",
+          "Na stiahnutie a odkazy"
+        ]
+      }
+    },
+    {
+      "route": "sluzby/inspekcie-a-skusky/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Testing Service disponuje požadovanými akreditáciami na poskytovanie týchto inšpekcií",
+          "Školenia odborných spôsobilostí",
+          "Zaveďte svoju technológiu do miestnej legislatívy",
+          "Komplexné testovanie pred uvedením do prevádzky",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 156.8125
+        }
+      }
+    },
+    {
+      "route": "sluzby/povolenia-a-schvalenia/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Stavebné povolenie – povolenie začať stavbu",
+          "Inštalácia vyhradených technických zariadení – povolenie pre inštaláciu technických zariadení skupiny A",
+          "Prvé uvedenie do prevádzky",
+          "Povolenie na prevádzku",
+          "Naše služby",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 187.8125
+        }
+      }
+    },
+    {
+      "route": "sluzby/rizika-atex-pawa/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Dodržujete bezpečnostné štandardy a všetky právne predpisy Slovenskej/Českej republiky?",
+          "Uistite sa, že vaša bezpečnostná dokumentácia a potrebné súbory sú v poriadku",
+          "Predchádzajte potenciálnym nehodám vďaka rigoróznej a nestrannej bezpečnostnej analýze od tretej strany",
+          "Neexistuje ospravedlnenie pri zanedbaní bezpečnosti zamestnancov",
+          "Tri kľúčové kroky",
+          "Nepredídené pracovné úrazy a nehody",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 156.8125
+        }
+      }
+    },
+    {
+      "route": "sluzby/technicke-poradenstvo/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": [
+          "Čo robíme?",
+          "Nečakajte než sa technológia postaví",
+          "Uistite sa, že kupujete a/alebo dovážate technológiu, ktorá spĺňa miestne právne štandardy",
+          "Časté prípady našich poradenských služieb sa zameriavajú na niekoľko kľúčových situácii",
+          "Prevádzkovateľ: prísna kontrola technológie pred prevzatím",
+          "Validácia technológie pred dodaním špeciálne pre dodávateľov",
+          "Naše skúsenosti",
+          "Ďalšie služby"
+        ],
+        "hero": {
+          "photo": 200,
+          "copy": 132.90625
+        }
+      }
+    },
+    {
+      "route": "zh/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {}
+    },
+    {
+      "route": "zh/references/",
+      "width": 1080,
+      "cls": 0,
+      "overflow": false,
+      "narrow": [],
+      "overlap": [],
+      "columns": [],
+      "contactOrder": true,
+      "images": [],
+      "contract": [],
+      "review7": {
+        "rail": []
+      }
+    }
+  ]
+}

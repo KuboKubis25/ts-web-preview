@@ -71,7 +71,7 @@ export function review6Contract() {
         return y;
       };
       const diff = baseline(rail.querySelector('.eyebrow')) - baseline(prose.firstElementChild);
-      check(Math.abs(diff) <= 2, 'rail-baseline', { diff, first: prose.firstElementChild.tagName });
+      check(Math.abs(diff) <= 1, 'rail-baseline', { diff, first: prose.firstElementChild.tagName });
     }
   }
   for (const text of document.querySelectorAll('.rail-text')) {
@@ -106,16 +106,17 @@ export function review6Contract() {
     }
   }
   for (const photo of document.querySelectorAll('.page-hero > img')) {
-    if (innerWidth !== 1440) continue;
+    if (innerWidth < 1080) continue;
     const copy = photo.previousElementSibling;
-    const expected = Math.min(300, Math.max(240, box(copy).height));
+    const expected = Math.min(300, Math.max(200, box(copy).height));
     check(Math.abs(box(photo).height - expected) <= 1, 'hero-photo-copy-height', { height: box(photo).height, copy: box(copy).height, expected });
-    check(box(photo).bottom - box(copy).bottom <= Math.max(0, 240 - box(copy).height) + 1, 'hero-empty-space', box(photo).bottom - box(copy).bottom);
+    check(box(photo).bottom - box(copy).bottom <= Math.max(0, 200 - box(copy).height) + 1, 'hero-empty-space', box(photo).bottom - box(copy).bottom);
   }
   for (const label of document.querySelectorAll('.enquiry-form label')) token(label, 14, 500, 1.55, 'field-label');
   if (innerWidth < 1080) {
     for (const link of document.querySelectorAll('.breadcrumb a')) {
-      check(box(link).width >= 44 && box(link).height >= 44, 'breadcrumb-hit-area', { text: link.textContent, width: box(link).width, height: box(link).height });
+      const hit = getComputedStyle(link, '::after');
+      check(parseFloat(hit.width) >= 44 && parseFloat(hit.height) >= 44 && hit.content !== 'none', 'breadcrumb-hit-area', { text: link.textContent, width: hit.width, height: hit.height });
     }
     for (const item of document.querySelectorAll('.breadcrumb li + li')) {
       const separator = getComputedStyle(item, '::before');
@@ -124,7 +125,7 @@ export function review6Contract() {
   }
   for (const list of document.querySelectorAll('.footer-grid ul')) {
     const links = [...list.querySelectorAll('a')];
-    check(getComputedStyle(list).rowGap === '8px', 'footer-row-gap', list.textContent);
+    check(getComputedStyle(list).rowGap === (innerWidth >= 1080 ? '8px' : '0px'), 'footer-row-gap', list.textContent);
     if (innerWidth >= 1080) links.forEach((link, i) => {
       check(getComputedStyle(link).display === 'inline-block' && box(link).height >= 24, 'footer-link-box', link.textContent);
       if (i) check(Math.abs(box(link).top - box(links[i-1]).bottom - 8) <= 1, 'footer-link-gap', { text: link.textContent, gap: box(link).top - box(links[i-1]).bottom });

@@ -7,7 +7,7 @@ description: "Splnenie českých a slovenských legislatívnych požiadaviek pre
 kind: "home"
 source: "_source/pages/skmain.md"
 image: "CarAssembly-min.jpg"
-packageLead: "Aby sme mohli zabezpečiť najlepšie možné výsledky, ponúkame naše služby zviazané do jednotlivých balíčkov, ktoré majú za účel kompletne zabezpečiť akékoľvek právne požiadavky, ktoré prevádzkovateľ alebo dodávateľ má alebo bude mať s technológiou."
+packageLead: "Ponúkame naše služby zviazané do jednotlivých balíčkov, ktoré majú za účel kompletne zabezpečiť akékoľvek právne požiadavky."
 ---
 
 

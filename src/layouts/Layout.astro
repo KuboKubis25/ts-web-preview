@@ -87,7 +87,7 @@ const canonical = absolute(
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta name="theme-color" content={colors.ink} />
-    <style is:inline set:html={`:root { --color-ink: ${colors.ink}; --hairline-gap: ${spacing.hairlineGap}; --text-prose-h2: ${typeTokens["prose-h2"].size}; --weight-field-label: ${typeTokens["field-label"].weight}; }`} />
+    <style is:inline set:html={`:root { --color-ink: ${colors.ink}; --hairline-gap: ${spacing.hairlineGap}; --text-prose-h2: ${typeTokens["prose-h2"].size}; --text-prose-h3: ${typeTokens["prose-h3"].size}; --weight-ui-current: ${typeTokens["ui-current"].weight}; --weight-field-label: ${typeTokens["field-label"].weight}; }`} />
   </head>
   <body class:list={[page.kind === "aviation" && "aviation"]}>
     <header class="site-header">
@@ -278,7 +278,7 @@ const canonical = absolute(
           <h3 class="type-h4">{t.aviation}{aviationLanguage && <LangTag current={page.lang} target={aviationLanguage} />}</h3>
           <p lang="en">Aviation Testing Center · Žilina (LZZI)</p>
           <ul>
-            {page.kind !== "aviation" && <li><FooterLink href="mailto:info.aviation@testing-service.org" title="info.aviation@testing-service.org" current={page.lang} /></li>}
+            {page.kind !== "aviation" && page.kind !== "contact" && <li><FooterLink href="mailto:info.aviation@testing-service.org" title="info.aviation@testing-service.org" current={page.lang} /></li>}
             {aviationPages.map((p) => <li><FooterLink href={url(p.path + "/")} title={p.title} current={page.lang} target={aviationLanguage ? undefined : p.lang} textLang={p.lang} /></li>)}
           </ul>
         </div>

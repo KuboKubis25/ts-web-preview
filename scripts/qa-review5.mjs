@@ -110,7 +110,7 @@ export function typographyLines() {
     }
     const text=[...lines.entries()].sort((a,b)=>a[0]-b[0]).map(([,line])=>line.trim());
     text.forEach((line,i)=>{
-      if((i<text.length-1 && /(?:^|\s)[aikosuvz]$/.test(line) || /(?:^|[.!?:] )[AIKOSUVZ]$/.test(line)) || /^[–/]/.test(line) || (i < text.length-1 && /(?:^|\s)(?:No|č\.|Nr\.)$/.test(line)) || (/(?:Kategória|skupiny|sk\.|TWY)$/.test(line) && /^[AIKOSUVZ](?:\s|$)/.test(text[i+1] || ''))) failures.push({line,block:block.textContent.slice(0,100)});
+      if((i<text.length-1 && /(?:^|\s)(?:Bendix|Slick|série|skupiny)$/.test(line)) || (i<text.length-1 && /(?:^|\s)[aikosuvz]$/.test(line) || /(?:^|[.!?:] )[AIKOSUVZ]$/.test(line)) || /^[–/%]/.test(line) || (i < text.length-1 && /(?:^|\s)(?:No|č\.|Nr\.)$/.test(line)) || (/(?:Kategória|skupiny|sk\.|TWY)$/.test(line) && /^[AIKOSUVZ](?:\s|$)/.test(text[i+1] || ''))) failures.push({line,block:block.textContent.slice(0,100)});
     });
   }
   return failures;

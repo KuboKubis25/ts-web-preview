@@ -1,3 +1,5 @@
+import { parseFragment, serialize } from 'parse5';
+
 /** Shared, idempotent typography for Markdown text and rendered data strings. */
 export function typography(value, lang, compounds = false) {
   if (lang === 'zh') return value;
@@ -9,8 +11,12 @@ export function typography(value, lang, compounds = false) {
     // the forward pass keep an already-bound category letter from binding twice.
     text = text.replace(/\b(No|Nr\.|sk\.) (?=[\dA-Z])/g, '$1\u00a0')
       .replace(/(č\.) (?=[\dA-Z])/g, '$1\u00a0');
+    text = text.replace(/Bendix\sKing/g, 'Bendix\u00a0King')
+      .replace(/(Slick|King)\s(?=\(|série|serie|series)/g, '$1\u00a0')
+      .replace(/(série|serie|series)\s(?=[A-Z0-9])/g, '$1\u00a0');
     if (lang === 'sk' || lang === 'cs') {
-      text = text.replace(/([^\s.!?:„(])(\s)([AIKOSUVZ])(?=[\s,.)])/g, '$1\u00a0$3');
+      text = text.replace(/(\d)\s?%/g, '$1\u00a0%');
+      text = text.replace(/([^\s.!?:„(])(\s)([AIKOSUVZ])(?=[\s,.)]|$)/g, '$1\u00a0$3');
       for (let pass = 0; pass < 2; pass++) {
         text = text.replace(/(^|[\s(„])([aikosuvz]) /g, '$1$2\u00a0')
           .replace(/(^|[„(]|[.!?:] )([AIKOSUVZ]) /g, '$1$2\u00a0');
@@ -37,6 +43,18 @@ export default function rehypeTypography() {
       }
       if (node.type === 'element' && ['code', 'pre', 'script', 'style'].includes(node.tagName)) return;
       if (node.type === 'text') node.value = typography(node.value, lang, compounds);
+      // Authored key lines are raw HTML in Markdown; normalize their text nodes
+      // too, while leaving attribute values, URLs and element structure intact.
+      if (node.type === 'raw' && lang !== 'zh' && /^<p\b[^>]*>[\s\S]*<\/p>$/.test(node.value)) {
+        const fragment = parseFragment(node.value);
+        const normalize = element => {
+          if (['code', 'pre', 'script', 'style'].includes(element.tagName)) return;
+          if (element.nodeName === '#text') element.value = typography(element.value, lang, compounds);
+          element.childNodes?.forEach(normalize);
+        };
+        normalize(fragment);
+        node.value = serialize(fragment);
+      }
       if (node.type === 'element' && /^h[2-4]$/.test(node.tagName) && node.children?.at(-1)?.value?.endsWith(':')) {
         node.properties ||= {};
         node.properties.className = [...(node.properties.className || []), 'prose-label'];

@@ -25,11 +25,11 @@ Technológia dodávaná zo štátov mimo Európskej únie je vystavená značné
 
 ### Časté prípady našich poradenských služieb sa zameriavajú na niekoľko kľúčových situácii
 
-- bezpečnostné návrhy a riešenia pre technológie
-- systémy EX pre potenciálne výbušné prostredie
-- hygienické parametre v pracovných priestoroch
-- protipožiarna ochrana budov a technológií
-- environmentálne podmienky
+- Bezpečnostné návrhy a riešenia pre technológie.
+- Systémy EX pre potenciálne výbušné prostredie.
+- Hygienické parametre v pracovných priestoroch.
+- Protipožiarna ochrana budov a technológií.
+- Environmentálne podmienky.
 
 ## Prevádzkovateľ: prísna kontrola technológie pred prevzatím
 

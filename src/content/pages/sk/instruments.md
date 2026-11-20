@@ -17,8 +17,8 @@ Vyplnený formulár odošlite na info.aviation@testing-service.org
 
 ### Počas prevádzky TWR:
 
-- [mapa](/s/LZZI-Map.jpg)
-- [letisko AIP](https://aim.lps.sk/eAIP/eAIP_SR/AIRAC193_EFF_24MAY2018/html/LZ-AD-2.LZZI-en-SK.html)
+- [Mapa](/s/LZZI-Map.jpg).
+- [Letisko AIP](https://aim.lps.sk/eAIP/eAIP_SR/AIRAC193_EFF_24MAY2018/html/LZ-AD-2.LZZI-en-SK.html).
 
 ### Mimo prevádzky TWR:
 
@@ -26,10 +26,10 @@ Na konci TWY A odbočte doprava na miesto č. 3 podľa mapky.
 
 ### Potrebujeme:
 
-- zariadiť manipuláciu s lietadlami
-- 230 V k dispozícii (max. 50 m od meracieho priestoru)
+- Zariadiť manipuláciu s lietadlami.
+- 230 V k dispozícii (max. 50 m od meracieho priestoru).
 
 ### Majte prichystané:
 
-- lietadlovú knihu
-- predchádzajúce záznamy
+- Lietadlovú knihu.
+- Predchádzajúce záznamy.
