@@ -5,10 +5,12 @@ import logo from "../../_source/img/logo-mark.png";
 import Icon from "../components/Icon.astro";
 import FooterLink from "../components/FooterLink.astro";
 import LangTag from "../components/LangTag.astro";
+import { colors } from "../data/tokens";
 import { languages, ui } from "../data/ui";
 import { url, absolute } from "../lib/urls";
 import { downloads, downloadTitle } from "../data/downloads";
 import { serviceKeys, aviationKeys, serviceTitle } from "../data/sections";
+import plexLatin from "@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-wght-normal.woff2?url";
 import "@fontsource-variable/ibm-plex-sans/wght.css";
 import "../styles/global.css";
 interface Props {
@@ -47,6 +49,7 @@ const canonical = absolute(
 <html lang={page.lang}>
   <head>
     <meta charset="UTF-8" />
+    <link rel="preload" href={plexLatin} as="font" type="font/woff2" crossorigin />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <title>{page.title === 'Testing Service' ? `${page.title} — ${page.description}` : `${page.title} | Testing Service`}</title>
@@ -75,7 +78,8 @@ const canonical = absolute(
     <meta property="og:description" content={page.description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
-    <meta name="theme-color" content="#18292e" />
+    <meta name="theme-color" content={colors.ink} />
+    <style is:inline set:html={`:root { --color-ink: ${colors.ink}; }`} />
   </head>
   <body class:list={[page.kind === "aviation" && "aviation"]}>
     <header class="site-header">
@@ -336,7 +340,10 @@ const canonical = absolute(
       );
       const tabs = activeTab?.parentElement;
       if (activeTab && tabs) {
-        const updateFade = () => tabs.classList.toggle("has-overflow", tabs.scrollWidth > tabs.clientWidth + tabs.scrollLeft + 1);
+        const updateFade = () => {
+          tabs.classList.toggle("fade-start", tabs.scrollLeft > 1);
+          tabs.classList.toggle("fade-end", tabs.scrollWidth > tabs.clientWidth + tabs.scrollLeft + 1);
+        };
         const alignTab = () => {
           if (matchMedia("(width < 640px)").matches)
             activeTab.scrollIntoView({ inline: "start", block: "nearest", behavior: "instant" });
@@ -358,8 +365,11 @@ const canonical = absolute(
       const updateContents = () => {
         queued = false;
         let active = 0;
+        const rail = document.querySelector(".rail");
+        if (!rail) return;
+        const railTop = parseFloat(getComputedStyle(rail).top);
         sections.forEach((section, index) => {
-          if (section && section.getBoundingClientRect().top <= 120)
+          if (section && section.getBoundingClientRect().top <= railTop + 24)
             active = index;
         });
         contentsLinks.forEach((link, index) => {

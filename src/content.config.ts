@@ -18,6 +18,11 @@ const pages = defineCollection({
       "legal",
     ]),
     image: z.string().optional(),
+    facts: z
+      .array(z.object({ label: z.string(), value: z.string() }))
+      .min(2)
+      .max(4)
+      .optional(),
     packageLead: z.string().optional(),
     closing: z.string().optional(),
     source: z.string(),

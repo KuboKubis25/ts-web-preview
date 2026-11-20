@@ -58,6 +58,33 @@ const browser = await chromium.launch({
   args: ["--no-sandbox"],
 });
 const context = await browser.newContext({ reducedMotion: "reduce" });
+// Observe from document creation, before fonts or images can move content.
+await context.addInitScript(() => {
+  window.__layoutShift = {
+    value: 0,
+    session: 0,
+    start: 0,
+    last: 0,
+    entries: [],
+  };
+  new PerformanceObserver((list) => {
+    const cls = window.__layoutShift;
+    for (const entry of list.getEntries()) {
+      if (entry.hadRecentInput) continue;
+      if (
+        entry.startTime - cls.last > 1000 ||
+        entry.startTime - cls.start > 5000
+      ) {
+        cls.session = 0;
+        cls.start = entry.startTime;
+      }
+      cls.last = entry.startTime;
+      cls.session += entry.value;
+      cls.value = Math.max(cls.value, cls.session);
+      cls.entries.push({ value: entry.value, time: entry.startTime });
+    }
+  }).observe({ type: "layout-shift", buffered: true });
+});
 const page = await context.newPage();
 const failures = [],
   metrics = [],
@@ -72,8 +99,10 @@ const shots = {
   "letectvo/skusky-avioniky/": "sk-aviation-testing",
   "kontaktujte-nas/": "sk-contact",
   "en/references/": "en-references",
+  "sluzby/rizika-atex-pawa/": "sk-risk",
+  "letectvo/technicka-udrzba/": "sk-maintenance",
 };
-const shotDir = "docs/review/shots-v3";
+const shotDir = "docs/review/shots-v4";
 if (capture) await mkdir(shotDir, { recursive: true });
 async function ready() {
   await page.evaluate(async () => {
@@ -158,11 +187,242 @@ function layoutContract() {
   if (heroPhoto && innerWidth < 1080) {
     check(
       Math.abs(box(heroPhoto).width - innerWidth) <= 1 &&
-        box(heroPhoto).height <= innerHeight / 2 + 1,
+        box(heroPhoto).height <= Math.min(innerHeight / 2, 400) + 1,
       "stacked-hero-photo",
       { width: box(heroPhoto).width, height: box(heroPhoto).height },
     );
   }
+  for (const photo of document.querySelectorAll(
+    ".page-hero > img, .aviation-feature-grid > img",
+  )) {
+    if (innerWidth < 1080)
+      check(
+        box(photo).height <= Math.min(innerHeight / 2, 400) + 1 &&
+          getComputedStyle(photo).objectFit === "cover",
+        "stacked-photo-cap",
+        box(photo).height,
+      );
+  }
+  const article = document.querySelector(".article-layout");
+  check(
+    !document.querySelector(".related"),
+    "related-inside-article",
+    location.pathname,
+  );
+  if (article) {
+    const prose = article.querySelector(".prose");
+    const rail = article.querySelector(".rail");
+    const contents = [...article.querySelectorAll(".contents a")];
+    const endings = [
+      ...article.querySelectorAll(".downloads, .partners, .related-block"),
+    ];
+    const targets = [...prose.querySelectorAll("h2[id], h3[id]"), ...endings];
+    const hasFacts = !!article.querySelector(".facts");
+    check(!!rail === (targets.length >= 2 || hasFacts), "rail-presence", {
+      targets: targets.length,
+      hasFacts,
+    });
+    check(
+      contents.map((a) => decodeURIComponent(a.hash.slice(1))).join("|") ===
+        (targets.length >= 2 ? targets.map((t) => t.id).join("|") : ""),
+      "rail-targets",
+      targets.map((t) => t.id),
+    );
+    for (const entry of contents) {
+      check(
+        entry.title === entry.textContent &&
+          getComputedStyle(entry).whiteSpace === "nowrap" &&
+          getComputedStyle(entry).textOverflow === "ellipsis",
+        "rail-entry-label",
+        entry.textContent,
+      );
+      if (
+        document.getElementById(decodeURIComponent(entry.hash.slice(1)))
+          .tagName === "H3"
+      )
+        check(
+          parseFloat(getComputedStyle(entry).paddingLeft) === 24,
+          "rail-h3-indent",
+          entry.textContent,
+        );
+    }
+    for (const ending of endings)
+      check(
+        parseFloat(getComputedStyle(ending).marginTop) === 64 &&
+          ending.querySelector("h2.type-h3"),
+        "ending-block-rhythm",
+        ending.id,
+      );
+    if (innerWidth >= 1080) {
+      const container = box(article),
+        step = (container.width + 24) / 12;
+      check(
+        Math.abs(box(prose).left - container.left - 4 * step) < 1 &&
+          (innerWidth !== 1440 ||
+            box(prose).right <= container.left + 10 * step - 24 + 1),
+        "prose-column-edges",
+        { left: box(prose).left, right: box(prose).right },
+      );
+      if (rail) {
+        check(
+          visible(rail) &&
+            Math.abs(box(rail).left - container.left) < 1 &&
+            Math.abs(box(rail).width - (3 * step - 24)) < 1,
+          "rail-column-edges",
+          { left: box(rail).left, width: box(rail).width },
+        );
+        check(
+          getComputedStyle(rail).position === "sticky" &&
+            getComputedStyle(rail.parentElement).alignSelf !== "start",
+          "rail-sticky-container",
+          getComputedStyle(rail.parentElement).alignSelf,
+        );
+        const current = rail.querySelector('[aria-current="location"]');
+        if (current)
+          check(
+            getComputedStyle(current).color ===
+              getComputedStyle(document.body).color &&
+              getComputedStyle(current).boxShadow !== "none",
+            "rail-active-rule",
+            current.textContent,
+          );
+      }
+      if (innerWidth === 1440) {
+        // DESIGN wins over review-4's literal 64px: section-y / 2 is 52.8px here.
+        const expected = parseFloat(getComputedStyle(article).paddingTop);
+        const preceding = article.previousElementSibling;
+        const hairline = box(preceding).bottom - 1;
+        check(
+          Math.abs(expected - 52.8) <= 0.1 &&
+            Math.abs(
+              box(prose.firstElementChild).top - hairline - expected - 1,
+            ) < 1,
+          "hairline-first-line",
+          { gap: box(prose.firstElementChild).top - hairline, expected },
+        );
+        if (rail) {
+          const offset = parseFloat(getComputedStyle(rail).paddingTop);
+          check(
+            Math.abs(
+              box(rail.querySelector(".eyebrow")).top -
+                box(prose.firstElementChild).top -
+                offset,
+            ) < 1 && offset === 6,
+            "rail-first-line-alignment",
+            offset,
+          );
+        }
+      }
+    } else {
+      check(!rail || !visible(rail), "mobile-rail-hidden", location.pathname);
+      const facts = article.querySelector(".mobile-facts");
+      if (facts) {
+        const cells = [...facts.querySelectorAll(".facts > div")];
+        check(
+          visible(facts) &&
+            Math.abs(box(prose).top - box(facts).bottom - 32) < 1,
+          "mobile-facts-gap",
+          box(prose).top - box(facts).bottom,
+        );
+        check(
+          getComputedStyle(facts.querySelector("dl")).gridTemplateColumns.split(
+            " ",
+          ).length === (innerWidth >= 640 ? 2 : 1),
+          "mobile-facts-columns",
+          innerWidth,
+        );
+        if (innerWidth >= 640)
+          check(
+            Math.abs(box(cells[0]).top - box(cells[1]).top) < 1,
+            "mobile-facts-row",
+            innerWidth,
+          );
+      }
+    }
+  }
+  if (innerWidth >= 1080) {
+    const action = document.querySelector(".footer-action");
+    if (action) {
+      const container = box(action.parentElement),
+        expected = container.left + (7 * (container.width + 24)) / 12;
+      for (const element of [action, ...action.children])
+        check(
+          Math.abs(box(element).left - expected) < 1,
+          "footer-closing-edge",
+          { left: box(element).left, expected },
+        );
+      const heading = document.querySelector(".footer-top h2"),
+        email = action.querySelector(".footer-email");
+      const offset =
+        (parseFloat(getComputedStyle(heading).lineHeight) -
+          parseFloat(getComputedStyle(email).lineHeight)) /
+        2;
+      check(
+        Math.abs(box(email).top - box(heading).top - offset) < 1,
+        "footer-closing-baseline",
+        offset,
+      );
+    }
+  }
+  for (const list of document.querySelectorAll(
+    ".prose li > ul, .prose li > ol",
+  ))
+    check(
+      getComputedStyle(list).marginTop === "4px" &&
+        getComputedStyle(list).marginBottom === "0px",
+      "nested-list-rhythm",
+      label(list),
+    );
+  const capabilities = [...document.querySelectorAll(".capabilities > li")];
+  if (capabilities.length)
+    check(
+      capabilities.every(
+        (el) =>
+          getComputedStyle(el).alignItems === "start" &&
+          getComputedStyle(el).paddingTop === "16px",
+      ),
+      "capability-baselines",
+      location.pathname,
+    );
+  if (
+    document.documentElement.lang === "zh" &&
+    document.querySelector(".packages")
+  ) {
+    check(
+      document.querySelector(".packages details").open,
+      "zh-packages-open",
+      location.pathname,
+    );
+    for (const p of document.querySelectorAll(".intro-section p"))
+      check(
+        getComputedStyle(p).wordBreak === "keep-all" &&
+          !!p.querySelector("wbr"),
+        "zh-phrase-breaks",
+        p.textContent,
+      );
+  }
+  check(
+    !document.querySelector(".aerial-group[role], .aerial-group[aria-label]"),
+    "aerial-decoration",
+    location.pathname,
+  );
+  const probe = document.createElement("span");
+  probe.style.color = document.querySelector(
+    'meta[name="theme-color"]',
+  ).content;
+  document.body.append(probe);
+  check(
+    getComputedStyle(probe).color === getComputedStyle(document.body).color,
+    "theme-color-token",
+    getComputedStyle(probe).color,
+  );
+  probe.remove();
+  if (document.body.classList.contains("aviation"))
+    check(
+      document.querySelectorAll(".breadcrumb li").length === 2,
+      "aviation-breadcrumb",
+      location.pathname,
+    );
   const question = document.querySelector(".footer-top h2");
   if (question)
     check(
@@ -180,7 +440,7 @@ function layoutContract() {
     if (
       !visible(el) ||
       el.matches("a, button, input, textarea, .lang-tag") ||
-      el.closest(".section-nav, .contents")
+      el.closest(".section-nav, .contents, .facts")
     )
       continue;
     const style = getComputedStyle(el),
@@ -422,9 +682,37 @@ function layoutContract() {
 try {
   for (const width of [390, 640, 1024, 1440, 1080]) {
     await page.setViewportSize({ width, height: width === 390 ? 844 : 1000 });
+    // Routing disables cache. A delayed font makes the fallback paint on every mobile route.
+    if (width === 390)
+      await page.route("**/*.woff2", async (route) => {
+        await new Promise((resolve) => setTimeout(resolve, 350));
+        await route.continue();
+      });
+    else await page.unroute("**/*.woff2");
     for (const route of routes) {
-      await page.goto(origin + route);
+      await page.goto(origin + route, {
+        waitUntil: width === 390 ? "domcontentloaded" : "load",
+      });
+      const fallbackEyebrowHeight =
+        width === 390
+          ? await page
+              .locator(".hero-copy .eyebrow")
+              .evaluateAll(
+                (elements) => elements[0]?.getBoundingClientRect().height,
+              )
+          : undefined;
       await ready();
+      if (fallbackEyebrowHeight !== undefined) {
+        const finalHeight = await page
+          .locator(".hero-copy .eyebrow")
+          .evaluate((el) => el.getBoundingClientRect().height);
+        if (Math.abs(finalHeight - fallbackEyebrowHeight) > 1)
+          failures.push({
+            route,
+            width,
+            fontWrap: { fallbackEyebrowHeight, finalHeight },
+          });
+      }
       const result = await page.evaluate(() => {
         const visible = (element) =>
           element.checkVisibility() &&
@@ -547,9 +835,36 @@ try {
           images,
         };
       });
+      const cls = await page.evaluate(() => window.__layoutShift.value);
+      if (width === 390 && cls >= 0.05) failures.push({ route, width, cls });
+      const sourceFacts = await page
+        .locator(".article-layout")
+        .evaluateAll((articles) =>
+          articles.map((article) => ({
+            source: article.dataset.source,
+            values: [...article.querySelectorAll(".rail .facts dd")].map(
+              (el) => el.textContent,
+            ),
+            mobile: [
+              ...article.querySelectorAll(".mobile-facts .facts dd"),
+            ].map((el) => el.textContent),
+          })),
+        );
+      for (const facts of sourceFacts) {
+        const original = await readFile(facts.source, "utf8");
+        if (
+          facts.values.some((value) => !original.includes(value)) ||
+          facts.values.join("|") !== facts.mobile.join("|")
+        )
+          failures.push({
+            route,
+            facts:
+              "Source-verbatim facts and identical mobile rendering required",
+          });
+      }
       const contract = await page.evaluate(layoutContract);
       if (contract.length) failures.push({ route, width, contract });
-      metrics.push({ route, width, ...result, contract });
+      metrics.push({ route, width, cls, ...result, contract });
       if (
         result.overflow ||
         result.narrow.length ||
@@ -559,6 +874,29 @@ try {
         result.images.length
       )
         failures.push({ route, width, ...result });
+      const name = shots[route];
+      if (
+        capture &&
+        name &&
+        (width === 1440 ||
+          width === 390 ||
+          ([640, 1024, 1080].includes(width) &&
+            ["sk-home", "sk-contact", "sk-aviation-testing"].includes(name)) ||
+          (width === 640 && name === "sk-service") ||
+          (width === 1024 && name === "zh-home"))
+      ) {
+        // Capture the arrival state before accessibility probes can focus or scroll controls.
+        await page.evaluate(() => {
+          document.activeElement?.blur();
+          scrollTo(0, 0);
+        });
+        await page.screenshot({
+          path: `${shotDir}/${name}-${width === 1440 ? "desktop" : width === 390 ? "mobile" : width}.jpg`,
+          fullPage: true,
+          type: "jpeg",
+          quality: 85,
+        });
+      }
       if ([390, 1440].includes(width)) {
         const axe = await new AxeBuilder({ page })
           .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
@@ -575,25 +913,8 @@ try {
           });
       }
       await checkImagePixels(`${route} at ${width}px`);
-      const name = shots[route];
-      if (
-        capture &&
-        name &&
-        (width === 1440 ||
-          width === 390 ||
-          ([640, 1024, 1080].includes(width) &&
-            ["sk-home", "sk-contact", "sk-aviation-testing"].includes(name)) ||
-          (width === 640 && name === "sk-service") ||
-          (width === 1024 && name === "zh-home"))
-      ) {
-        await page.screenshot({
-          path: `${shotDir}/${name}-${width === 1440 ? "desktop" : width === 390 ? "mobile" : width}.jpg`,
-          fullPage: true,
-          type: "jpeg",
-          quality: 85,
-        });
-      }
     }
+    console.log(`Checked ${routes.length} routes at ${width}px.`);
   }
   for (const width of [390, 1440]) {
     await page.setViewportSize({ width, height: width === 390 ? 844 : 1000 });
@@ -709,29 +1030,58 @@ try {
     const active = el.querySelector('[aria-current="page"]');
     return {
       x: active.getBoundingClientRect().left,
-      fade: el.classList.contains("has-overflow"),
+      fadeStart: el.classList.contains("fade-start"),
+      fadeEnd: el.classList.contains("fade-end"),
+      mask: getComputedStyle(el).maskImage,
       scroll: el.scrollLeft,
     };
   });
   assert.ok(Math.abs(tabState.x - 20) <= 1);
-  assert.ok(tabState.fade && tabState.scroll > 0);
-  if (capture)
-    await page.screenshot({
-      path: `${shotDir}/sk-aviation-mobile-tabs.jpg`,
-      type: "jpeg",
-      quality: 85,
-    });
+  assert.ok(
+    tabState.fadeStart &&
+      tabState.fadeEnd &&
+      tabState.scroll > 0 &&
+      tabState.mask !== "none",
+  );
+  if (capture) {
+    for (const name of [
+      "sk-aviation-mobile-tabs",
+      "sk-aviation-testing-mobile-tabs",
+    ])
+      await page.screenshot({
+        path: `${shotDir}/${name}.jpg`,
+        type: "jpeg",
+        quality: 85,
+      });
+  }
   await page.locator(".section-nav").evaluate((el) => {
     el.scrollLeft = el.scrollWidth;
   });
   await page.waitForFunction(
     () =>
-      !document
-        .querySelector(".section-nav")
-        .classList.contains("has-overflow"),
+      !document.querySelector(".section-nav").classList.contains("fade-end"),
+  );
+  assert.equal(
+    await page
+      .locator(".section-nav")
+      .evaluate((el) => el.classList.contains("fade-start")),
+    true,
+  );
+  await page.locator(".section-nav").evaluate((el) => {
+    el.scrollLeft = 0;
+  });
+  await page.waitForFunction(
+    () =>
+      !document.querySelector(".section-nav").classList.contains("fade-start"),
+  );
+  assert.equal(
+    await page
+      .locator(".section-nav")
+      .evaluate((el) => el.classList.contains("fade-end")),
+    true,
   );
   behaviors.push(
-    "Mobile aviation tabs: current tab at gutter, overflow fade clears at end",
+    "Mobile aviation tabs: both fades in the middle, start-only at end, end-only at start",
   );
   await page.goto(origin + "kontaktujte-nas/");
   await page.locator(".enquiry-form button").click();
@@ -767,6 +1117,54 @@ try {
     assert.ok(detected.has(rule), `QA must catch injected ${rule}`);
   behaviors.push(
     "QA regression probes: displaced heading, duplicate footer link, uneven rows and off-token leading rejected",
+  );
+  // Exercise the rail through prose h3s and the moved ending, including sticky containment.
+  await page.goto(origin + "sluzby/povolenia-a-schvalenia/");
+  await ready();
+  await page.locator(".contents a").first().click();
+  await page.waitForFunction(
+    () =>
+      Math.abs(
+        document.querySelector(".rail").getBoundingClientRect().top - 96,
+      ) < 1,
+  );
+  for (const target of [".prose h3[id]", "#related"]) {
+    const id = await page.locator(target).first().getAttribute("id");
+    await page.locator(`.contents a[href="#${id}"]`).click();
+    await page.waitForFunction(
+      (id) =>
+        document.querySelector('.contents [aria-current="location"]')?.hash ===
+        "#" + encodeURIComponent(id),
+      id,
+    );
+  }
+  behaviors.push(
+    "Rail stays at 96px and scroll-spy follows h3 and ending targets",
+  );
+  await page.evaluate(() => {
+    scrollTo(0, 0);
+    document.querySelector(".rail").style.transform = "translateX(20px)";
+    document.querySelector(".article-layout").style.paddingTop = "90px";
+    document.querySelector(".footer-action").style.transform =
+      "translateX(20px)";
+  });
+  const newRules = new Set(
+    (await page.evaluate(layoutContract)).map((issue) => issue.rule),
+  );
+  for (const rule of [
+    "rail-column-edges",
+    "hairline-first-line",
+    "footer-closing-edge",
+  ])
+    assert.ok(newRules.has(rule), `QA must catch injected ${rule}`);
+  await page.locator(".rail").evaluate((el) => el.remove());
+  assert.ok(
+    (await page.evaluate(layoutContract)).some(
+      (issue) => issue.rule === "rail-presence",
+    ),
+  );
+  behaviors.push(
+    "QA regression probes reject missing/displaced rail, wrong article gap and displaced footer closing",
   );
   const retina = await browser.newContext({
     deviceScaleFactor: 2,
@@ -824,7 +1222,7 @@ const report = {
   metrics,
 };
 await writeFile(
-  capture ? "docs/review/qa-v3.json" : "dist/qa-layout.json",
+  capture ? "docs/review/qa-v4.json" : "dist/qa-layout.json",
   JSON.stringify(report, null, 2) + "\n",
 );
 console.log(

@@ -3,6 +3,7 @@ import { getCollection, render, type CollectionEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import partners from "../../_source/img/Na%C5%A1i_Partneri.jpg";
+import Facts from "../components/Facts.astro";
 import Icon from "../components/Icon.astro";
 import LangTag from "../components/LangTag.astro";
 import LinkList, { type Row } from "../components/LinkList.astro";
@@ -45,7 +46,7 @@ const services = serviceKeys.map((key) => find(key)!);
 const aviation = aviationKeys.map((key) => find(key)!);
 const content = page ? await render(page) : undefined;
 const Content = content?.Content;
-const headings = content?.headings.filter((h) => h.depth === 2) || [];
+const headings = content?.headings.filter((h) => h.depth === 2 || h.depth === 3) || [];
 // Do not repeat a document already linked directly in the source prose.
 const relevantDownloads = downloads
   .filter((f) => f.page === d?.key && !page?.body?.includes("/s/" + f.file))
@@ -78,23 +79,12 @@ if (d?.kind === "references") {
       href: "https://drive.google.com/file/d/1fGjFYueDh0oi0DWyY603WWtxajNFD-Wq/view?usp=sharing",
     });
 }
-if (d?.key === "aviation") {
-  rows.push(
-    {
-      title: "EASA · No 2018/1139",
-      href: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32018R1139",
-    },
-    {
-      title: "EASA · No 1321/2014",
-      href: "https://eur-lex.europa.eu/legal-content/CS/TXT/?qid=1551125876356&uri=CELEX:32014R1321",
-    },
-  );
-  if (lang === "sk")
-    rows.push({
-      title: "No 216/2008 · ucl.cz",
-      href: "http://www.caa.cz/file/6475/",
-    });
-}
+const railEntries = [
+  ...headings,
+  ...(rows.length ? [{ slug: "downloads", text: t.downloadsLinks, depth: 2 }] : []),
+  ...(d?.key === "aviation" ? [{ slug: "partners", text: t.partners, depth: 2 }] : []),
+  ...(d?.kind === "service" ? [{ slug: "related", text: t.related, depth: 2 }] : []),
+];
 const featuredNames = [
   "TESTING_CENTER-26%5B203%5D.jpg",
   "TESTING_CENTER-33%5B210%5D.jpg",
@@ -221,7 +211,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
           </section>
           <section class="intro-section wrap grid">
             {copy.intro.split("\n\n").map((p, i) => (
-              <p class={i === 0 ? "statement" : undefined}>{p}</p>
+              <p class={i === 0 ? "statement" : undefined}>{p.split("<wbr>").map((phrase, index) => <>{index > 0 && <wbr />}{phrase}</>)}</p>
             ))}
           </section>
           <section class="services-section" id="services">
@@ -262,7 +252,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                   ))}
                 </ul>
               )}
-              <details class="disclosure">
+              <details class="disclosure" open={copy.capabilities.length === 0}>
                 <summary>
                   {t.packageDetails}
                   <Icon name="plus" />
@@ -316,9 +306,9 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                   </a>
                 </li>
               )}
-              {d.kind === "aviation" && d.key !== "aviation" && (
+              {d.kind === "aviation" && (
                 <li>
-                  <a href={url(aviation[0].data.path + "/")}>Aviation</a>
+                  {d.key === "aviation" ? <span aria-current="page">{t.aviation}</span> : <a href={url(aviation[0].data.path + "/")}>{t.aviation}</a>}
                 </li>
               )}
               {d.kind !== "aviation" && <li aria-current="page">{d.title}</li>}
@@ -414,19 +404,22 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
               </div>
             </section>
           ) : (
-            <div class="wrap article-layout grid">
+            <div class="wrap article-layout grid" data-rail-entries={railEntries.length} data-source={d.source}>
               <aside>
-                {headings.length >= 2 &&
-                  headings.every((h) => h.text.length <= 80) && (
-                    <nav class="contents" aria-label={t.toc}>
+                {(d.facts?.length || railEntries.length >= 2) && (
+                  <nav class="rail" aria-label={t.toc}>
+                    {d.facts && <Facts label={t.facts} facts={d.facts} />}
+                    {railEntries.length >= 2 && <div class="contents">
                       <span class="eyebrow">{t.toc}</span>
-                      {headings.map((h) => (
-                        <a href={"#" + h.slug}>{h.text}</a>
+                      {railEntries.map((h) => (
+                        <a class:list={[h.depth === 3 && "rail-subheading"]} href={"#" + h.slug} title={h.text}>{h.text}</a>
                       ))}
-                    </nav>
-                  )}
+                    </div>}
+                  </nav>
+                )}
               </aside>
               <div>
+                {d.facts && <Facts label={t.facts} facts={d.facts} class="mobile-facts" />}
                 <article class="prose">{Content && <Content />}</article>
                 {rows.length > 0 && (
                   <section class="downloads" id="downloads">
@@ -435,9 +428,9 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                   </section>
                 )}
                 {d.key === "aviation" && (
-                  <section class="partners">
+                  <section class="partners" id="partners">
                     <h2 class="type-h3">
-                      {lang === "sk" ? "Naši partneri" : "Our partners"}
+                      {t.partners}
                     </h2>
                     <Image
                       src={partners}
@@ -448,14 +441,14 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                     />
                   </section>
                 )}
+                {d.kind === "service" && (
+                  <section class="related-block" id="related">
+                    <h2 class="type-h3">{t.related}</h2>
+                    <LinkList lang={lang} rows={services.filter((p) => p.data.key !== d.key).map((p) => ({ title: serviceTitle(p.data, lang), href: url(p.data.path + "/"), lang: p.data.lang }))} />
+                  </section>
+                )}
               </div>
             </div>
-          )}
-          {d.kind === "service" && (
-            <section class="wrap related grid">
-              <span class="eyebrow">{t.related}</span>
-              <LinkList lang={lang} rows={services.filter((p) => p.data.key !== d.key).map((p) => ({ title: serviceTitle(p.data, lang), href: url(p.data.path + "/"), lang: p.data.lang }))} />
-            </section>
           )}
           {d.key === "aviation" && (
             <section class="gallery">
@@ -487,7 +480,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                       />
                     ))}
                   </div>
-                  <div class="aerial-group" role="group" aria-label={t.aerials}>
+                  <div class="aerial-group">
                     <h3>{t.aerials}</h3>
                     <div class="gallery-grid">
                       {aerials.map((p) => (

@@ -7,6 +7,11 @@ description: "Prileťte na „STK“ avioniky vášho lietadla na letisko do Ži
 kind: "aviation"
 source: "_source/pages/aviation-testing-service.md"
 image: "TESTING_CENTER-32%5B209%5D.jpg"
+facts:
+  - label: "Miesto"
+    value: "Žiliny (LZZI)"
+  - label: "Objednávka"
+    value: "info.aviation@testing-service.org"
 ---
 
 Skúšky avionických systémov sú povinné.
@@ -29,7 +34,7 @@ Na konci TWY A odbočte doprava na miesto č. 3 podľa mapky.
 <h3 class="type-h4">Potrebujeme:</h3>
 
 - zariadiť manipuláciu s lietadlami
-- 230V k dispozícii (max.50m od meracieho priestoru)
+- 230 V k dispozícii (max. 50 m od meracieho priestoru)
 
 <h3 class="type-h4">Majte prichystané:</h3>
 

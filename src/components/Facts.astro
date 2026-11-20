@@ -1,0 +1,16 @@
+---
+interface Props {
+  label: string;
+  facts: { label: string; value: string }[];
+  class?: string;
+}
+const { label, facts, class: className } = Astro.props;
+---
+<div class:list={["facts-block", className]}>
+  <span class="eyebrow">{label}</span>
+  <dl class="facts">
+    {facts.map((fact) => (
+      <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>
+    ))}
+  </dl>
+</div>

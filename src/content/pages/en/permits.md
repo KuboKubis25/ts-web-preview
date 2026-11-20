@@ -7,6 +7,11 @@ description: "Keeping track of necessary permits and approvals needed for your t
 kind: "service"
 source: "_source/pages/permit-assurance.md"
 image: "shutterstock_448000054-min.jpg"
+facts:
+  - label: "Regulation"
+    value: "Decree (SK)508-2009"
+  - label: "Devices"
+    value: "restricted technical devices (RTDs)"
 ---
 
 The legislation in Czech Republic and Slovak Republic states different legal requirements of the technology that must be met. However, both countries require multiple levels of permits and approvals necessary for installing and operating any technology, machinery or manufacturing equipment.

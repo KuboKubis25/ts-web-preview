@@ -3,6 +3,8 @@ export type Lang = (typeof languages)[number];
 export const ui = {
   sk: {
     toc: "Obsah",
+    facts: "Údaje",
+    partners: "Naši partneri",
     packageDetails: "Celý popis balíkov",
     morePhotos: "Ďalšie fotografie",
     aerials: "Letecké zábery Slovenska",
@@ -47,6 +49,8 @@ export const ui = {
   },
   en: {
     toc: "Contents",
+    facts: "Key facts",
+    partners: "Our partners",
     packageDetails: "Full package description",
     morePhotos: "More photos",
     aerials: "Aerial views of Slovakia",
@@ -94,6 +98,8 @@ export const ui = {
   // until approved Chinese copy exists; rendered UI labels need native review.
   zh: {
     toc: "目录",
+    facts: "要点",
+    partners: "合作伙伴",
     packageDetails: "套餐完整说明",
     morePhotos: "",
     aerials: "",

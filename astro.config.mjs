@@ -1,6 +1,8 @@
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 import { unified } from "@astrojs/markdown-remark";
+import aviationDetails from "./scripts/remark-aviation-details.mjs";
+import { ui } from "./src/data/ui.ts";
 import baseAwareLinks from "./scripts/remark-links.mjs";
 import redirects from "./src/data/redirects.json" with { type: "json" };
 const env = {
@@ -14,7 +16,22 @@ export default defineConfig({
   output: "static",
   markdown: {
     processor: unified({
-      remarkPlugins: [[baseAwareLinks, { base, redirects }]],
+      remarkPlugins: [
+        [
+          aviationDetails,
+          {
+            labels: { sk: ui.sk.more, en: ui.en.more },
+            paths: {
+              sk: ["/letectvo/skusky-avioniky/", "/letectvo/technicka-udrzba/"],
+              en: [
+                "/en/aviation/instrument-testing/",
+                "/en/aviation/technical-maintenance/",
+              ],
+            },
+          },
+        ],
+        [baseAwareLinks, { base, redirects }],
+      ],
     }),
   },
   trailingSlash: "always",

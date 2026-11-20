@@ -7,6 +7,11 @@ description: "Come for inspection of avionics to Žilina (LZZI/ILZ), or we will 
 kind: "aviation"
 source: "_source/pages/aviation-testing-service-2.md"
 image: "TESTING_CENTER-32%5B209%5D.jpg"
+facts:
+  - label: "Location"
+    value: "Žilina (LZZI/ILZ)"
+  - label: "Order"
+    value: "info.aviation@testing-service.org"
 ---
 
 ## Aviation instrument testing
@@ -36,6 +41,6 @@ We will come for inspection with our inspection vehicle to you.
 <h3 class="type-h4">We need:</h3>
 
 - arrange aircraft movements
-- 230V max. 50m from aircraft
+- 230 V max. 50 m from aircraft
 - aircraft logbook
 - previous records
