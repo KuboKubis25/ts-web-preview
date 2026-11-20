@@ -226,9 +226,10 @@ components:
 
 # Design System: Testing Service
 
-<!-- Round 7 (2026-11-20): refined after the v6 review (docs/review/review-7.md). Round-7 system changes are listed
-under "Changes in round 7" at the end; rounds 6, 5, 4 and 3 stay listed below them. If this file disagrees with any
-review-N.md, this file wins. -->
+<!-- Round 8 (2026-11-20): refined after the v7 review (docs/review/review-8.md). This file describes the current
+target only; round-8 changes are listed at the end, earlier rounds live in docs/review/review-3.md … review-7.md and in
+git history. Pixel coordinates quoted here are illustrations at 1440px; the rule is the token or span, and QA asserts
+it. If this file disagrees with any review-N.md, this file wins. -->
 
 ## Overview
 
@@ -329,12 +330,13 @@ The palette is restrained and warm-neutral: graphite-teal ink, paper and stone n
 
 **The Step Rule.** Every font-size, weight and line-height combination in CSS is one of the tokens above, *including line-height*. No component-local values (no `1.4` on UI text, no `1.6` on Small, no inherited 1.65 on a summary).
 
-**The Wrap Rule.** Headings **and leads** use `text-wrap: balance` (a lead is one sentence of 1–3 lines; `pretty` still leaves a one- or two-word last line such as "to you."); paragraphs and list items use `text-wrap: pretty`. Separator dots stay with the word before them (`Inšpekcie&nbsp;·`), so no line ever starts with "·". The same binding applies to a spaced dash (`slovo&nbsp;– ďalej`, ZH `标志\u2060——`): no line ever starts with "–" or "——". A spaced slash between multi-word alternatives (`IFR check / VFR check`) is bound the same way (`check&nbsp;/ VFR`), so no line starts with "/"; between single words the slash is unspaced (Source Typography Rule). **In Slovak and Czech text** a one-letter preposition or conjunction (a, i, k, o, s, u, v, z and their capitals) is bound to the next word with a non-breaking space, in statements, leads, headings, list rows, card text and prose. **Exception: an uppercase single letter in the middle of a sentence is a label, not a preposition** (a device group "Kategória A", "skupiny A", "sk. A", a taxiway "TWY A"): it is bound to the *preceding* word instead (`Kategória&nbsp;A vyhradených`), **including when the letter ends its text node or heading** ("…zariadení skupiny&nbsp;A": the lookahead accepts end of string). A capital counts as a preposition only at the start of a text node, after `„` or `(`, or after a sentence end (`.`, `!`, `?`, `:` followed by a space). A number is bound to its label in every Latin language: `č.&nbsp;3`, `No&nbsp;1321/2014`, `Nr.&nbsp;…`, `sk.&nbsp;A`. In Slovak and Czech a percentage is spaced and bound (`60&nbsp;%`); in English and Chinese it stays unspaced (`60%`, `100%`). A **product name** is never split: `Bendix&nbsp;King`, and a make bound to its series (`Slick&nbsp;(4600/6300)`, `série&nbsp;S20/S200`, `series&nbsp;S20/S200`). A hyphenated compound in a list row, card text or heading never breaks at its hyphen (U+2011 non-breaking hyphen for compounds of ≤ 24 characters: `výchovno‑vzdelávacie`, `third‑party`); in running prose the normal hyphen stays. Do all of this as one build-time text transform (remark/rehype plus the same helper for `home.json` and `ui.ts` strings), never by hand.
+**The Wrap Rule.** Headings **and leads** use `text-wrap: balance` (a lead is one sentence of 1–3 lines; `pretty` still leaves a one- or two-word last line such as "to you."); paragraphs and list items use `text-wrap: pretty`. Separator dots stay with the word before them (`Inšpekcie&nbsp;·`), so no line ever starts with "·". The same binding applies to a spaced dash (`slovo&nbsp;– ďalej`, ZH `标志\u2060——`): no line ever starts with "–" or "——". A spaced slash between multi-word alternatives (`IFR check / VFR check`) is bound the same way (`check&nbsp;/ VFR`), so no line starts with "/"; between single words the slash is unspaced (Source Typography Rule). **In Slovak and Czech text** a one-letter preposition or conjunction (a, i, k, o, s, u, v, z and their capitals) is bound to the next word with a non-breaking space, in statements, leads, headings, list rows, card text and prose. **Exception: an uppercase single letter in the middle of a sentence is a label, not a preposition** (a device group "Kategória A", "skupiny A", "sk. A", a taxiway "TWY A"): it is bound to the *preceding* word instead (`Kategória&nbsp;A vyhradených`), **including when the letter ends its text node or heading** ("…zariadení skupiny&nbsp;A": the lookahead accepts end of string). A capital counts as a preposition only at the start of a text node, after `„` or `(`, or after a sentence end (`.`, `!`, `?`, `:` followed by a space). A number is bound to its label in every Latin language: `č.&nbsp;3`, `No&nbsp;1321/2014`, `Nr.&nbsp;…`, `sk.&nbsp;A`. In Slovak and Czech a percentage is spaced and bound (`60&nbsp;%`); in English and Chinese it stays unspaced (`60%`, `100%`). A **product name** is never split (`Bendix&nbsp;King`), and a series designation is bound to its own label word (`série&nbsp;S20/S200`, `series&nbsp;S20/S200`, `Slick&nbsp;(4600/6300)`). A make and its series are **not** chained into one run: "Bendix&nbsp;King series&nbsp;S20/S200" breaks between "King" and "series". **No bound run is longer than 24 characters**; a binding that would exceed it is dropped. In English, "&" is bound to the following word (`testing &&nbsp;qualifications`), so no line ends with "&". A hyphenated compound in a list row, card text, heading, **lead, breadcrumb or Display/H1** never breaks at its hyphen (U+2011 non-breaking hyphen for compounds of ≤ 24 characters: `výchovno‑vzdelávacie`, `third‑party`); only in running prose does the normal hyphen stay. Balanced text (headings, leads) is where a hyphen break is most likely, because `balance` hunts for any break opportunity. Do all of this as one build-time text transform (remark/rehype plus the same helper for `home.json` and `ui.ts` strings), never by hand.
 
 **The Measure Rule.** Reading text is capped by `measure` (40rem = 640px, which equals cols 5–10 at the 1312px container: 6 × 87.33 + 5 × 24 = 644px). Only running text, prose headings and prose lists are capped. List stacks (downloads, related) span the whole content area (cols 5–12), so every right-aligned icon sits on the container's right edge.
 
 **The CJK Rule.** Under `:lang(zh)`:
 - Headings: `letter-spacing: 0`, weight 600 (CJK needs the extra weight at the same size), `line-height: 1.3`, `word-break: keep-all` plus `overflow-wrap: anywhere`.
+- **Every** style with a negative tracking token (Display, H1, H2, Statement, Prose H2, Prose H3, H3) gets `letter-spacing: 0` under `:lang(zh)`, not only the heading elements (v7: the ZH Statement kept −0.3px).
 - Body and lead: `line-height: 1.8`.
 - Labels: keep 600, letter-spacing drops to 0.04em.
 
@@ -355,7 +357,10 @@ ZH punctuation is not run through the Latin normalisation: the clause dash is "�
 - quotation marks follow the language: Slovak/Czech „…“, English “…”;
 - no spaces around a slash between alternatives (`a/alebo`, `revízie/úradné skúšky`); units are spaced (`250 hod.`, `236 €`), and there is no space before ":" (`4300/6300: 236 €`);
 - **one list, one style:** items that complete a lead-in ending in ":" start lowercase and take no full stop; stand-alone fragments start with a capital and end with a full stop. A list directly under a heading (no lead-in sentence, e.g. "Naša špecializácia") is a list of stand-alone fragments, in every language and on every page of a division (the aviation index and maintenance lists look the same). A lead-in sentence that introduces a list ends with ":";
-- headings never end with "." or ":" (a "?" stays). The only colon-ended labels are H4 prose labels ("Potrebujeme:").
+- **a list item that is only a link** ("Mapa", "Letisko AIP") is a label, not a fragment: capital first letter, **no** full stop after the link;
+- headings never end with "." or ":" (a "?" stays). The only colon-ended labels are H4 prose labels ("Potrebujeme:");
+- a run of items glued with spaced dashes in one source paragraph ("… of – Electric Devices – Pressure Devices …") is a list: the lead-in ends with ":", each item becomes a Markdown list item, and the same content renders with the same structure in every language. A trailing link sentence becomes its own paragraph;
+- a missing space after a sentence-ending full stop is restored ("commissioning.In" → "commissioning. In").
 
 **The Heading Restoration Rule.** The source (an old Squarespace export) uses heading markup for two different things, and the content files must tell them apart the same way on every page:
 - a source heading that is **one sentence of at most 110 characters** is a real section heading. It stays a heading, at its source level, with the levels shifted so the article's first heading is h2 and no level is skipped. Its words are unchanged; the terminal "." is dropped;
@@ -431,7 +436,7 @@ Component grids:
 | Lead (or heading, if there is no lead) | action | 32px |
 | Block | block, inside the article ending (downloads, partners, related) | 64px |
 
-**The Hairline Adjacency Rule.** Separation between sections is a background change **or** a hairline, never both and never neither. A block that would start with a rule drops it when its previous sibling already ends with one; that last rule of the list *is* the separator.
+**The Hairline Adjacency Rule.** Separation between sections is a background change **or** a hairline, never both and never neither. A block that would start with a rule drops it when its previous sibling already ends with one; that last rule of the list *is* the separator. A page hero that is the last element of `main` (the 404 page) has no bottom hairline: the footer's background change is the separator.
 
 **Breakpoints:** `sm` = 640px, `md` = 1080px, plus container queries for the card grid (540px and 1120px inline size). Nothing else.
 
@@ -466,7 +471,9 @@ Corners are square everywhere; the 2px focus-ring radius is the only rounding. R
 
 Everything is vertically centred on the 72px bar.
 
-**Breadcrumb hit area.** Below 1080px each breadcrumb link has a 44 × 44 hit area that **never changes visual spacing**: the link keeps its text width, and the hit area is an absolutely positioned pseudo-element (`a { position: relative } a::after { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 44px); height: 44px; translate: -50% -50% }`). The "/" separator sits exactly 8px from the text on both sides at every width. (Round 6's `min-width: 44px` pushed the separator 20px away from "Úvod" and 8px from the next item.)
+**Breadcrumb hit area.** Below 1080px each breadcrumb link has a 44 × 44 hit area that **never changes visual spacing**: the link keeps its text width, and the hit area is an absolutely positioned pseudo-element (`a { position: relative } a::after { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 44px); height: 44px; translate: -50% -50% }`). The "/" separator sits exactly 8px from the text on both sides at every width.
+
+**Breadcrumb is one line.** At every width the breadcrumb is a single line box. Ancestors never shrink; the current item (which repeats the h1 directly below it) is `white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0` and carries the full text in `title`. This is the second permitted ellipsis after the rail, and for the same reason: the full text is on screen.
 
 **Brand.** The logo roundel only (from `logo_zlate.png`, original colours), 40px (32px below `md`), plus "TESTING SERVICE" in Wordmark type. The whole brand link has a **44px hit area** (`min-height: 44px`). Below 640px the wordmark is the stacked two-line lockup (Wordmark stacked).
 
@@ -527,16 +534,17 @@ Everything is vertically centred on the 72px bar.
 Interior page heroes have **no eyebrow**; the breadcrumb carries the parent. The home Aviation teaser has none either; its h2 already names the division.
 
 ### Home hero
-- **Band.** Ink, `min-height: min(640px, 80svh)`, grid 6 / 6 at ≥1080px (the copy column is padded to the container's col 1; the photo begins on the col-7 line, so the dark gap between the end of the Display h1 and the photo is ≈ 210px at 1440 instead of ≈ 320px).
+- **Band.** Ink, `min-height: min(640px, 80svh)`, grid 6 / 6 at ≥1080px (the copy column is padded to the container's col 1; the photo begins on the col-7 line).
+- **Display line breaks (Latin).** The h1 is set by `text-wrap: balance` and `max-width: 18ch` alone. No hand-placed `nowrap` span or forced break inside a Latin Display or H1 (v7's EN `.hero-place-names` span stranded "Managing" on line 1). Acceptance at 1024, 1080 and 1440: no line is a single word, and the first line is ≥ 50% of the widest line. The dark gap between the h1 and the photo follows from the grid; it is not a target.
 - **Copy column.** Vertically centred, padding 96px block and 64px right. It holds:
   1. the eyebrow in `accent-on-dark`, each item `nowrap` with its trailing separator;
   2. the display h1 with the gold full stop;
   3. one `button-on-dark` (→ `#services`, ↓).
 - **Photo.** Cover, bleeding right, `object-position: 60% 50%`.
-- **Below 1080px.** Stacked: copy first (padding 48px top/bottom, gutter sides, 40px bottom), then the photo at 3:2 full width, **`max-height: 50svh`**, `object-fit: cover`.
+- **Below 1080px.** Stacked: copy first (padding 48px top and bottom (`--space-7`), gutter sides; no prose token is reused for hero padding), then the photo at 3:2 full width, **`max-height: 50svh`**, `object-fit: cover`.
 
 ### Page hero (interior)
-- **Order.** Breadcrumb (Small, ancestors linked, current item ink). Industry pages show the full trail (`Úvod / Služby / <page>`). **All three aviation pages show the same two-item trail `Úvod / Aviation`** (Aviation is a link on the two sub-pages and plain ink text on the index), because the tabs name the page. A breadcrumb never consists of "Úvod" alone. Aviation pages then show the tabs. Then the grid: h1 with full stop → 16px → lead → [32px → action] in cols 1–7, and the photo in cols 8–12 (height follows the copy, 240–300px, see Photography), top-aligned with the h1's first line box.
+- **Order.** Breadcrumb (Small, ancestors linked, current item ink). Industry pages show the full trail (`Úvod / Služby / <page>`). **All three aviation pages show the same two-item trail `Úvod / Aviation`** (Aviation is a link on the two sub-pages and plain ink text on the index), because the tabs name the page. A breadcrumb never consists of "Úvod" alone. Aviation pages then show the tabs. Then the grid: h1 with full stop → 16px → lead → [32px → action] in cols 1–7, and the photo in cols 8–12 (height follows the copy, 200–300px, see Photography), top-aligned with the h1's first line box.
 - **No photo.** The copy spans cols 1–8.
 - **The last child of the copy column has `margin-bottom: 0`.** The hero's bottom padding (64px) is therefore always the true distance to the hairline. One hairline sits below the hero, always.
 - **Hero action.** Pages with downloads show a `button-secondary` "Na stiahnutie ↓" (`#downloads`); others show none.
@@ -565,7 +573,8 @@ Interior page heroes have **no eyebrow**; the breadcrumb carries the parent. The
 - **Disclosure row.** A list row whose icon is + / −, summary in the **List** token (17/500, not 15px). When it follows a list it is the last row of that stack. When it follows a capabilities grid it keeps its own top rule with `margin-top: -1px`, so one full-width rule closes the grid even when the last row is partial. A disclosure always ships closed.
 - **Capabilities list** (home packages). List rows without icons, Body 400 ink, in the capabilities grid (3/2/1 columns, row by row, `align-items: start`, rows sized to their own content, so the first lines of a row share one baseline and single-line items are neither centred nor padded to the tallest item on the page). The disclosure row spans the full width under it.
 - **Prose lists.** Bullets in `muted`, 20px indent, 4px between items, nested lists indented a further 20px. A "loose" Markdown list (blank lines between some items) renders exactly like a tight one: `.prose li > p { margin: 0 }`. A nested list sits 4px below its parent item's text and adds no bottom margin (`.prose li > :is(ul, ol) { margin-block: 4px 0 }`); only top-level lists get the 16px block margin.
-- **Ordering.** Downloads are ordered order forms → price lists → certificates → leaflets → external references. A row that only repeats an inline link in the prose above it is omitted.
+- **Ordering.** Downloads are ordered order forms → price lists → certificates → leaflets → external references.
+- **Completeness (Paperwork Rule).** Every document file (PDF, XLSX) assigned to a page in `downloads.ts` appears in that page's download list, **even when the prose also links it inline**; the list is the page's complete paperwork inventory, and the hero then shows "Na stiahnutie ↓". Only an external *web page* link that repeats an inline prose link is omitted from the list. (v7 hid the accreditation PDF, the only industry document, on the inspections page.)
 
 ### Article (prose page) and the one page ending
 - **Grid.** Margin + content, as **one** grid that contains the prose *and* every ending block (downloads, partners, related). There is no separate `.related` section any more.
@@ -582,7 +591,7 @@ Interior page heroes have **no eyebrow**; the breadcrumb carries the parent. The
   - **Clamp anatomy.** The clamp sits on an inner `<span class="rail-text">` (`display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden`). The padding, the left rule and the current-state rule stay on the `<a>`. A clamp on the padded `<a>` itself lets the top of a third line show inside the bottom padding, which is what v5 does.
   - **Entry style (`rail-link`):** Small (14/1.55), `muted`, `padding: 8px 0 8px 12px` (h3: 24px left), 1px `line` left rule. Hover: `ink` text. **Current** (scroll-spy, `aria-current="location"`): `ink` text and a 2px `accent` left rule (`box-shadow: inset 2px 0 var(--accent)`), never accent-coloured text. The accent is a rule here, like every other active state.
   - **Scroll-spy truth.** No entry is current until its target's top has passed `rail-top + 24px`; while the reader is still in the text above the first heading, nothing is marked. When the page is scrolled to the bottom, the last entry is current.
-  - The contents part is shown whenever it has **≥2 entries**; the rail as a whole is shown when it has a facts block or ≥2 contents entries. This covers every service page and every aviation page in SK and EN. Hidden below 1080px (the content is one column there and the hero already offers the downloads jump).
+  - The contents part is shown whenever it has **≥2 entries** (ending blocks count; a short page therefore shows a two-entry rail such as "Naša špecializácia / Na stiahnutie a odkazy". That is intended: every article has the same anatomy, and the rail doubles as the jump to the downloads); the rail as a whole is shown when it has a facts block or ≥2 contents entries. This covers every service page and every aviation page in SK and EN. Hidden below 1080px (the content is one column there and the hero already offers the downloads jump).
 - **Below 1080px.** The contents part is hidden. The facts block, if any, renders between the hero hairline and the prose as a 2-column `dl` (1 column below 640px), with 32px below it.
 - **Prose start.** The prose has `margin-top: 0` on its first child. The rail's Label baseline aligns with the first prose line (Baseline Rule).
 
@@ -597,7 +606,7 @@ There is **no in-article closing strip.** The closing question lives in the foot
 
 ### Gallery
 - On a **stone** band. A full-width section header at col 1: eyebrow "Žilina · LZZI" → 16px → h2.
-- Grid as specified in Layout. "Ďalšie fotografie (57)" is a disclosure row spanning the grid.
+- Grid as specified in Layout. "Ďalšie fotografie (n)" (n = the number of photos inside, derived from the data, never typed) is a disclosure row spanning the grid.
 
 ### Forms (contact)
 - **Layout.** Margin + content at ≥1080px: details in cols 1–4, form in cols 5–12. Below 1080px, one column with the form first. The details column has `padding-top: var(--panel)`, so its H3 aligns with the form's H3.
@@ -647,9 +656,15 @@ There is **no in-article closing strip.** The closing question lives in the foot
   3. **Služby:** the four service links (→), from the single service list.
   4. **Aviation:** location line; info.aviation@ ↗; the three aviation page links (→).
 
-  **The top-row e-mail wins.** The division e-mail shown in the top row is never repeated in the grid: on aviation pages column 4 has no info.aviation@ row; on industry pages column 1 has no jakub.kubis@ row. Every other link appears exactly once.
+  **E-mail placement (one table, every page).** Each division e-mail appears once per page ending:
+
+  | Page | Top-row e-mail | Col 1 (Company) | Col 4 (Aviation) |
+  |---|---|---|---|
+  | Home, industry, references, legal, 404 | jakub.kubis@ | — | info.aviation@ ↗ |
+  | The three aviation pages | info.aviation@ | — | — |
+  | Contact (no top row; the details column lists both) | — | — | — |
+
 - **Footer rhythm.** At ≥1080px footer link items are separated by a fixed 8px **box** gap (`row-gap: var(--space-2)`), each link `min-height: 24px`: a link that wraps to two lines keeps the same 8px box gap to the next item as a one-line link. **Below 1080px** links are `min-height: 44px` with `row-gap: 0` (a 44px pitch; adjacent 44px targets satisfy the hit rule without an extra gap; 44 + 8 = 52px against 22px text lines read as a broken list in v6). A non-link text line (the Aviation location line, the register lines) is followed by the same gap as the links' pitch would give: 8px at ≥1080, 0 below (the next link's own 44px box supplies the air).
-- **Contact page footer.** The contact page has no top row, and its details column already lists both division e-mails. Its footer grid therefore shows **no e-mail row in any column** (neither jakub.kubis@ nor info.aviation@). "The top-row e-mail wins" only applies where a top row exists.
 - **Lang tags in a footer column.** When every link in a footer column goes to the same other language (ZH pages: "我们的服务" and the three aviation page links go to EN), the tag appears once, after the column heading (`我们的服务 EN`), and not on each link. A column with mixed targets keeps per-link tags.
 
   Division documents (price lists, order forms, certificates, leaflets) live on their pages' download lists, not in the footer.
@@ -679,112 +694,22 @@ There is **no in-article closing strip.** The closing question lives in the foot
 - **Don't** show the same call to action twice on one screen; the sticky header counts as being on every screen.
 - **Don't** draw two hairlines where one block ends and the next begins.
 - **Don't** stack two dark bands, use shadows outside the dropdown, or round corners.
-- **Don't** truncate source copy with an ellipsis.
+- **Don't** truncate source copy with an ellipsis (the rail entry and the breadcrumb's current item are the only exceptions, because their full text is on the same screen).
 - **Don't** list a document or link twice in the footer, or a photo twice on a page.
 - **Don't** use ↗ for internal links, → for `mailto:`, or ↓ for a link to another page.
 
-## Changes in round 7
-**Type**
-- New `prose-h3` token (19→22px) so the prose hierarchy survives at 390; H3 stays fixed 22px for cards and ending blocks.
-- New `ui-current` token (15/600/1.2) for the switcher's current language.
-- Leads use `text-wrap: balance`.
-- Wrap Rule: category letter bound backward also at the end of a text node; SK/CS percentages spaced (`60 %`); product names never split (`Bendix King`, make + series).
-- Source Typography Rule: a list directly under a heading is a list of stand-alone fragments (capital + full stop), the same on every page of a division.
+## Changes in round 8
+**Rules that produced v7 side effects**
+- Latin Display/H1: no hand-placed `nowrap` spans; acceptance is "no one-word line, first line ≥ 50% of the widest". The h1-to-photo gap is no longer a target.
+- Wrap Rule: U+2011 also in leads, breadcrumb and Display/H1; make and series are not chained; no bound run over 24 characters; EN "&" bound forward.
+- Downloads: the Paperwork Rule replaces "omit a row that repeats an inline link" for document files.
+- Source Typography Rule: link-only list items take no full stop; dash-glued runs are lists; a missing space after a full stop is restored.
 
 **Components**
-- Rail: the second heading of a stack is listed when it has a later same-level sibling in its section. Paragraph-first rail offset 6 → 8px, tolerance ±1px.
-- Page-hero photo floor 240 → 200px.
-- Home hero split 7/5 → 6/6 (photo from the col-7 line).
-- Breadcrumb hit area is a pseudo-element; separators stay 8px from the text on both sides.
-- Footer: 44px pitch with no gap below 1080; the contact-page footer shows no e-mail rows; the "32px at ≥1080" footer-link height in Buttons is gone (Footer rhythm is the only definition).
-- Lang tag inside any button is borderless.
-- Aviation hero exception for maintenance stated as temporary and owner-blocked.
-
-## Changes in round 6
-**Content structure (the remaining source of "inconsistency")**
-- Heading Restoration Rule, second pass: data lines become a key line (List token + Small footnote), empty source headings are not rendered, a heading equal to the h1 is dropped and one starting with the h1 becomes a Body paragraph, prose labels take the level below their section heading but always the H4 token.
-- Heading stack: at most two headings with no content between them, the second 16px below the first, and only the first in the rail.
-- Prose H2 becomes fluid (24→28px).
-
-**Typography**
-- Wrap Rule: a mid-sentence capital single letter is a label bound to the preceding word ("Kategória A"); spaced slashes are bound so no line starts with "/"; numbers are bound to their label (`č.`, `No`); short compounds use a non-breaking hyphen in rows, cards and headings.
-- New `field-label` token for form labels.
-
-**Components**
-- Rail: the two-line clamp sits on an inner span; the Baseline Rule covers articles that open with a heading.
-- One icon binding for every link with an icon (last word + icon nowrap); standalone text links are inline-block, not inline-flex.
-- Page-hero photo height follows the copy (240–300px) at ≥1080; one hero type per aviation tab set (owner-blocked for maintenance).
-- Footer: the top-row e-mail is never repeated in the grid; links are 8px apart regardless of wrapping; a column whose links all go to one other language shows its lang tag once on the heading.
-- Contact: the Prague block uses the same element as the other two.
-
-## Changes in round 5
-**Content typography (the remaining source of "inconsistency")**
-- Facts: source words, normalised typography, base form, unique labels, no repeats, two rows minimum.
-- Source Typography Rule gains compounds, quotes, slashes, units/colons, one-list-one-style and heading punctuation; new Heading Restoration Rule.
-- Wrap Rule binds spaced dashes and Slovak/Czech one-letter words with a non-breaking space; CJK punctuation is exempt from Latin normalisation.
-
-**Components**
-- Home packages: one pattern in every language (rows + closed disclosure), package names as rows when there are no capabilities, a no-repeat rule for the body, body headings one level down. Replaces round-4 "open when no capabilities".
-- Capabilities rows size to their own content; the disclosure keeps its own top rule.
-- Rail: scroll-spy marks nothing before the first target; entries wrap to two lines.
-- Mobile menu: every row is a 57px List row (`menu-row`).
-- Aviation tabs: 48px scroll-padding so the fade never covers the current tab.
-- Lists: no `E-MAIL` meta; e-mail addresses break only after "@"; loose lists render like tight ones.
-- Contact: both contact blocks share one element and one stack; the privacy link is a full text link.
-
-**Layout**
-- `hairline-gap` token for both sides of the hero hairline (64px at 1440, 40px at 390).
-- Page-hero photo 16:9 at ≥1080; photo subject must match the page.
-
-## Changes in round 4
-**Reading layout (long pages)**
-- The article margin (cols 1–3) becomes the **report rail**: a sticky contents list built from h2 + h3 + the ending blocks, shown at ≥2 entries. Previously it needed ≥2 h2s, so 10 of 17 article pages (both aviation indexes, SK instruments, both maintenance and both risk pages, EN consulting, SK legal, and the EN/ZH references pages) showed an empty 445px left margin beside a narrow column.
-- `measure` 38rem → 40rem, so the reading column is exactly cols 5–10.
-- Related moves inside the article grid as an H3 + list block, identical to downloads; the rail owns the margin, so no margin Label competes with it. Ending blocks are 64px apart.
-- Rail active state = ink text + 2px accent left rule (accent is never a text colour for an active state).
-- Optional "Údaje" facts block at the top of the rail (frontmatter `facts`, values verbatim from source), shown as a strip above the prose below 1080px.
-
-**Smaller system fixes**
-- Footer closing column left-aligned at col 8 with baseline alignment to the h2.
-- Aviation tabs fade on both overflowing edges.
-- Nested prose lists: 4px top, 0 bottom.
-- Capabilities grid `align-items: start`.
-- Font loading: preload + metric-matched fallback, CLS < 0.05.
-- Source Typography Rule covers units, letter lists and balanced parentheses.
-
-**Hero and navigation**
-- Aviation breadcrumb is always `Úvod / Aviation`; no breadcrumb is "Úvod" alone.
-- Stacked hero, home hero and teaser photos are capped at `min(50svh, 400px)` below 1080px.
-
-**Content**
-- The Source Typography Rule applies to the aviation prose too. Its fragment paragraphs ("…divízia Aviation", "…avionický systém", "…povinné", "…letovej spôsobilosti") end with full stops.
-
-## Changes in round 3
-**Grid and rhythm**
-- Two section patterns, with every heading at col 1 (home packages and gallery move to the full-width pattern; the home intro becomes a 7/5 statement split).
-- Baseline Rule and Hairline Adjacency Rule.
-- The last element in the page hero has `margin-bottom: 0`.
-
-**Type**
-- H4 at 500, and a List token (17/500/1.4) for every row and disclosure.
-- Wordmark tokens, and line-heights become part of the Step Rule.
-
-**Page ending**
-- The in-article closing strip is removed. The footer top row is the single closing (`ctaQuestion` + e-mail + `t.enquiry`).
-- Aviation pages drop Related (the tabs are the local nav) and the current breadcrumb.
-
-**Footer**
-- Rebuilt as four balanced columns, with no documents repeated from the pages.
-
-**Components**
-- Service cards become photo-free numbered entries, with the card grid at 540/1120.
-- Home hero photo capped at 50svh below 1080px.
-- Interior heroes lose their eyebrow, and the teaser loses its eyebrow and is top-aligned.
-- One lang-tag (boxed on dark too; in list rows the language goes in the meta line).
-- List meta inline at ≥640px.
-- Mobile-menu rule fix with no "Všetky služby" row; dropdown flush, with the → arrow.
-- Tab fade; contact details aligned to the form; input weight 400; 44px hit areas for the brand, footer e-mail, and mobile breadcrumb and footer links.
-
-**Content**
-- Source Typography Rule protects Markdown lists and capitalises fragments.
-- Downloads get `kind` and `titleEn`.
+- Breadcrumb is always one line (current item ellipsised, full text in `title`).
+- A page hero that ends `main` (404) drops its bottom hairline.
+- CJK: every negatively tracked style resets to 0, including the Statement.
+- Home hero below 1080: 48px top and bottom.
+- Footer e-mail placement is one table; the three overlapping clauses are gone.
+- Contradictions removed: page-hero photo 200–300px everywhere; gallery count derived.
+- Rounds 3–7 changelogs removed from this file (see the review files and git history).
