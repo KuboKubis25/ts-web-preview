@@ -10,7 +10,6 @@ image: "CarAssembly-min.jpg"
 packageLead: "Aby sme mohli zabezpečiť najlepšie možné výsledky, ponúkame naše služby zviazané do jednotlivých balíčkov, ktoré majú za účel kompletne zabezpečiť akékoľvek právne požiadavky, ktoré prevádzkovateľ alebo dodávateľ má alebo bude mať s technológiou."
 ---
 
-Balík pre zamestnávateľa/prevádzkovateľa
 
 Špecializovaný servis pre zamestnávateľov a prevádzkovateľov technológie.
 
@@ -34,7 +33,6 @@ Red Star je naša prémiová služba pre prevádzkovateľov technológie. V prav
 
 Zaistite kompletnú kompatibilitu vašej technológie s českou a slovenskou legislatívou vďaka nášmu prémiovému Red Star programu.
 
-Balík pre dodávateľov
 
 Naše služby pripravené na mieru pre dodávateľov (výrobcov) technológií do Českej a Slovenskej republiky.
 

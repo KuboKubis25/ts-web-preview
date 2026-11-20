@@ -10,7 +10,7 @@ image: "CarAssembly-min.jpg"
 packageLead: "In order to provide the best possible outcomes, we offer our services bundled in packages that aim to completely outsource any legal issues the operator might have with technology."
 ---
 
-Employer/Operator Package Specialised Service designed specifically for Employers and Operators of Technology
+Specialised Service designed specifically for Employers and Operators of Technology
 
 ## Employer/operator package
 
@@ -34,7 +34,6 @@ This service is offered for periods of the time and includes periodical deep saf
 
 Ensure the compatibility of your technology with local Czech and Slovak legislation through our Validation Red Star programme.
 
-Supplier Package
 
 Our service specifically designed for suppliers shipping products to Slovak or Czech Republic
 

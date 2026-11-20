@@ -2,10 +2,12 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
 import logo from "../../_source/img/logo-mark.png";
+import { typography } from "../../scripts/rehype-typography.mjs";
+import EmailText from "../components/EmailText.astro";
 import Icon from "../components/Icon.astro";
 import FooterLink from "../components/FooterLink.astro";
 import LangTag from "../components/LangTag.astro";
-import { colors } from "../data/tokens";
+import { colors, spacing } from "../data/tokens";
 import { languages, ui } from "../data/ui";
 import { url, absolute } from "../lib/urls";
 import { downloads, downloadTitle } from "../data/downloads";
@@ -79,7 +81,7 @@ const canonical = absolute(
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta name="theme-color" content={colors.ink} />
-    <style is:inline set:html={`:root { --color-ink: ${colors.ink}; }`} />
+    <style is:inline set:html={`:root { --color-ink: ${colors.ink}; --hairline-gap: ${spacing.hairlineGap}; }`} />
   </head>
   <body class:list={[page.kind === "aviation" && "aviation"]}>
     <header class="site-header">
@@ -213,11 +215,11 @@ const canonical = absolute(
         <div class="wrap footer-top grid">
           <div class="footer-closing">
             <h2>{t.ctaQuestion}</h2>
-            {page.closing && page.closing !== t.ctaQuestion && <p>{page.closing}</p>}
+            {page.closing && page.closing !== t.ctaQuestion && <p>{typography(page.closing, page.lang)}</p>}
           </div>
           <div class="footer-action">
             <a class="footer-email" href={`mailto:${divisionEmail}`}>
-              <span class="nowrap">{divisionEmail}<Icon name="external" /></span>
+              <EmailText address={divisionEmail} />
             </a>
             <a
               class="button button-on-dark"
@@ -364,7 +366,7 @@ const canonical = absolute(
       let queued = false;
       const updateContents = () => {
         queued = false;
-        let active = 0;
+        let active = -1;
         const rail = document.querySelector(".rail");
         if (!rail) return;
         const railTop = parseFloat(getComputedStyle(rail).top);
@@ -372,6 +374,8 @@ const canonical = absolute(
           if (section && section.getBoundingClientRect().top <= railTop + 24)
             active = index;
         });
+        if (window.innerHeight + scrollY >= document.documentElement.scrollHeight - 2)
+          active = sections.length - 1;
         contentsLinks.forEach((link, index) => {
           if (index === active) link.setAttribute("aria-current", "location");
           else link.removeAttribute("aria-current");

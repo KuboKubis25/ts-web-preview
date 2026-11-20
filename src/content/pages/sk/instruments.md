@@ -7,14 +7,9 @@ description: "Prileťte na „STK“ avioniky vášho lietadla na letisko do Ži
 kind: "aviation"
 source: "_source/pages/aviation-testing-service.md"
 image: "TESTING_CENTER-32%5B209%5D.jpg"
-facts:
-  - label: "Miesto"
-    value: "Žiliny (LZZI)"
-  - label: "Objednávka"
-    value: "info.aviation@testing-service.org"
 ---
 
-Skúšky avionických systémov sú povinné.
+## Skúšky avionických systémov sú povinné
 
 Vyplnený formulár odošlite na info.aviation@testing-service.org
 
@@ -22,21 +17,21 @@ Vyplnený formulár odošlite na info.aviation@testing-service.org
 
 ### Pre pilotov: organizácia pri prílete
 
-Počas prevádzky TWR:
+#### Počas prevádzky TWR:
 
-- [Mapa](/s/LZZI-Map.jpg)
+- [mapa](/s/LZZI-Map.jpg)
 - [letisko AIP](https://aim.lps.sk/eAIP/eAIP_SR/AIRAC193_EFF_24MAY2018/html/LZ-AD-2.LZZI-en-SK.html)
 
-Mimo prevádzky TWR:
+#### Mimo prevádzky TWR:
 
 Na konci TWY A odbočte doprava na miesto č. 3 podľa mapky.
 
-<h3 class="type-h4">Potrebujeme:</h3>
+#### Potrebujeme:
 
 - zariadiť manipuláciu s lietadlami
 - 230 V k dispozícii (max. 50 m od meracieho priestoru)
 
-<h3 class="type-h4">Majte prichystané:</h3>
+#### Majte prichystané:
 
-- Lietadlovú knihu
-- Predchádzajúce záznamy
+- lietadlovú knihu
+- predchádzajúce záznamy

@@ -1,8 +1,9 @@
 ---
 import { getCollection, render, type CollectionEntry } from "astro:content";
+import { typography, typographyCopy } from "../../scripts/rehype-typography.mjs";
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
-import partners from "../../_source/img/Na%C5%A1i_Partneri.jpg";
+import partners from "../assets/partners-cropped.png";
 import Facts from "../components/Facts.astro";
 import Icon from "../components/Icon.astro";
 import LangTag from "../components/LangTag.astro";
@@ -36,7 +37,7 @@ interface Props {
 }
 const { page, target } = Astro.props;
 const all = await getCollection("pages");
-const d = page?.data;
+const d = page ? { ...page.data, ...typographyCopy({ title: page.data.title, description: page.data.description, packageLead: page.data.packageLead }, page.data.lang) } : undefined;
 const lang = d?.lang || "sk";
 const t = ui[lang];
 const find = (key: string) =>
@@ -51,7 +52,9 @@ const headings = content?.headings.filter((h) => h.depth === 2 || h.depth === 3)
 const relevantDownloads = downloads
   .filter((f) => f.page === d?.key && !page?.body?.includes("/s/" + f.file))
   .sort((a, b) => downloadOrder.indexOf(a.kind) - downloadOrder.indexOf(b.kind));
-const copy = homeCopy[lang];
+const rawCopy = homeCopy[lang];
+const copy = { ...rawCopy, intro: typography(rawCopy.intro, lang), capabilities: rawCopy.capabilities.map((text) => typography(text, lang)), services: rawCopy.services.map((service) => typographyCopy(service, lang)) };
+const capabilities = copy.capabilities.length ? copy.capabilities : content?.headings.filter((h) => h.depth === 3).map((h) => h.text) || [];
 // The compliance sentence is existing source copy in all three languages.
 const homeLead = {
   sk: "Splnenie českých a slovenských legislatívnych požiadaviek pre vašu technológiu",
@@ -92,7 +95,7 @@ const featuredNames = [
   "TESTING_CENTER-10%5B187%5D.jpg",
   "TESTING_CENTER-36%5B213%5D.jpg",
   "TESTING_CENTER-32%5B209%5D.jpg",
-  "AT1.png",
+  "TESTING_CENTER-08%5B185%5D.jpg",
   "TESTING_CENTER-06%5B183%5D.jpg",
 ];
 const featured = featuredNames.map((name) =>
@@ -164,7 +167,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                     ))
                 ) : (
                   <>
-                    {homeLead}
+                    {typography(homeLead, lang)}
                     <span class="gold">.</span>
                   </>
                 )}
@@ -245,14 +248,14 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                 <h2>{t.packages}</h2>
                 <p class="lead">{d.packageLead}</p>
               </div>
-              {copy.capabilities.length > 0 && (
+              {capabilities.length > 0 && (
                 <ul class="list capabilities">
-                  {copy.capabilities.map((c) => (
+                  {capabilities.map((c) => (
                     <li>{c}</li>
                   ))}
                 </ul>
               )}
-              <details class="disclosure" open={copy.capabilities.length === 0}>
+              <details class="disclosure">
                 <summary>
                   {t.packageDetails}
                   <Icon name="plus" />
@@ -346,6 +349,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                 name={d.image}
                 alt={d.kind === "aviation" ? "Testing Service Aviation" : ""}
                 eager
+                widths={[400, 720, 1080, 1440, 2000]}
                 sizes="(min-width: 1080px) 37vw, 100vw"
               />
             )}
@@ -372,24 +376,22 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                     {
                       title: "jakub.kubis@testing-service.org",
                       href: "mailto:jakub.kubis@testing-service.org",
-                      meta: "E-MAIL",
                     },
                   ]}
                 />
-                <h3>Aviation</h3>
+                <h2 class="type-h3">Aviation</h2>
                 <LinkList
                   lang={lang}
                   rows={[
                     {
                       title: "info.aviation@testing-service.org",
                       href: "mailto:info.aviation@testing-service.org",
-                      meta: "E-MAIL",
                     },
                   ]}
                 />
                 <div class="future-office">
                   <span class="eyebrow">{t.soon}</span>
-                  <h3>{lang === "sk" ? "Praha" : "Prague"}</h3>
+                  <h2 class="type-h3">{lang === "sk" ? "Praha" : "Prague"}</h2>
                   <p>
                     Forum Karlín, Pernerova 51
                     <br />
@@ -412,7 +414,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                     {railEntries.length >= 2 && <div class="contents">
                       <span class="eyebrow">{t.toc}</span>
                       {railEntries.map((h) => (
-                        <a class:list={[h.depth === 3 && "rail-subheading"]} href={"#" + h.slug} title={h.text}>{h.text}</a>
+                        <a class:list={[h.depth === 3 && "rail-subheading"]} href={"#" + h.slug} title={typography(h.text, lang)}>{typography(h.text, lang)}</a>
                       ))}
                     </div>}
                   </nav>

@@ -3,26 +3,21 @@ key: "instruments"
 lang: "en"
 path: "en/aviation/instrument-testing"
 title: "Aviation instrument testing"
-description: "Come for inspection of avionics to Žilina (LZZI/ILZ), or we will come to you."
+description: "### Come for inspection of avionics to Žilina (LZZI/ILZ), or we will come to you."
 kind: "aviation"
 source: "_source/pages/aviation-testing-service-2.md"
 image: "TESTING_CENTER-32%5B209%5D.jpg"
-facts:
-  - label: "Location"
-    value: "Žilina (LZZI/ILZ)"
-  - label: "Order"
-    value: "info.aviation@testing-service.org"
 ---
 
 ## Aviation instrument testing
 
-Testing of avionics IS mandatory
+### Testing of avionics IS mandatory
 
-Testing Service division Aviation offers services tailored to meet specified requirements according to EASA.
+## Testing Service division Aviation offers services tailored to meet specified requirements according to EASA
 
 Put your aircraft in a group and you have unbeatable prices
 
-Contact us, we will answer you
+## Contact us, we will answer you
 
 ### Download order form
 
@@ -30,15 +25,15 @@ Contact us, we will answer you
 
 Completed order send to info.aviation@testing-service.org
 
-The question is: will you come to us or will we come to you?
+## The question is: will you come to us or will we come to you?
 
-## Aviation Testing Center
+### Aviation Testing Center
 
-Come for inspection of avionics to Žilina (LZZI/ILZ)
+### Come for inspection of avionics to Žilina (LZZI/ILZ)
 
-We will come for inspection with our inspection vehicle to you.
+### We will come for inspection with our inspection vehicle to you
 
-<h3 class="type-h4">We need:</h3>
+#### We need:
 
 - arrange aircraft movements
 - 230 V max. 50 m from aircraft

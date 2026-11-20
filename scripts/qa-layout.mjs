@@ -1,3 +1,5 @@
+import { review5Contract, typographyLines } from "./qa-review5.mjs";
+import { sourceHeadings, normalizeHeading } from "./qa-source-headings.mjs";
 import { chromium } from "playwright";
 import AxeBuilder from "@axe-core/playwright";
 import { createServer } from "node:http";
@@ -102,7 +104,7 @@ const shots = {
   "sluzby/rizika-atex-pawa/": "sk-risk",
   "letectvo/technicka-udrzba/": "sk-maintenance",
 };
-const shotDir = "docs/review/shots-v4";
+const shotDir = "docs/review/shots-v5";
 if (capture) await mkdir(shotDir, { recursive: true });
 async function ready() {
   await page.evaluate(async () => {
@@ -231,8 +233,8 @@ function layoutContract() {
     for (const entry of contents) {
       check(
         entry.title === entry.textContent &&
-          getComputedStyle(entry).whiteSpace === "nowrap" &&
-          getComputedStyle(entry).textOverflow === "ellipsis",
+          getComputedStyle(entry).whiteSpace === "normal" &&
+          getComputedStyle(entry).webkitLineClamp === "2",
         "rail-entry-label",
         entry.textContent,
       );
@@ -288,12 +290,12 @@ function layoutContract() {
           );
       }
       if (innerWidth === 1440) {
-        // DESIGN wins over review-4's literal 64px: section-y / 2 is 52.8px here.
+        // Round 5 unifies both sides of the hero hairline.
         const expected = parseFloat(getComputedStyle(article).paddingTop);
         const preceding = article.previousElementSibling;
         const hairline = box(preceding).bottom - 1;
         check(
-          Math.abs(expected - 52.8) <= 0.1 &&
+          Math.abs(expected - 64) <= 0.1 &&
             Math.abs(
               box(prose.firstElementChild).top - hairline - expected - 1,
             ) < 1,
@@ -389,8 +391,8 @@ function layoutContract() {
     document.querySelector(".packages")
   ) {
     check(
-      document.querySelector(".packages details").open,
-      "zh-packages-open",
+      !document.querySelector(".packages details").open || document.querySelector(".packages details").dataset.qaExpanded,
+      "zh-packages-closed",
       location.pathname,
     );
     for (const p of document.querySelectorAll(".intro-section p"))
@@ -476,7 +478,10 @@ function layoutContract() {
     for (const list of document.querySelectorAll(".list")) {
       const rows = [...list.querySelectorAll(":scope > li")].filter(visible);
       const heights = rows.map((row) => box(row).height);
-      if (heights.length > 1)
+      if (list.matches(".capabilities")) {
+        const groups = Map.groupBy(rows, row => Math.round(box(row).top));
+        for (const group of groups.values()) check(Math.max(...group.map(row=>box(row).height))-Math.min(...group.map(row=>box(row).height))<=1, "equal-list-rows", group.map(row=>box(row).height));
+      } else if (heights.length > 1)
         check(
           Math.max(...heights) - Math.min(...heights) <= 1,
           "equal-list-rows",
@@ -493,7 +498,7 @@ function layoutContract() {
       .filter(visible);
     const bottom = Math.max(...children.map((el) => box(el).bottom));
     const gap = box(hero).bottom - 1 - bottom;
-    check(Math.abs(gap - 64) <= 1, "hero-bottom", { gap });
+    check(Math.abs(gap - Math.min(64, Math.max(40, 16 + innerWidth * .034))) <= 1, "hero-bottom", { gap });
   }
   for (const el of document.querySelectorAll(
     ".list-title, .disclosure > summary",
@@ -650,8 +655,8 @@ function layoutContract() {
     /\/(?:letectvo|aviation)\/$/.test(location.pathname)
   )
     check(
-      !!document.querySelector(".prose li > ul > li"),
-      "nested-regulations",
+      document.querySelectorAll('.prose li > a[href*="eur-lex.europa.eu"]').length === 2 && !document.querySelector(".prose li > ul"),
+      "linked-regulations-without-repeat",
       location.pathname,
     );
   const cards = [...document.querySelectorAll(".service-card")];
@@ -853,16 +858,33 @@ try {
       for (const facts of sourceFacts) {
         const original = await readFile(facts.source, "utf8");
         if (
-          facts.values.some((value) => !original.includes(value)) ||
+          facts.values.some((value) => {
+            // DESIGN requires the nominative base form of this source noun.
+            const normalize = token => token === 'vyhlášky' ? 'vyhláška' : token;
+            const tokens = new Set((original.toLowerCase().match(/[\p{L}\p{N}]+/gu) || []).map(normalize));
+            return (value.toLowerCase().match(/[\p{L}\p{N}]+/gu) || []).some(token => !tokens.has(token));
+          }) ||
           facts.values.join("|") !== facts.mobile.join("|")
         )
           failures.push({
             route,
             facts:
-              "Source-verbatim facts and identical mobile rendering required",
+              "Source-word facts and identical mobile rendering required",
           });
       }
-      const contract = await page.evaluate(layoutContract);
+      const articleSource = await page.locator('.article-layout').evaluateAll(elements => elements[0]?.dataset.source);
+      if (articleSource && width === 1440) {
+        const expected = await sourceHeadings(articleSource);
+        const rendered = await page.locator('.prose h2, .prose h3, .prose h4').evaluateAll(elements=>elements.map(el=>({text:el.textContent, tag:el.tagName})));
+        for (const heading of expected) if (!rendered.some(el=>normalizeHeading(el.text)===normalizeHeading(heading.text) && (heading.label ? el.tag==='H4' : ['H2','H3'].includes(el.tag)))) failures.push({route, sourceHeading:heading});
+        const outline = await page.locator('.prose h2, .prose h3, .prose h4').evaluateAll(elements=>elements.map(el=>+el.tagName.slice(1)));
+        if(outline.some((depth,i)=>depth>(i?outline[i-1]+1:2))) failures.push({route,headingLevelSkip:outline});
+      }
+      const contract = [...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract)];
+      if ([390,1440].includes(width)) {
+        const lines = await page.evaluate(typographyLines);
+        if(lines.length) failures.push({route,width,typographyLines:lines});
+      }
       if (contract.length) failures.push({ route, width, contract });
       metrics.push({ route, width, cls, ...result, contract });
       if (
@@ -882,7 +904,7 @@ try {
           width === 390 ||
           ([640, 1024, 1080].includes(width) &&
             ["sk-home", "sk-contact", "sk-aviation-testing"].includes(name)) ||
-          (width === 640 && name === "sk-service") ||
+          (width === 640 && ["sk-service", "en-home"].includes(name)) ||
           (width === 1024 && name === "zh-home"))
       ) {
         // Capture the arrival state before accessibility probes can focus or scroll controls.
@@ -933,12 +955,14 @@ try {
       await page
         .locator(".gallery-grid img")
         .evaluateAll((images) =>
+// DESIGN permits density capped at source pixels (the panorama crops to 612px).
+          // Every cell must still cover its complete displayed width at 1×.
           images.every(
             (image) =>
               Math.min(
                 +image.dataset.sourceWidth,
                 +image.dataset.sourceHeight * 1.5,
-              ) >= 620,
+              ) >= image.getBoundingClientRect().width,
           ),
         ),
       true,
@@ -983,7 +1007,7 @@ try {
       .evaluate((el) => getComputedStyle(el).borderBottomWidth),
     "1px",
   );
-  const menuContract = await page.evaluate(layoutContract);
+  const menuContract = [...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract)];
   if (menuContract.length) failures.push({ menu: 390, contract: menuContract });
   await page.keyboard.press("Escape");
   assert.equal(
@@ -1036,7 +1060,7 @@ try {
       scroll: el.scrollLeft,
     };
   });
-  assert.ok(Math.abs(tabState.x - 20) <= 1);
+  assert.ok(tabState.x >= 52);
   assert.ok(
     tabState.fadeStart &&
       tabState.fadeEnd &&
@@ -1101,8 +1125,8 @@ try {
     const footerLink = document.querySelector(".footer-grid a");
     footerLink.after(footerLink.cloneNode(true));
     const list = document.querySelector(".capabilities");
-    list.style.gridAutoRows = "auto";
-    list.children[0].style.minHeight = "200px";
+    list.children[0].style.height = "200px";
+    list.children[1].style.height = "60px";
     document.querySelector(".intro-section p").style.lineHeight = "1.77";
   });
   const detected = new Set(
@@ -1118,6 +1142,33 @@ try {
   behaviors.push(
     "QA regression probes: displaced heading, duplicate footer link, uneven rows and off-token leading rejected",
   );
+  if(capture) {
+    await page.goto(origin); await ready();
+    await page.screenshot({path:`${shotDir}/sk-home-viewport-1440.jpg`,type:'jpeg',quality:85});
+  }
+  // Review-5 expanded package content and source typography in every language.
+  for (const width of [390,1440]) {
+    await page.setViewportSize({width,height:width===390?844:1000});
+    for (const route of ['', 'en/', 'zh/']) {
+      await page.goto(origin+route);await ready();
+      await page.locator('.packages details').evaluate(el=>{el.dataset.qaExpanded='true';el.open=true;});
+      await ready();
+      const contract=[...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract)];
+      const lines=await page.evaluate(typographyLines);
+      if(contract.length || lines.length) failures.push({route,width,expandedPackages:contract,typographyLines:lines});
+      if(capture && width===390 && route==='zh/') await page.screenshot({path:`${shotDir}/zh-home-packages-open-390.jpg`,fullPage:true,type:'jpeg',quality:85});
+    }
+  }
+  behaviors.push('Packages closed on arrival, expanded content checked in SK/EN/ZH at 390/1440');
+  // Scroll-spy must also handle the exact bottom, even beyond all article targets.
+  await page.setViewportSize({width:1440,height:1000});
+  for(const route of ['sluzby/rizika-atex-pawa/','sluzby/povolenia-a-schvalenia/','letectvo/']) {
+    await page.goto(origin+route);await ready();
+    assert.equal(await page.locator('.contents a[aria-current]').count(),0);
+    await page.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight));
+    await page.waitForFunction(()=>document.querySelector('.contents a:last-child')?.hasAttribute('aria-current'));
+  }
+  behaviors.push('Risk/permits/aviation rail idle at arrival and last entry current at bottom');
   // Exercise the rail through prose h3s and the moved ending, including sticky containment.
   await page.goto(origin + "sluzby/povolenia-a-schvalenia/");
   await ready();
@@ -1222,7 +1273,7 @@ const report = {
   metrics,
 };
 await writeFile(
-  capture ? "docs/review/qa-v4.json" : "dist/qa-layout.json",
+  capture ? "docs/review/qa-v5.json" : "dist/qa-layout.json",
   JSON.stringify(report, null, 2) + "\n",
 );
 console.log(

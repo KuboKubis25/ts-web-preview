@@ -9,9 +9,9 @@ source: "_source/pages/povolenia-schvalenia.md"
 image: "shutterstock_448000054-min.jpg"
 facts:
   - label: "Predpis"
-    value: "MPSVaR SR č. 508/2009 Z. z."
+    value: "vyhláška MPSVaR SR č. 508/2009 Z. z."
   - label: "Zariadenia"
-    value: "VTZ - A,B,C"
+    value: "VTZ – A, B, C"
 ---
 
 Legislatíva v Českej a Slovenskej Republike udáva rozdielne právne požiadavky, ktoré musia technológie spĺňať. Dodatočne, ešte v oboch krajinách je potrebné mať niekoľko úrovní povolení a schválení na inštaláciu a prevádzku akejkoľvek technológie, vybavenia alebo výrobných zariadení.
@@ -20,7 +20,7 @@ Legislatíva v Českej a Slovenskej Republike udáva rozdielne právne požiadav
 
 Na začiatku stavby je potrebné požiadať o stavebné povolenie Stavebný úrad alebo SIŽP, zostaviť potrebnú dokumentáciu stavby podľa stavebného zákona a zaslať tieto dokumenty na relevantné štátne inštitúcie ako sú RÚVZ, KRHaZZ, TISR. Tieto úkony vyústia v povolenie na začatie stavby, ktoré je vydané stavebným úradom alebo Slovenskou inšpekciou životného prostredia.
 
-Inštalácia vyhradených technických zariadení – povolenie pre inštaláciu technických zariadení skupiny A.
+### Inštalácia vyhradených technických zariadení – povolenie pre inštaláciu technických zariadení skupiny A
 
 Podľa vyhlášky MPSVaR SR č. 508/2009 Z. z., technické zariadenia (elektrické, zdvíhacie, tlakové a plynové) sú klasifikované do troch kategórií nazývaných vyhradené technické zariadenia (VTZ – A, B, C). Kategória A vyhradených technických zariadení musí mať podľa vyhlášky schválenú konštrukčnú dokumentáciu ešte pred inštaláciou. Za účelom zväčšenia efektivity a minimalizovania času potrebného na získanie tohoto povolenia, nami vypracovaná konštrukčná dokumentácia bude detailne pripravená a predložená oprávnenej právnickej osobe (ako napr. Technická inšpekcia SR) na posúdenie. Po tom, čo je konštrukčná dokumentácia kladne posúdená, môže začať inštalácia zariadenia. Schválená konštrukčná dokumentácie je de facto povolenie na inštaláciu.
 
@@ -30,7 +30,7 @@ Pred prvým uvedením do prevádzky akejkoľvek technológie, alebo zariadenia j
 
 ### Povolenie na prevádzku
 
-Povolenie na prevádzku je udelené tým istým úradom ako stavebné povolenie. Povolenie sa vydáva na základe kolaudácie stavby a technológie, pripravenej a vypracovanej relevantnej dokumentácie, výsledkov meraní, testov a inšpekcií vykonaných počas stavby, inštalácie zariadenia a predvýrobného testovania (commissioning)
+Povolenie na prevádzku je udelené tým istým úradom ako stavebné povolenie. Povolenie sa vydáva na základe kolaudácie stavby a technológie, pripravenej a vypracovanej relevantnej dokumentácie, výsledkov meraní, testov a inšpekcií vykonaných počas stavby, inštalácie zariadenia a predvýrobného testovania (commissioning).
 
 ## Naše služby
 

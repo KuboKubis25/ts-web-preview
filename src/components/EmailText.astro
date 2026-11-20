@@ -1,0 +1,7 @@
+---
+import Icon from "./Icon.astro";
+interface Props { address: string }
+const { address } = Astro.props;
+const [local, domain] = address.split("@");
+---
+<span class="email-address"><span class="nowrap">{local}@</span><wbr /><span class="nowrap email-domain">{domain}<Icon name="external" /></span></span>

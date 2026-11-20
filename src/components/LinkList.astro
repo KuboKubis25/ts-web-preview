@@ -1,4 +1,6 @@
 ---
+import EmailText from "./EmailText.astro";
+import { typography } from "../../scripts/rehype-typography.mjs";
 import Icon from "./Icon.astro";
 import type { Lang } from "../data/ui";
 export interface Row {
@@ -15,11 +17,12 @@ const { rows, lang } = Astro.props;
   {rows.map((row) => {
     const language = row.lang && row.lang !== "both" && row.lang !== lang
       ? row.lang === "zh" ? "中文" : row.lang.toUpperCase() : undefined;
-    const meta = [row.meta, language].filter(Boolean).join(" · ");
+    const email = /^[^\s@]+@[^\s@]+$/.test(row.title);
+    const meta = [email ? undefined : row.meta, language].filter(Boolean).join(" · ");
     return <li><a href={row.href} download={row.download || undefined}>
-      <span class="list-title">{row.title}</span>
+      <span class:list={["list-title", email && "email-title"]}>{email ? <EmailText address={row.title} /> : typography(row.title, lang)}</span>
       {meta && <small>{meta}</small>}
-      <Icon name={row.download ? "down" : /^(https?:|mailto:)/.test(row.href) ? "external" : "right"} />
+      {!email && <Icon name={row.download ? "down" : /^(https?:|mailto:)/.test(row.href) ? "external" : "right"} />}
     </a></li>;
   })}
 </ul>

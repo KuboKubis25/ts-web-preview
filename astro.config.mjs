@@ -1,6 +1,8 @@
 import { defineConfig } from "astro/config";
 import { loadEnv } from "vite";
 import { unified } from "@astrojs/markdown-remark";
+import rehypeTypography from "./scripts/rehype-typography.mjs";
+import packages from "./scripts/remark-packages.mjs";
 import aviationDetails from "./scripts/remark-aviation-details.mjs";
 import { ui } from "./src/data/ui.ts";
 import baseAwareLinks from "./scripts/remark-links.mjs";
@@ -16,7 +18,9 @@ export default defineConfig({
   output: "static",
   markdown: {
     processor: unified({
+      rehypePlugins: [rehypeTypography],
       remarkPlugins: [
+        [packages, { labels: { sk: ui.sk.packages, en: ui.en.packages, zh: ui.zh.packages } }],
         [
           aviationDetails,
           {

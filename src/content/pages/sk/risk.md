@@ -14,13 +14,13 @@ Chráňte bezpečnosť svojich zamestnancov tým, že zabezpečíte, aby vaša t
 
 Podľa súčasných právnych predpisov je zamestnávateľ úplne zodpovedný za identifikáciu, znižovanie a odstraňovanie všetkých potenciálnych rizík súvisiacich s technológiou na pracovisku. Riziká musia byť odstránené v súlade s najnovšími vedecko-technickými poznatkami.
 
-Dodržujete bezpečnostné štandardy a všetky právne predpisy Slovenskej / Českej republiky?
+## Dodržujete bezpečnostné štandardy a všetky právne predpisy Slovenskej / Českej republiky?
 
 Ako tretia strana, TESTING SERVICE poskytuje analýzu, ktorá identifikuje bezpečnostné riziká zamestnancov a potenciálne právne riziká pre prevádzkovateľa. Táto analýza môže byť použitá ako základ pre návrh bezpečnosti, ktorý spĺňa súčasné právne podmienky. V našom projektovom portfóliu sme vyvinuli niekoľko kompletných bezpečnostných návrhov a riešení v mnohých veľkých výrobných zariadeniach po celom Slovensku a Česku.
 
-Uistite sa, že vaša bezpečnostná dokumentácia a potrebné súbory sú v poriadku.
+### Uistite sa, že vaša bezpečnostná dokumentácia a potrebné súbory sú v poriadku
 
-Od zamestnávateľov sa vyžaduje, aby vypracovali množstvo dokumentov týkajúcich sa bezpečnosti pracovísk a technológií, ako napríklad
+Od zamestnávateľov sa vyžaduje, aby vypracovali množstvo dokumentov týkajúcich sa bezpečnosti pracovísk a technológií, ako napríklad:
 
 - prevádzkové pravidlá pre vyhradené technické zariadenia (elektrické, tlakové, zdvíhacie a plynové)
 - protokol na určenie vonkajších vplyvov
@@ -29,28 +29,28 @@ Od zamestnávateľov sa vyžaduje, aby vypracovali množstvo dokumentov týkajú
 
 Tieto dokumenty sú dôležitou súčasťou operačného manuálu zamestnávateľov a často podliehajú prísnej kontrole. Ponúkame spracovanie a správu akýchkoľvek požadovaných dokumentov.
 
-Predchádzajte potenciálnym nehodám vďaka rigoróznej a nestrannej bezpečnostnej analýze od tretej strany.
+### Predchádzajte potenciálnym nehodám vďaka rigoróznej a nestrannej bezpečnostnej analýze od tretej strany
 
 Naši inšpektori identifikujú akékoľvek nevyriešené riziká a situácie, v ktorých by mohlo dôjsť k pracovnému úrazu. Každé identifikované riziko zodpovedá potenciálnemu veľmi negatívnemu dôsledku pre zamestnancov aj pre prevádzkovateľa. Hľadáme tieto problémy skôr, ako sa to stanú, a navrhujeme riešenia, ktoré im zabránia. Naším cieľom je ponúknuť nezaujatú a nezávislú kontrolu, ktorá poskytne zamestnávateľom objektívny pohľad na bezpečnostné nedostatky ich prevádzky a povinnú bezpečnostnú dokumentáciu.
 
-Neexistuje ospravedlnenie pri zanedbaní bezpečnosti zamestnancov.
+## Neexistuje ospravedlnenie pri zanedbaní bezpečnosti zamestnancov
 
-Bohužiaľ, naše skúsenosti naznačujú, že to je presne to, čo sa deje – aby sa zjednodušili prevádzkové procesy bezpečnostné systémy sa vypínajú, alebo sa mnohé revízne činnosti udejú len na “papieri od stola” čo je najväčší hazard – pretože podľa zákona je zodpovedný zamestnávateľ a nie dodávateľ takej služby.
+Bohužiaľ, naše skúsenosti naznačujú, že to je presne to, čo sa deje – aby sa zjednodušili prevádzkové procesy bezpečnostné systémy sa vypínajú, alebo sa mnohé revízne činnosti udejú len na „papieri od stola“ čo je najväčší hazard – pretože podľa zákona je zodpovedný zamestnávateľ a nie dodávateľ takej služby.
 
 Snažíme sa určiť, kde sa takéto zanedbávanie deje v procesnej línii, a navrhnúť riešenie, ktoré je dokonale bezpečné a operačne vyhovujúce.
 
-## Tri kľúčové kroky
+### Tri kľúčové kroky
 
-Celý proces možno rozdeliť do troch kľúčových krokov.
+Celý proces možno rozdeliť do troch kľúčových krokov:
 
-- Kontrola pracoviska, technológie, dokumentácie a procesov
-- Analýza zistených pozorovaní a určenie možných komplikácií a zanedbaností
-- Vývoj bezpečnostných návrhov za účelom kompenzácie bezpečnostných nedostatkov
+- kontrola pracoviska, technológie, dokumentácie a procesov
+- analýza zistených pozorovaní a určenie možných komplikácií a zanedbaností
+- vývoj bezpečnostných návrhov za účelom kompenzácie bezpečnostných nedostatkov
 
 Pravidelné nezávislé hodnotenie rizík a bezpečnosti je najlepší spôsob, ako sa vyhnúť potenciálnym pracovným úrazom a zraneniam pri práci. Zvyčajným výsledkom takýchto nehôd sú mimosúdne vyrovnania, ktoré vedú k podstatným finančným nákladom.
 
 ### Nepredídené pracovné úrazy a nehody
 
-V prípade zranenia na pracovisku a /alebo nehody ponúkame naše poradenské, kontrolné a analytické služby poisťovniam, inšpektorátom a polícii. Môžeme tiež zabezpečiť právnu podporu a analýzu nevyriešených a nezabránených rizík spojených s nehodou v mene postihnutého zamestnanca.
+V prípade zranenia na pracovisku a/alebo nehody ponúkame naše poradenské, kontrolné a analytické služby poisťovniam, inšpektorátom a polícii. Môžeme tiež zabezpečiť právnu podporu a analýzu nevyriešených a nezabránených rizík spojených s nehodou v mene postihnutého zamestnanca.
 
 Z našich skúseností, sú tieto úrazy často spôsobené zanedbaním bezpečnostných predpisov do istej miery zo strany zamestnávateľa.

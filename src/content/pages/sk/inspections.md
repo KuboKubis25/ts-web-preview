@@ -10,7 +10,7 @@ image: "shutterstock_551823535-min.jpg"
 closing: "Napíšte nám a zistite ako vám môžu naše služby pomôcť."
 ---
 
-Testing Service disponuje požadovanými akreditáciami na poskytovanie týchto inšpekcií.
+## Testing Service disponuje požadovanými akreditáciami na poskytovanie týchto inšpekcií
 
 Každá skupina VTZ má špecifické (zvyčajne odlišné) právne podmienky na jej kontrolu a testovanie. Vyhradené technické zariadenia kategórie A (VTZ-A) okrem toho vyžadujú aj schválenie konštrukčnej dokumentácie pred inštaláciou zariadenia alebo pred rekonštrukciou zariadenia.
 
@@ -18,7 +18,7 @@ Každý zamestnanec, ktorý bude prevádzkovať akékoľvek obmedzené technick�
 
 TESTING SERVICE zabezpečuje vypracovanie všetkých úvodných a periodických revízií, inšpekcií a školení zamestnancov.
 
-## Školenia odborných spôsobilostí
+### Školenia odborných spôsobilostí
 
 Okrem školenia BOZP poskytujeme aj školenie a vzdelávanie odbornej spôsobilosti pracovníkov na operácie a služby
 
@@ -29,7 +29,7 @@ Okrem školenia BOZP poskytujeme aj školenie a vzdelávanie odbornej spôsobilo
 
 [Podrobný zoznam vzdelávacích kurzov a akreditácií nájdete tu.](/s/TS-Opravnenie.pdf)
 
-Zaveďte svoju technológiu do miestnej legislatívy
+## Zaveďte svoju technológiu do miestnej legislatívy
 
 Zavedenie technológie do slovenskej legislatívy spočíva vo vytvorení periodického plánu revízií podľa miestnej legislatívy spolu so zoznamom presných odborných kvalifikácií, ktoré sú potrebné na bezpečnú prevádzku danej technológie. Tento výstup môžu ďalej využívať vzdelávacie oddelenia, ktoré budú mať dostatočné údaje na to, aby mohli zabezpečiť správne a potrebné školenia pre zamestnancov a prevádzkovateľov technológií.
 

@@ -1,6 +1,7 @@
 export const languages = ["sk", "en", "zh"] as const;
 export type Lang = (typeof languages)[number];
-export const ui = {
+import { typographyCopy } from "../../scripts/rehype-typography.mjs";
+const rawUi = {
   sk: {
     toc: "Obsah",
     facts: "Údaje",
@@ -133,13 +134,15 @@ export const ui = {
     mailHint: "",
     readPrivacy: "",
     soon: "",
-    packages: "雇主 / 运营商套餐",
+    packages: "运营商与供应商服务",
     detail: "",
     gallery: "",
     related: "",
-    all: "我们的服务",
+    all: "全部服务",
     language: "语言",
     back: "返回首页",
     required: "",
   },
 } satisfies Record<Lang, Record<string, string>>;
+
+export const ui = Object.fromEntries(languages.map((lang) => [lang, typographyCopy(rawUi[lang], lang)])) as typeof rawUi;

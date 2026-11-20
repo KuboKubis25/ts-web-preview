@@ -74,9 +74,10 @@ if (endpoint && !/^https:\/\//.test(endpoint))
     </span>
   </label>
   <p class="small">
-    <a href={url("ochrana-osobnych-udajov/")}>
+    <a class="text-link" href={url("ochrana-osobnych-udajov/")}>
       {t.readPrivacy}
       <LangTag current={lang} target="sk" />
+      <Icon />
     </a>
   </p>
   {!endpoint && (

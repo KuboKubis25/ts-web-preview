@@ -7,16 +7,9 @@ description: "Control and testing of avionics systems. Aircraft magneto servicin
 kind: "aviation"
 source: "_source/pages/aviation-2.md"
 image: "20190628_141438.jpg"
-facts:
-  - label: "EASA"
-    value: "No 2018/1139"
-  - label: "EASA"
-    value: "No 1321/2014"
 ---
 
-TESTING SERVICE s.r.o. division AVIATION.
-
-The periodic inspection of communication and navigation systems in aircraft is mandatory.
+## The periodic inspection of communication and navigation systems in aircraft is mandatory
 
 - For all category of aircrafts.
 - IFR / VFR certified aircrafts.
@@ -26,12 +19,9 @@ The periodic inspection of communication and navigation systems in aircraft is m
 
 - Also class G.
 
-It is an important condition for Airworthiness Review Certificates – ARC.
+## It is an important condition for Airworthiness Review Certificates – ARC
 
-- EASA: Regulation (EC) No 2018/1139 a No 1321/2014 [easa.europa.eu](http://www.easa.europa.eu/).
-- Links to regulations:
-  - [No 2018/1139](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32018R1139).
-  - [No 1321/2014](https://eur-lex.europa.eu/legal-content/CS/TXT/?qid=1551125876356&uri=CELEX:32014R1321).
+- EASA: Regulation (EC) [No 2018/1139](https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32018R1139) a [No 1321/2014](https://eur-lex.europa.eu/legal-content/CS/TXT/?qid=1551125876356&uri=CELEX:32014R1321) [easa.europa.eu](http://www.easa.europa.eu/).
 
 ## Our offer
 

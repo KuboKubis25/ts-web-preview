@@ -6,17 +6,16 @@ title: "Technická údržba"
 description: "500 hodinové a generálne opravy leteckých magnet."
 kind: "aviation"
 source: "_source/pages/aviation-technical-maintenance.md"
-image: "shutterstock_170715560-min.jpg"
 ---
 
-## Naša špecializácia:
+## Naša špecializácia
 
 - 500 hodinové a generálne opravy magnet typ
 - Bendix King serie S20/S200 a Slick série 4300/6300
 - Sprostredkovanie opravy avioniky
 - Poradenstvo v oblasti zástavby avioniky
 
-250hod./500hod./Revízia (kontrola) magnet Bendix King série S20/S200 a Slick série 4300/6300 : 236 €*/ks.
+## 250 hod./500 hod./Revízia (kontrola) magnet Bendix King série S20/S200 a Slick série 4300/6300: 236 €*/ks
 
 *bez DPH
 

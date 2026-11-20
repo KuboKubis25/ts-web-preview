@@ -1,3 +1,4 @@
+import { typography } from "../../scripts/rehype-typography.mjs";
 import homeCopy from "./home.json";
 import type { Lang } from "./ui";
 export const serviceKeys = [
@@ -12,5 +13,5 @@ export function serviceTitle(page: { key: string; title: string }, lang: Lang) {
   const index = serviceKeys.findIndex((key) => key === page.key);
   return lang === "zh" && index >= 0
     ? homeCopy.zh.services[index].title
-    : page.title;
+    : typography(page.title, lang);
 }

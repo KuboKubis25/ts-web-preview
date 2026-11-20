@@ -9,9 +9,9 @@ source: "_source/pages/permit-assurance.md"
 image: "shutterstock_448000054-min.jpg"
 facts:
   - label: "Regulation"
-    value: "Decree (SK)508-2009"
+    value: "Decree (SK) 508/2009"
   - label: "Devices"
-    value: "restricted technical devices (RTDs)"
+    value: "Restricted technical devices (RTDs)"
 ---
 
 The legislation in Czech Republic and Slovak Republic states different legal requirements of the technology that must be met. However, both countries require multiple levels of permits and approvals necessary for installing and operating any technology, machinery or manufacturing equipment.
@@ -22,9 +22,9 @@ At first, the documentation required for construction permit must be compiled an
 
 ### Installation of RTDs
 
-According to Decree (SK)508-2009, technical devices (electric, gas, pressure and lifting) are classified into three categories labeled as restricted technical devices (RTDs). Category A of the restricted technical devices are required by law to have their design documentation approved before installation. In order to ensure effectivity and minimise the time required to gain this approval, the documentation should be submitted to relevant authority (such as Slovak Technical Inspection) in an acceptable form. After the design documentation is approved by the TI, the installation permit is issued, allowing for the technology, machinery or equipment to be installed.
+According to Decree (SK) 508/2009, technical devices (electric, gas, pressure and lifting) are classified into three categories labeled as restricted technical devices (RTDs). Category A of the restricted technical devices are required by law to have their design documentation approved before installation. In order to ensure effectivity and minimise the time required to gain this approval, the documentation should be submitted to relevant authority (such as Slovak Technical Inspection) in an acceptable form. After the design documentation is approved by the TI, the installation permit is issued, allowing for the technology, machinery or equipment to be installed.
 
-### Commissioning
+### Comissioning
 
 Before the commissioning of any new technology, an inspection certificate must be issued. This certificate can be delivered by specialised and legally authorised inspectors, such as Testing Service.
 
