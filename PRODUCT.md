@@ -41,7 +41,7 @@ A small, specialised Slovak inspection and consulting company with more than 20 
 - Contact form posts to a configurable endpoint, otherwise falls back to mailto.
 - Fonts: IBM Plex Sans Variable self-hosted (full Latin Extended for Slovak diacritics); CJK from the system stack.
 - Performance target: Lighthouse 95+, no layout shift. Accessible keyboard nav, `lang` and `hreflang` per page.
-- **Undecided:** phone numbers (none in the source content, so don't add any); Prague office opening date (source says only "coming soon"); final production domain.
+- **Undecided:** phone numbers (none in the source content, so don't add any); Prague office opening date (source says only "coming soon"); final production domain; the Slick magneto series (the source says "4600/6300" on the aviation overview and "4300/6300" on the maintenance page; the owner must pick one, and both pages and the home capabilities list then use it).
 
 ## Brand Commitments
 
