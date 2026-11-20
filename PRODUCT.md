@@ -41,7 +41,7 @@ A small, specialised Slovak inspection and consulting company with more than 20 
 - Contact form posts to a configurable endpoint, otherwise falls back to mailto.
 - Fonts: IBM Plex Sans Variable self-hosted (full Latin Extended for Slovak diacritics); CJK from the system stack.
 - Performance target: Lighthouse 95+, no layout shift. Accessible keyboard nav, `lang` and `hreflang` per page.
-- **Undecided:** phone numbers (none in the source content, so don't add any); Prague office opening date (source says only "coming soon"); final production domain; the Slick magneto series (the source says "4600/6300" on the aviation overview and "4300/6300" on the maintenance page; the owner must pick one, and both pages and the home capabilities list then use it).
+- **Undecided:** phone numbers (none in the source content, so don't add any); Prague office opening date (source says only "coming soon"); final production domain; the Slick magneto series (the source says "4600/6300" on the aviation overview and "4300/6300" on the maintenance page; the owner must pick one, and both pages and the home capabilities list then use it). Also undecided (round 5): the SK home source carries the supplier package twice in two wordings (pick one); the pilot "letisko AIP" link points to a 2018 AIRAC page (current URL needed); the magneto page hero is a stock automotive belt-drive photo (needs a real TS-A photo or none); whether every service page gets a footer closing line (only risk and inspections have one).
 
 ## Brand Commitments
 
