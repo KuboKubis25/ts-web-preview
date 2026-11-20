@@ -2,18 +2,22 @@ import { parseFragment, serialize } from 'parse5';
 
 /** Shared, idempotent typography for Markdown text and rendered data strings. */
 export function typography(value, lang, compounds = false) {
-  if (lang === 'zh') return value;
+  if (lang === 'zh' && !compounds) return value;
+  const bindCompounds = text => text.replace(/\p{L}{2,}(?:-\p{L}{2,})+/gu,
+    word => word.length <= 24 ? word.replaceAll('-', '\u2011') : word);
   // Leave URLs and addresses intact, including their path/query punctuation.
   return value.split(/((?:https?:\/\/|mailto:|www\.)\S+|\S+@\S+)/g).map((part, index) => {
     if (index % 2) return part;
+    if (lang === 'zh') return bindCompounds(part);
     let text = part.replace(/ ([·–/]) /g, '\u00a0$1 ').replace(/(\d) (?=(?:hod\.|h\b|V\b|m\b|€))/g, '$1\u00a0');
     // Labels bind backward before prepositions bind forward. Literal spaces in
     // the forward pass keep an already-bound category letter from binding twice.
     text = text.replace(/\b(No|Nr\.|sk\.) (?=[\dA-Z])/g, '$1\u00a0')
       .replace(/(č\.) (?=[\dA-Z])/g, '$1\u00a0');
     text = text.replace(/Bendix\sKing/g, 'Bendix\u00a0King')
-      .replace(/(Slick|King)\s(?=\(|série|serie|series)/g, '$1\u00a0')
+      .replace(/Slick\s(?=\(?\d)/g, 'Slick\u00a0')
       .replace(/(série|serie|series)\s(?=[A-Z0-9])/g, '$1\u00a0');
+    if (lang === 'en') text = text.replace(/ & /g, ' &\u00a0');
     if (lang === 'sk' || lang === 'cs') {
       text = text.replace(/(\d)\s?%/g, '$1\u00a0%');
       text = text.replace(/([^\s.!?:„(])(\s)([AIKOSUVZ])(?=[\s,.)]|$)/g, '$1\u00a0$3');
@@ -22,15 +26,23 @@ export function typography(value, lang, compounds = false) {
           .replace(/(^|[„(]|[.!?:] )([AIKOSUVZ]) /g, '$1$2\u00a0');
       }
     }
-    if (compounds) text = text.replace(/\p{L}{2,}(?:-\p{L}{2,})+/gu,
-      word => word.length <= 24 ? word.replaceAll('-', '\u2011') : word);
-    return text;
+    if (compounds) text = bindCompounds(text);
+    // Drop a joining space if it would chain more than 24 characters.
+    // Preserve each short product/series unit and keep this pass idempotent.
+    return text.replace(/[^\s]+(?:\u00a0[^\s]+)+/g, run => {
+      let length = 0;
+      return run.split('\u00a0').map((word, i) => {
+        const separator = i && length + 1 + word.length <= 24 ? '\u00a0' : i ? ' ' : '';
+        length = separator === '\u00a0' ? length + 1 + word.length : word.length;
+        return separator + word;
+      }).join('');
+    });
   }).join('');
 }
 
 /** Transform only visible copy, never routing keys, URLs, IDs or image names. */
 export function typographyCopy(copy, lang, compounds = false) {
-  return Object.fromEntries(Object.entries(copy).map(([key, value]) => [key, typeof value === 'string' ? typography(value, lang, compounds || key === 'title') : value]));
+  return Object.fromEntries(Object.entries(copy).map(([key, value]) => [key, typeof value === 'string' ? typography(value, lang, compounds || ['title', 'description', 'packageLead'].includes(key)) : value]));
 }
 
 export default function rehypeTypography() {

@@ -20,7 +20,14 @@ Testing Service provides the elaboration of all initial and periodic revisions, 
 
 ## Professional qualifications trainings
 
-In addition to OSH (BOZP) training, we provide the training and education of professional competence of workers for operations and services of – Electric Devices and Technology – Pressure Devices and Technology – Gas Devices and Technology – Lifting Devices and Technology [See detailed list of training courses and accreditations here.](/s/TS-Opravnenie.pdf)
+In addition to OSH (BOZP) training, we provide the training and education of professional competence of workers for operations and services of:
+
+- electric devices and technology
+- pressure devices and technology
+- gas devices and technology
+- lifting devices and technology
+
+[See detailed list of training courses and accreditations here.](/s/TS-Opravnenie.pdf)
 
 ## Establish your technology in local legislation
 
@@ -28,6 +35,6 @@ Establishing your technology in Slovak legislation consists of creating the peri
 
 ## Complex testing before commissioning
 
-In addition, we provide a complex testing (including environmental, safety and fire protection) to ensure that technology is fulfilling all legal requirements and is ready for commissioning.In addition, we also provide operators with a complex testing before commissioning. This exhaustive examinations ensures that your technology is ready for commissioning and all local legal requirements are fulfilled. The procedure includes testing of restricted technical devices, testing of environmental factors and fire-protection safety.
+In addition, we provide a complex testing (including environmental, safety and fire protection) to ensure that technology is fulfilling all legal requirements and is ready for commissioning. In addition, we also provide operators with a complex testing before commissioning. This exhaustive examinations ensures that your technology is ready for commissioning and all local legal requirements are fulfilled. The procedure includes testing of restricted technical devices, testing of environmental factors and fire-protection safety.
 
 With over 20 years of experience, we support our clients whether they need a revision, inspection, employee training and certification or complete establishment of a technology in local legislation.

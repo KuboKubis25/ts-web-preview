@@ -1,3 +1,4 @@
+import { review8Contract, review8ContentChecks, review8Probes } from './qa-review8.mjs';
 import { execFileSync } from "node:child_process";
 import { review7Contract, review7ContentChecks, review7Probes, review7Measurements } from "./qa-review7.mjs";
 import { review6Contract, typographyFixtures } from "./qa-review6.mjs";
@@ -12,6 +13,7 @@ import assert from "node:assert/strict";
 
 typographyFixtures();
 await review7ContentChecks();
+const paperwork = await review8ContentChecks();
 const root = resolve("dist");
 const homeHTML = await readFile(resolve(root, "index.html"), "utf8");
 const base = new URL(homeHTML.match(/rel="canonical" href="([^"]+)"/)[1])
@@ -120,6 +122,7 @@ const shots = {
   "zh/references/": "zh-references",
   "ochrana-osobnych-udajov/": "sk-legal",
   "404.html": "404",
+  "en/contact/": "en-contact",
   "": "sk-home",
   "en/": "en-home",
   "zh/": "zh-home",
@@ -133,7 +136,7 @@ const shots = {
   "en/aviation/instrument-testing/": "en-aviation-testing",
   "sluzby/technicke-poradenstvo/": "sk-consulting",
 };
-const shotDir = "docs/review/shots-v7";
+const shotDir = "docs/review/shots-v8";
 if (capture) await mkdir(shotDir, { recursive: true });
 async function ready() {
   await page.evaluate(async () => {
@@ -919,7 +922,7 @@ try {
         if(outline.some((depth,i)=>depth>(i?outline[i-1]+1:2))) failures.push({route,headingLevelSkip:outline});
       }
       if (width === 1440 && ['', 'en/', 'zh/'].includes(route)) await recordFonts(route === 'zh/' ? 'zhH1' : route === '' ? 'skH1' : 'enBody', route === 'en/' ? '.intro-section p:not(.statement)' : '.hero-copy h1');
-      const contract = [...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract), ...await page.evaluate(review6Contract), ...await page.evaluate(review7Contract)];
+      const contract = [...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract), ...await page.evaluate(review6Contract), ...await page.evaluate(review7Contract), ...await page.evaluate(review8Contract, paperwork[route] || [])];
       if ([390,640,1024,1080,1440].includes(width)) {
         const lines = await page.evaluate(typographyLines);
         if(lines.length) failures.push({route,width,typographyLines:lines});
@@ -944,7 +947,9 @@ try {
           ([640, 1024, 1080].includes(width) &&
             ["sk-home", "sk-contact", "sk-aviation-testing"].includes(name)) ||
           (width === 640 && ["sk-service", "en-home"].includes(name)) ||
-          ([1024,1080].includes(width) && name === "zh-home"))
+          ([1024,1080].includes(width) && name === "zh-home") ||
+          (width === 1024 && name === "404") ||
+          (width === 640 && name === "en-inspections"))
       ) {
         // Capture the arrival state before accessibility probes can focus or scroll controls.
         await page.evaluate(() => {
@@ -1047,7 +1052,7 @@ try {
       .evaluate((el) => getComputedStyle(el).borderBottomWidth),
     "1px",
   );
-  const menuContract = [...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract), ...await page.evaluate(review6Contract), ...await page.evaluate(review7Contract)];
+  const menuContract = [...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract), ...await page.evaluate(review6Contract), ...await page.evaluate(review7Contract), ...await page.evaluate(review8Contract)];
   if (menuContract.length) failures.push({ menu: 390, contract: menuContract });
   await page.keyboard.press("Escape");
   assert.equal(
@@ -1193,7 +1198,7 @@ try {
       await page.goto(origin+route);await ready();
       await page.locator('.packages details').evaluate(el=>{el.dataset.qaExpanded='true';el.open=true;});
       await ready();
-      const contract=[...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract), ...await page.evaluate(review6Contract), ...await page.evaluate(review7Contract)];
+      const contract=[...await page.evaluate(layoutContract), ...await page.evaluate(review5Contract), ...await page.evaluate(review6Contract), ...await page.evaluate(review7Contract), ...await page.evaluate(review8Contract)];
       const lines=await page.evaluate(typographyLines);
       if(contract.length || lines.length) failures.push({route,width,expandedPackages:contract,typographyLines:lines});
       if(capture && width===390 && route==='zh/') await page.screenshot({path:`${shotDir}/zh-home-packages-open-390.jpg`,fullPage:true,type:'jpeg',quality:85});
@@ -1202,7 +1207,7 @@ try {
   behaviors.push('Packages closed on arrival, expanded content checked in SK/EN/ZH at 390/1440');
   if (capture) {
     const files = new Set(await readdir(shotDir));
-    for (const file of await readdir('docs/review/shots-v6')) assert.ok(files.has(file), `Preserve v6 capture: ${file}`);
+    for (const file of await readdir('docs/review/shots-v7')) assert.ok(files.has(file), `Preserve v7 capture: ${file}`);
     for (const name of ['sk-inspections','en-inspections','en-service','en-consulting','en-risk','en-aviation','en-maintenance','zh-references','sk-legal','404'])
       for (const size of ['desktop','mobile']) assert.ok(files.has(`${name}-${size}.jpg`), `New capture: ${name}-${size}`);
   }
@@ -1295,6 +1300,8 @@ try {
   for (const rule of ['text-link-icon-gap', 'breadcrumb-hit-area', 'type-field-label'])
     assert.ok(mobileRules.has(rule), `QA must catch injected ${rule}`);
   behaviors.push('Review 6: injected heading, rail, hero, footer, link, breadcrumb and field-token regressions rejected');
+  await review8Probes(page, origin, ready);
+  behaviors.push('Review 8: injected heading, line-ending, bound-run, breadcrumb and paperwork regressions rejected');
   await review7Probes(page, origin, ready, layoutContract, review6Contract);
   behaviors.push("Review 7: injected ZH, breadcrumb, prose-h3, footer, lead, sibling-rail, photo-floor, current-language, home-split and lang-tag regressions rejected; Markdown list fixtures rejected");
   const retina = await browser.newContext({
@@ -1354,7 +1361,7 @@ const report = {
   metrics,
 };
 await writeFile(
-  capture ? "docs/review/qa-v7.json" : "dist/qa-layout.json",
+  capture ? "docs/review/qa-v8.json" : "dist/qa-layout.json",
   JSON.stringify(report, null, 2) + "\n",
 );
 console.log(

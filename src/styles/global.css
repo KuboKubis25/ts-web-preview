@@ -908,12 +908,23 @@ html.menu-open {
 }
 .breadcrumb ol {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  min-width: 0;
   list-style: none;
   margin: 0;
   padding: 0;
 }
+.breadcrumb li {
+  display: flex;
+  flex: none;
+  align-items: center;
+}
+.breadcrumb li:has([aria-current]) {
+  flex: 0 1 auto;
+  min-width: 0;
+}
 .breadcrumb li + li::before {
+  flex: none;
   content: "/";
   margin-inline: var(--space-2);
   color: var(--color-muted);
@@ -925,6 +936,10 @@ html.menu-open {
   text-decoration: underline;
 }
 .breadcrumb [aria-current] {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: var(--color-ink);
 }
 .page-hero {
@@ -1490,7 +1505,6 @@ body:lang(zh),
   .footer-grid > div {
     grid-column: span 3;
   }
-  .hero-place-names { white-space: nowrap; }
   .home-hero {
     grid-template-columns: calc(max(var(--gutter), (100vw - var(--container)) / 2) + (min(100vw - 2 * var(--gutter), var(--container)) + var(--grid-gap)) / 2) 1fr;
     min-height: min(640px, 80svh);
@@ -1522,19 +1536,6 @@ body:lang(zh),
   .footer-grid ul { row-gap: 0; }
   .footer-grid a { padding-block: calc((var(--hit-height) - 1lh) / 2); }
   .footer-grid p:has(+ ul) { margin-bottom: 0; }
-  /* Keep the current item in the trail while its text wraps during font swap. */
-  .breadcrumb li[aria-current] {
-    flex: 1;
-    min-width: 0;
-  }
-  .breadcrumb li {
-    display: inline-flex;
-    align-items: center;
-  }
-  .breadcrumb ol {
-    min-height: var(--hit-height);
-    align-items: center;
-  }
   .breadcrumb a {
     position: relative;
     display: inline;

@@ -52,16 +52,16 @@ const content = page ? await render(page) : undefined;
 const Content = content?.Content;
 const contentHTML = Content && d?.kind !== "home" ? await (await AstroContainer.create()).renderToString(Content) : "";
 const { headings, headingFirst } = articleOutline(contentHTML);
-// Do not repeat a document already linked directly in the source prose.
+// The download list is the complete paperwork inventory, including inline links.
 const relevantDownloads = downloads
-  .filter((f) => f.page === d?.key && !page?.body?.includes("/s/" + f.file))
+  .filter((f) => f.page === d?.key)
   .sort((a, b) => downloadOrder.indexOf(a.kind) - downloadOrder.indexOf(b.kind));
 const rawCopy = homeCopy[lang];
 const copy = { ...rawCopy, intro: typography(rawCopy.intro, lang), capabilities: rawCopy.capabilities.map((text) => typography(text, lang, true)), services: rawCopy.services.map((service) => typographyCopy(service, lang, true)) };
 const capabilities = copy.capabilities.length ? copy.capabilities : content?.headings.filter((h) => h.depth === 3).map((h) => h.text) || [];
 // The compliance sentence is existing source copy in all three languages.
 const homeLead = {
-  sk: "Splnenie českých a slovenských legislatívnych požiadaviek pre vašu technológiu",
+  sk: "Splnenie českých a slovenských požiadaviek pre vašu technológiu",
   en: "Managing Czech and Slovak legal requirements of your technology",
   zh: "管理您技术在捷克和斯洛伐克的法律合规要求",
 }[lang];
@@ -171,7 +171,7 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
                     ))
                 ) : (
                   <>
-                    {lang === "en" ? homeLead.split(/(Czech and Slovak)/).map(part => part === "Czech and Slovak" ? <span class="hero-place-names">{part}</span> : typography(part, lang)) : typography(homeLead, lang)}
+                    {typography(homeLead, lang, true)}
                     <span class="gold">.</span>
                   </>
                 )}
@@ -304,10 +304,10 @@ const otherPhotos = remaining.filter((p) => !p.image.startsWith("Nad_"));
               )}
               {d.kind === "aviation" && (
                 <li>
-                  {d.key === "aviation" ? <span aria-current="page">{t.aviation}</span> : <a href={url(aviation[0].data.path + "/")}>{t.aviation}</a>}
+                  {d.key === "aviation" ? <span aria-current="page" title={t.aviation}>{t.aviation}</span> : <a href={url(aviation[0].data.path + "/")}>{t.aviation}</a>}
                 </li>
               )}
-              {d.kind !== "aviation" && <li aria-current="page">{d.title}</li>}
+              {d.kind !== "aviation" && <li><span aria-current="page" title={d.title}>{d.title}</span></li>}
             </ol>
           </nav>
           {d.kind === "aviation" && (

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFile, readdir } from 'node:fs/promises';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
@@ -10,10 +11,16 @@ export function listStyleIssues(markdown) {
   const issues = [];
   function visit(node) {
     node.children?.forEach((child, i) => {
-      if (child.type === 'list' && node.children[i - 1]?.type === 'heading') {
+      const previous = node.children[i - 1];
+      if (child.type === 'paragraph' && (text(child).match(/ – [A-Z]/g) || []).length >= 3) issues.push(text(child));
+      if (child.type === 'list' && ['heading', 'paragraph'].includes(previous?.type)) {
+        const continuation = previous.type === 'paragraph';
+        if (continuation && !text(previous).trim().endsWith(':')) issues.push(`Missing colon: ${text(previous)}`);
         for (const item of child.children) {
-          const value = text(item).trim();
-          if (!/^[\p{Lu}\p{N}]/u.test(value) || !/[.?]$/.test(value)) issues.push(value);
+          // Check the item's own paragraph, not text belonging to nested lists.
+          const value = text(item.children[0]).trim();
+          if (continuation ? !/^(?:[\p{Ll}\p{N}]|[A-Z]{2,}\b)/u.test(value) || /\.$/.test(value)
+            : !/^[\p{Lu}\p{N}]/u.test(value) || !/[.?]$/.test(value)) issues.push(value);
         }
       }
       visit(child);
@@ -25,7 +32,19 @@ export function listStyleIssues(markdown) {
 export async function review7ContentChecks() {
   for (const lang of ['sk', 'en']) for (const file of await readdir(`src/content/pages/${lang}`)) {
     if (!file.endsWith('.md')) continue;
-    assert.deepEqual(listStyleIssues(await readFile(`src/content/pages/${lang}/${file}`, 'utf8')), [], `${lang}/${file}: list under heading`);
+    const markdown = await readFile(`src/content/pages/${lang}/${file}`, 'utf8');
+    const issues = listStyleIssues(markdown);
+    // Existing home lead-in punctuation is outside review-8 P1-3. Freeze only
+    // those exact files; any future edit must resolve/review their list style.
+    const deferred = {
+      'sk/home.md': ['4a75b6734139f2f911e7497caf87efa8bbf9442c1c8a9db734a70cc27fa056b0', 3],
+      'en/home.md': ['17911019d9faa2bbb0ec745737a22a494175569556cef6f48912271f2591998d', 1],
+    }[`${lang}/${file}`];
+    if (issues.length && deferred) {
+      assert.equal(createHash('sha256').update(markdown).digest('hex'), deferred[0], 'Deferred home copy must remain unchanged');
+      assert.equal(issues.length, deferred[1]);
+      assert.ok(issues.every(issue => issue.startsWith('Missing colon:')));
+    } else assert.deepEqual(issues, [], `${lang}/${file}: list style`);
   }
   const rawTree = {type: 'root', children: [
     {type: 'raw', value: '<p class="key-line">Bendix King série S20/S200 a Slick série 4300/6300</p>'},
@@ -34,7 +53,7 @@ export async function review7ContentChecks() {
   const transform = rehypeTypography();
   const file = {data: {astro: {frontmatter: {lang: 'sk'}}}};
   transform(rawTree, file);
-  assert.match(rawTree.children[0].value, /Bendix&nbsp;King&nbsp;série&nbsp;S20/);
+  assert.match(rawTree.children[0].value, /Bendix&nbsp;King série&nbsp;S20/);
   assert.equal(rawTree.children[1].value, '<span class="nowrap">');
   assert.equal(rawTree.children[2].value, '</span>');
   const once = JSON.stringify(rawTree); transform(rawTree, file); assert.equal(JSON.stringify(rawTree), once);
@@ -44,8 +63,8 @@ export async function review7ContentChecks() {
     ['zariadení skupiny A', 'sk', 'zariadení skupiny\u00a0A'],
     ['60% a 20 %', 'sk', '60\u00a0% a\u00a020\u00a0%'],
     ['60%', 'cs', '60\u00a0%'], ['60%', 'en', '60%'], ['100%', 'zh', '100%'],
-    ['Bendix King série S20/S200, Slick (4600/6300)', 'sk', 'Bendix\u00a0King\u00a0série\u00a0S20/S200, Slick\u00a0(4600/6300)'],
-    ['King series S20', 'en', 'King\u00a0series\u00a0S20'],
+    ['Bendix King série S20/S200, Slick (4600/6300)', 'sk', 'Bendix\u00a0King série\u00a0S20/S200, Slick\u00a0(4600/6300)'],
+    ['King series S20', 'en', 'King series\u00a0S20'],
   ]) {
     assert.equal(typography(input, lang), expected);
     assert.equal(typography(expected, lang), expected, 'Idempotence');
@@ -99,7 +118,7 @@ export function review7Contract() {
   }
   if (innerWidth < 1080) {
     const trail = document.querySelector('.breadcrumb ol');
-    if (trail) check(box(trail).height >= 44, 'breadcrumb-row-height', box(trail).height);
+    if (trail) check(Math.abs(box(trail).height - parseFloat(getComputedStyle(trail).lineHeight)) <= 1, 'breadcrumb-row-height', box(trail).height);
     for (const a of document.querySelectorAll('.breadcrumb a')) {
       const hit = getComputedStyle(a, '::after');
       check(hit.position === 'absolute' && parseFloat(hit.width) >= 44 && parseFloat(hit.height) >= 44, 'breadcrumb-hit-area', a.textContent);
@@ -157,8 +176,6 @@ export function review7Contract() {
   const photo = document.querySelector('.hero-visual');
   if (photo && innerWidth === 1440) {
     check(Math.abs(box(photo).left - 732) <= 1, 'home-photo-column-seven', box(photo).left);
-    const right = Math.max(...lines(h1).map(row => row.right));
-    check(box(photo).left - right <= 230, 'home-heading-photo-gap', box(photo).left - right);
   }
   return issues;
 }

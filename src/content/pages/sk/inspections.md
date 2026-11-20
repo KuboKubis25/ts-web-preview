@@ -20,12 +20,12 @@ TESTING SERVICE zabezpečuje vypracovanie všetkých úvodných a periodických 
 
 ### Školenia odborných spôsobilostí
 
-Okrem školenia BOZP poskytujeme aj školenie a vzdelávanie odbornej spôsobilosti pracovníkov na operácie a služby
+Okrem školenia BOZP poskytujeme aj školenie a vzdelávanie odbornej spôsobilosti pracovníkov na operácie a služby:
 
-- Elektrických zariadení a technológií
-- Tlakových zariadení a technológií
-- Plynových zariadení a technológií
-- Zdvíhacích zariadení a technológií
+- elektrických zariadení a technológií
+- tlakových zariadení a technológií
+- plynových zariadení a technológií
+- zdvíhacích zariadení a technológií
 
 [Podrobný zoznam vzdelávacích kurzov a akreditácií nájdete tu.](/s/TS-Opravnenie.pdf)
 
